@@ -9,7 +9,7 @@ import * as WebBrowser from "expo-web-browser";
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function GoogleSignInButton() {
+export default function GoogleSignInButton({ title }: { title: string }) {
   function extractParamsFromUrl(url: string) {
     const parsedUrl = new URL(url);
     const hash = parsedUrl.hash.substring(1); // Remove the leading '#'
@@ -129,7 +129,7 @@ export default function GoogleSignInButton() {
           fontWeight: "500",
         }}
       >
-        Sign in with Google
+        {title}
       </Text>
     </TouchableOpacity>
   );
