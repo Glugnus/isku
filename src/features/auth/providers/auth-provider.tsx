@@ -1,5 +1,6 @@
+import { getClaims, onAuthStateChange } from "@/src/features/auth/api/auth-api";
 import { AuthContext } from "@/src/features/auth/hooks/use-auth-context";
-import { supabase } from "@/src/lib/supabase";
+import { getProfile } from "@/src/features/profile/api/profile-api";
 import { PropsWithChildren, useEffect, useState } from "react";
 
 export default function AuthProvider({ children }: PropsWithChildren) {
@@ -14,29 +15,22 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     const fetchClaims = async () => {
       setIsLoading(true);
 
-      const { data, error } = await supabase.auth.getClaims();
+      const claims = await getClaims();
 
-      if (error) {
-        console.error("Error fetching claims:", error);
-      }
-
-      setClaims(data?.claims ?? null);
+      setClaims(claims);
       setIsLoading(false);
     };
 
     fetchClaims();
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, _session) => {
-      console.log("Auth state changed:", { event: _event });
-      const { data } = await supabase.auth.getClaims();
-      setClaims(data?.claims ?? null);
+    const unsubscribe = onAuthStateChange(async () => {
+      const claims = await getClaims();
+      setClaims(claims);
     });
 
     // Cleanup subscription on unmount
     return () => {
-      subscription.unsubscribe();
+      unsubscribe();
     };
   }, []);
 
@@ -46,12 +40,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       setIsLoading(true);
 
       if (claims) {
-        const { data } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", claims.sub)
-          .single();
-
+        const data = await getProfile(claims.sub);
         setProfile(data);
       } else {
         setProfile(null);

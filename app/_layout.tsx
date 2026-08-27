@@ -11,12 +11,12 @@ function RootNavigator() {
   const { isLoggedIn } = useAuthContext();
 
   return (
-    <Stack>
+    <Stack screenOptions={{ headerShown: false }}>
       <Stack.Protected guard={isLoggedIn}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" />
       </Stack.Protected>
       <Stack.Protected guard={!isLoggedIn}>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" />
       </Stack.Protected>
     </Stack>
   );
@@ -27,7 +27,7 @@ export default function RootLayout() {
     <AuthProvider>
       <SplashScreenController />
       <RootNavigator />
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </AuthProvider>
   );
 }
