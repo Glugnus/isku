@@ -1,14 +1,13 @@
 import Button from "@/src/components/ui/button";
 import ControlledInput from "@/src/components/utils/controlled-input";
 import AuthHeader from "@/src/features/auth/components/auth-header";
-import GoogleSignInButton from "@/src/features/auth/components/social-auth-buttons/google/google-sign-in-button";
-import { useLoginForm } from "@/src/features/auth/hooks/use-login-form";
+import { useForgotPasswordForm } from "@/src/features/auth/hooks/use-forgot-password-form";
 import { Link } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 
-export default function LoginForm() {
+export default function ForgotPasswordForm() {
   const { control, handleSubmit, onSubmit, errors, isSubmitting } =
-    useLoginForm();
+    useForgotPasswordForm();
 
   return (
     <ScrollView
@@ -17,7 +16,8 @@ export default function LoginForm() {
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      <AuthHeader subtitle="Connectez-vous pour retrouver vos matchs et statistiques" />
+      <AuthHeader subtitle="Entrez votre email pour réinitialiser votre mot de passe" />
+
       <View className="my-4">
         <ControlledInput
           control={control}
@@ -29,25 +29,9 @@ export default function LoginForm() {
           placeholder="votre@email.com"
           textContentType="emailAddress"
           autoComplete="email"
-          returnKeyType="next"
-        />
-
-        <ControlledInput
-          control={control}
-          label="Mot de passe"
-          name="password"
-          variant="secondary"
-          autoCapitalize="none"
-          placeholder="********"
-          textContentType="password"
-          autoComplete="password"
           returnKeyType="done"
           onSubmitEditing={handleSubmit(onSubmit)}
-          isPassword
         />
-        <Link className="self-end mt-2" href="/(auth)/forgot-password">
-          <Text className="text-muted text-sm">Mot de passe oublié ?</Text>
-        </Link>
       </View>
       {errors.root && (
         <Text className="text-center mb-4 font-bold text-danger">
@@ -57,16 +41,15 @@ export default function LoginForm() {
       <View className="gap-y-6 pb-4">
         <View className="gap-y-2">
           <Button
-            title="Se connecter"
+            title="Réinitialiser"
             variant="primary"
             onPress={handleSubmit(onSubmit)}
             isLoading={isSubmitting}
           />
-          <Link href="/(auth)/register" asChild>
-            <Button title="Créer un compte" variant="surface" />
+          <Link href="/(auth)/login" asChild>
+            <Button title="Annuler" variant="surface" />
           </Link>
         </View>
-        <GoogleSignInButton title="Continuer avec Google" />
       </View>
     </ScrollView>
   );

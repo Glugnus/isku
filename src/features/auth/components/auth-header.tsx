@@ -8,7 +8,7 @@ interface AuthHeaderProps {
 export default function AuthHeader({ subtitle }: AuthHeaderProps) {
   return (
     <>
-      <View className="items-center justify-center mb-2 mt-12">
+      <View className="items-center justify-center mb-2 mt-6">
         <Image
           source={require("@/assets/images/Logo-Isku-Texte.svg")}
           style={{ width: 300, height: 120 }}

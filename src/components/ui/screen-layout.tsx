@@ -16,31 +16,27 @@ export default function ScreenLayout({
   keyboardVerticalOffset = 0,
   ...props
 }: ScreenLayoutProps) {
-  const content = (
+  return (
     <SafeAreaView
       className={`flex-1 bg-background ${className ?? ""}`}
       edges={edges}
     >
-      {children}
+      {withKeyboard ? (
+        <KeyboardAvoidingView
+          behavior={"padding"}
+          keyboardVerticalOffset={
+            Platform.OS === "ios" ? keyboardVerticalOffset : 0
+          }
+          className="flex-1"
+          {...props}
+        >
+          {children}
+        </KeyboardAvoidingView>
+      ) : (
+        <View className="flex-1" {...props}>
+          {children}
+        </View>
+      )}
     </SafeAreaView>
-  );
-  if (!withKeyboard) {
-    return (
-      <View className="flex-1" {...props}>
-        {content}
-      </View>
-    );
-  }
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={
-        Platform.OS === "ios" ? keyboardVerticalOffset : 0
-      }
-      className="flex-1"
-      {...props}
-    >
-      {content}
-    </KeyboardAvoidingView>
   );
 }

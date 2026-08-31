@@ -1,15 +1,13 @@
 import Button from "@/src/components/ui/button";
 import ControlledInput from "@/src/components/utils/controlled-input";
 import AuthHeader from "@/src/features/auth/components/auth-header";
-import GoogleSignInButton from "@/src/features/auth/components/social-auth-buttons/google/google-sign-in-button";
-import { useLoginForm } from "@/src/features/auth/hooks/use-login-form";
+import { useRegisterForm } from "@/src/features/auth/hooks/use-register-form";
 import { Link } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const { control, handleSubmit, onSubmit, errors, isSubmitting } =
-    useLoginForm();
-
+    useRegisterForm();
   return (
     <ScrollView
       contentContainerClassName="flex-grow p-6"
@@ -17,8 +15,18 @@ export default function LoginForm() {
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      <AuthHeader subtitle="Connectez-vous pour retrouver vos matchs et statistiques" />
+      <AuthHeader subtitle="Rejoignez-nous pour suivre vos statistiques" />
+
       <View className="my-4">
+        <ControlledInput
+          control={control}
+          label="Pseudo"
+          name="username"
+          variant="secondary"
+          autoCapitalize="characters"
+          placeholder="Votre pseudo"
+          returnKeyType="next"
+        />
         <ControlledInput
           control={control}
           label="Email"
@@ -31,7 +39,6 @@ export default function LoginForm() {
           autoComplete="email"
           returnKeyType="next"
         />
-
         <ControlledInput
           control={control}
           label="Mot de passe"
@@ -41,13 +48,22 @@ export default function LoginForm() {
           placeholder="********"
           textContentType="password"
           autoComplete="password"
+          returnKeyType="next"
+          isPassword
+        />
+        <ControlledInput
+          control={control}
+          label="Confirmer le mot de passe"
+          name="confirmPassword"
+          variant="secondary"
+          autoCapitalize="none"
+          placeholder="********"
+          textContentType="password"
+          autoComplete="password"
           returnKeyType="done"
           onSubmitEditing={handleSubmit(onSubmit)}
           isPassword
         />
-        <Link className="self-end mt-2" href="/(auth)/forgot-password">
-          <Text className="text-muted text-sm">Mot de passe oublié ?</Text>
-        </Link>
       </View>
       {errors.root && (
         <Text className="text-center mb-4 font-bold text-danger">
@@ -57,16 +73,15 @@ export default function LoginForm() {
       <View className="gap-y-6 pb-4">
         <View className="gap-y-2">
           <Button
-            title="Se connecter"
+            title="S'inscrire"
             variant="primary"
             onPress={handleSubmit(onSubmit)}
             isLoading={isSubmitting}
           />
-          <Link href="/(auth)/register" asChild>
-            <Button title="Créer un compte" variant="surface" />
+          <Link href="/(auth)/login" asChild>
+            <Button title="J'ai déjà un compte" variant="surface" />
           </Link>
         </View>
-        <GoogleSignInButton title="Continuer avec Google" />
       </View>
     </ScrollView>
   );

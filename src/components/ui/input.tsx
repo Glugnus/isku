@@ -2,7 +2,7 @@ import { colors } from "@/src/lib/colors";
 import { ReactNode } from "react";
 import { Text, TextInput, TextInputProps, View } from "react-native";
 
-interface InputProps extends TextInputProps {
+export interface InputProps extends TextInputProps {
   label?: string;
   variant?: "primary" | "secondary" | "neutral";
   isRight?: boolean;

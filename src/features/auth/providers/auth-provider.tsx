@@ -9,6 +9,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   >();
   const [profile, setProfile] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isPasswordRecovery, setIsPasswordRecovery] = useState<boolean>(false);
 
   // Fetch the claims once, and subscribe to auth state changes
   useEffect(() => {
@@ -23,7 +24,12 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
     fetchClaims();
 
-    const unsubscribe = onAuthStateChange(async () => {
+    const unsubscribe = onAuthStateChange(async (event) => {
+      if (event === "PASSWORD_RECOVERY") {
+        setIsPasswordRecovery(true);
+      } else if (event === "SIGNED_OUT") {
+        setIsPasswordRecovery(false);
+      }
       const claims = await getClaims();
       setClaims(claims);
     });
@@ -58,7 +64,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         claims,
         isLoading,
         profile,
-        isLoggedIn: !!claims,
+        isLoggedIn: !!claims && !isPasswordRecovery,
       }}
     >
       {children}

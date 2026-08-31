@@ -1,9 +1,11 @@
-import { Text, View } from "react-native";
+import ScreenLayout from "@/src/components/ui/screen-layout";
+import AuthHeader from "@/src/features/auth/components/auth-header";
+import RegisterForm from "@/src/features/auth/components/form/register-form";
 
 export default function RegisterScreen() {
   return (
-    <View>
-      <Text>Register</Text>
-    </View>
+    <ScreenLayout>
+      <RegisterForm />
+    </ScreenLayout>
   );
 }

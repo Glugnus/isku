@@ -1,14 +1,12 @@
 import Button from "@/src/components/ui/button";
 import ControlledInput from "@/src/components/utils/controlled-input";
 import AuthHeader from "@/src/features/auth/components/auth-header";
-import GoogleSignInButton from "@/src/features/auth/components/social-auth-buttons/google/google-sign-in-button";
-import { useLoginForm } from "@/src/features/auth/hooks/use-login-form";
-import { Link } from "expo-router";
+import { useResetPasswordForm } from "@/src/features/auth/hooks/use-reset-password-form";
 import { ScrollView, Text, View } from "react-native";
 
-export default function LoginForm() {
+export default function ResetPasswordForm() {
   const { control, handleSubmit, onSubmit, errors, isSubmitting } =
-    useLoginForm();
+    useResetPasswordForm();
 
   return (
     <ScrollView
@@ -17,21 +15,9 @@ export default function LoginForm() {
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-      <AuthHeader subtitle="Connectez-vous pour retrouver vos matchs et statistiques" />
-      <View className="my-4">
-        <ControlledInput
-          control={control}
-          label="Email"
-          name="email"
-          variant="secondary"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          placeholder="votre@email.com"
-          textContentType="emailAddress"
-          autoComplete="email"
-          returnKeyType="next"
-        />
+      <AuthHeader subtitle="Entrez votre nouveau mot de passe" />
 
+      <View className="my-4">
         <ControlledInput
           control={control}
           label="Mot de passe"
@@ -41,13 +27,22 @@ export default function LoginForm() {
           placeholder="********"
           textContentType="password"
           autoComplete="password"
+          returnKeyType="next"
+          isPassword
+        />
+        <ControlledInput
+          control={control}
+          label="Confirmer le mot de passe"
+          name="confirmPassword"
+          variant="secondary"
+          autoCapitalize="none"
+          placeholder="********"
+          textContentType="password"
+          autoComplete="password"
           returnKeyType="done"
           onSubmitEditing={handleSubmit(onSubmit)}
           isPassword
         />
-        <Link className="self-end mt-2" href="/(auth)/forgot-password">
-          <Text className="text-muted text-sm">Mot de passe oublié ?</Text>
-        </Link>
       </View>
       {errors.root && (
         <Text className="text-center mb-4 font-bold text-danger">
@@ -57,16 +52,12 @@ export default function LoginForm() {
       <View className="gap-y-6 pb-4">
         <View className="gap-y-2">
           <Button
-            title="Se connecter"
+            title="Modifier le mot de passe"
             variant="primary"
             onPress={handleSubmit(onSubmit)}
             isLoading={isSubmitting}
           />
-          <Link href="/(auth)/register" asChild>
-            <Button title="Créer un compte" variant="surface" />
-          </Link>
         </View>
-        <GoogleSignInButton title="Continuer avec Google" />
       </View>
     </ScrollView>
   );
