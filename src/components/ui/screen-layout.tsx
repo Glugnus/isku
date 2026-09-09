@@ -1,4 +1,10 @@
-import { KeyboardAvoidingView, Platform, View, ViewProps } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+  ViewProps,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface ScreenLayoutProps extends ViewProps {
@@ -6,6 +12,8 @@ interface ScreenLayoutProps extends ViewProps {
   withKeyboard?: boolean;
   edges?: readonly ("top" | "right" | "bottom" | "left")[];
   keyboardVerticalOffset?: number;
+  scrollable?: boolean;
+  contentContainerClassName?: string;
 }
 
 export default function ScreenLayout({
@@ -14,8 +22,23 @@ export default function ScreenLayout({
   withKeyboard = true,
   edges,
   keyboardVerticalOffset = 0,
+  scrollable = false,
+  contentContainerClassName,
   ...props
 }: ScreenLayoutProps) {
+  const scrollView = scrollable ? (
+    <ScrollView
+      contentContainerClassName={contentContainerClassName || "flex-grow p-6"}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+      className="flex-1"
+    >
+      {children}
+    </ScrollView>
+  ) : (
+    <View className="flex-1 p-6">{children}</View>
+  );
+
   return (
     <SafeAreaView
       className={`flex-1 bg-background ${className ?? ""}`}
@@ -30,11 +53,11 @@ export default function ScreenLayout({
           className="flex-1"
           {...props}
         >
-          {children}
+          {scrollView}
         </KeyboardAvoidingView>
       ) : (
         <View className="flex-1" {...props}>
-          {children}
+          {scrollView}
         </View>
       )}
     </SafeAreaView>

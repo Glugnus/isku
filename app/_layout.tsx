@@ -8,7 +8,11 @@ import AuthProvider from "@/src/features/auth/providers/auth-provider";
 
 // Separate RootNavigator so we can access the AuthContext
 function RootNavigator() {
-  const { isLoggedIn } = useAuthContext();
+  const { isLoading, isLoggedIn } = useAuthContext();
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <Stack screenOptions={{ headerShown: false }}>

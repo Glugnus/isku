@@ -3,21 +3,15 @@ import ControlledInput from "@/src/components/utils/controlled-input";
 import AuthHeader from "@/src/features/auth/components/auth-header";
 import { useRegisterForm } from "@/src/features/auth/hooks/use-register-form";
 import { Link } from "expo-router";
-import { ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 export default function RegisterForm() {
-  const { control, handleSubmit, onSubmit, errors, isSubmitting } =
-    useRegisterForm();
+  const { control, onSubmit, errors, isSubmitting } = useRegisterForm();
   return (
-    <ScrollView
-      contentContainerClassName="flex-grow p-6"
-      className="flex-1"
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
+    <>
       <AuthHeader subtitle="Rejoignez-nous pour suivre vos statistiques" />
 
-      <View className="my-4">
+      <View className="my-4 gap-y-2">
         <ControlledInput
           control={control}
           label="Pseudo"
@@ -26,6 +20,7 @@ export default function RegisterForm() {
           autoCapitalize="characters"
           placeholder="Votre pseudo"
           returnKeyType="next"
+          uppercase
         />
         <ControlledInput
           control={control}
@@ -61,7 +56,7 @@ export default function RegisterForm() {
           textContentType="password"
           autoComplete="password"
           returnKeyType="done"
-          onSubmitEditing={handleSubmit(onSubmit)}
+          onSubmitEditing={onSubmit}
           isPassword
         />
       </View>
@@ -75,7 +70,7 @@ export default function RegisterForm() {
           <Button
             title="S'inscrire"
             variant="primary"
-            onPress={handleSubmit(onSubmit)}
+            onPress={onSubmit}
             isLoading={isSubmitting}
           />
           <Link href="/(auth)/login" asChild>
@@ -83,6 +78,6 @@ export default function RegisterForm() {
           </Link>
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 }

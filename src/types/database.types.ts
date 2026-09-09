@@ -44,7 +44,7 @@ export type Database = {
           created_by: string;
           sport: string;
           format: number;
-          mode: "empire" | "quick";
+          mode: "umpire" | "quick";
           status: "planned" | "ongoing" | "completed";
           location: string | null;
           scheduled_at: string | null;
@@ -56,7 +56,7 @@ export type Database = {
           created_by: string;
           sport?: string;
           format?: number;
-          mode?: "empire" | "quick";
+          mode?: "umpire" | "quick";
           status?: "planned" | "ongoing" | "completed";
           location?: string | null;
           scheduled_at?: string | null;
@@ -68,7 +68,7 @@ export type Database = {
           created_by?: string;
           sport?: string;
           format?: number;
-          mode?: "empire" | "quick";
+          mode?: "umpire" | "quick";
           status?: "planned" | "ongoing" | "completed";
           location?: string | null;
           scheduled_at?: string | null;

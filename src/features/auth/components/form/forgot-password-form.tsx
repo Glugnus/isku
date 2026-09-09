@@ -3,19 +3,13 @@ import ControlledInput from "@/src/components/utils/controlled-input";
 import AuthHeader from "@/src/features/auth/components/auth-header";
 import { useForgotPasswordForm } from "@/src/features/auth/hooks/use-forgot-password-form";
 import { Link } from "expo-router";
-import { ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 export default function ForgotPasswordForm() {
-  const { control, handleSubmit, onSubmit, errors, isSubmitting } =
-    useForgotPasswordForm();
+  const { control, onSubmit, errors, isSubmitting } = useForgotPasswordForm();
 
   return (
-    <ScrollView
-      contentContainerClassName="flex-grow p-6"
-      className="flex-1"
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
+    <>
       <AuthHeader subtitle="Entrez votre email pour réinitialiser votre mot de passe" />
 
       <View className="my-4">
@@ -30,7 +24,7 @@ export default function ForgotPasswordForm() {
           textContentType="emailAddress"
           autoComplete="email"
           returnKeyType="done"
-          onSubmitEditing={handleSubmit(onSubmit)}
+          onSubmitEditing={onSubmit}
         />
       </View>
       {errors.root && (
@@ -43,7 +37,7 @@ export default function ForgotPasswordForm() {
           <Button
             title="Réinitialiser"
             variant="primary"
-            onPress={handleSubmit(onSubmit)}
+            onPress={onSubmit}
             isLoading={isSubmitting}
           />
           <Link href="/(auth)/login" asChild>
@@ -51,6 +45,6 @@ export default function ForgotPasswordForm() {
           </Link>
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 }

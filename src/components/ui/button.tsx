@@ -1,8 +1,9 @@
 import { colors } from "@/src/lib/colors";
+import { ReactNode } from "react";
 import {
   ActivityIndicator,
+  Pressable,
   Text,
-  TouchableOpacity,
   TouchableOpacityProps,
 } from "react-native";
 
@@ -12,6 +13,7 @@ interface ButtonProps extends TouchableOpacityProps {
   variant?:
     "primary" | "secondary" | "neutral" | "surface" | "danger" | "ghost";
   disabled?: boolean;
+  leftIcon?: ReactNode;
 }
 
 const BUTTON_VARIANTS = {
@@ -52,26 +54,28 @@ export default function Button({
   isLoading = false,
   variant = "primary",
   disabled = false,
+  leftIcon,
   ...props
 }: ButtonProps) {
   return (
-    <TouchableOpacity
-      className={`py-5 flex-row justify-center items-center ${BUTTON_VARIANTS[variant].container} rounded-2xl gap-x-3 ${isLoading || disabled ? "opacity-70" : ""} `}
+    <Pressable
+      className={`py-5 active:opacity-70 flex-row justify-center items-center ${BUTTON_VARIANTS[variant].container} rounded-2xl gap-x-3 ${isLoading || disabled ? "opacity-70" : ""} `}
       disabled={isLoading || disabled}
-      activeOpacity={0.7}
       {...props}
     >
-      {isLoading && (
+      {isLoading ? (
         <ActivityIndicator
           color={BUTTON_VARIANTS[variant].iconColor}
           size={18}
         />
+      ) : (
+        leftIcon && leftIcon
       )}
       <Text
         className={`${BUTTON_VARIANTS[variant].text} text-xl uppercase font-oswald tracking-widest`}
       >
         {title}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 }

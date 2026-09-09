@@ -3,7 +3,7 @@ import ControlledInput from "@/src/components/utils/controlled-input";
 import { useResendOtp } from "@/src/features/auth/hooks/use-resend-otp";
 import { useVerifyOtpForm } from "@/src/features/auth/hooks/use-verify-otp-form";
 import { EmailOtpType } from "@supabase/supabase-js";
-import { ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import AuthHeader from "../auth-header";
 
 export default function VerifyOtpForm({
@@ -13,19 +13,16 @@ export default function VerifyOtpForm({
   type: EmailOtpType;
   email: string;
 }) {
-  const { control, handleSubmit, onSubmit, errors, isSubmitting } =
-    useVerifyOtpForm({ type, email });
+  const { control, onSubmit, errors, isSubmitting } = useVerifyOtpForm({
+    type,
+    email,
+  });
 
   const { isResending, handleResend, secondsLeft, isRunning, message } =
     useResendOtp({ type, email });
 
   return (
-    <ScrollView
-      contentContainerClassName="flex-grow p-6"
-      className="flex-1"
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
+    <>
       <AuthHeader subtitle="Consultez votre boite mail pour renseigner le code" />
 
       <View className="my-4">
@@ -40,7 +37,7 @@ export default function VerifyOtpForm({
           textContentType="oneTimeCode"
           autoComplete="one-time-code"
           returnKeyType="done"
-          onSubmitEditing={handleSubmit(onSubmit)}
+          onSubmitEditing={onSubmit}
         />
       </View>
       {message && (
@@ -58,7 +55,7 @@ export default function VerifyOtpForm({
           <Button
             title="Valider"
             variant="primary"
-            onPress={handleSubmit(onSubmit)}
+            onPress={onSubmit}
             isLoading={isSubmitting}
           />
           <Button
@@ -72,6 +69,6 @@ export default function VerifyOtpForm({
           />
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 }

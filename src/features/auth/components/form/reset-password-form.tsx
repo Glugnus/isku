@@ -2,19 +2,13 @@ import Button from "@/src/components/ui/button";
 import ControlledInput from "@/src/components/utils/controlled-input";
 import AuthHeader from "@/src/features/auth/components/auth-header";
 import { useResetPasswordForm } from "@/src/features/auth/hooks/use-reset-password-form";
-import { ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 export default function ResetPasswordForm() {
-  const { control, handleSubmit, onSubmit, errors, isSubmitting } =
-    useResetPasswordForm();
+  const { control, onSubmit, errors, isSubmitting } = useResetPasswordForm();
 
   return (
-    <ScrollView
-      contentContainerClassName="flex-grow p-6"
-      className="flex-1"
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
+    <>
       <AuthHeader subtitle="Entrez votre nouveau mot de passe" />
 
       <View className="my-4">
@@ -40,7 +34,7 @@ export default function ResetPasswordForm() {
           textContentType="password"
           autoComplete="password"
           returnKeyType="done"
-          onSubmitEditing={handleSubmit(onSubmit)}
+          onSubmitEditing={onSubmit}
           isPassword
         />
       </View>
@@ -54,11 +48,11 @@ export default function ResetPasswordForm() {
           <Button
             title="Modifier le mot de passe"
             variant="primary"
-            onPress={handleSubmit(onSubmit)}
+            onPress={onSubmit}
             isLoading={isSubmitting}
           />
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 }

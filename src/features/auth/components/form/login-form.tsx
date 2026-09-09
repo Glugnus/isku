@@ -4,21 +4,15 @@ import AuthHeader from "@/src/features/auth/components/auth-header";
 import GoogleSignInButton from "@/src/features/auth/components/social-auth-buttons/google/google-sign-in-button";
 import { useLoginForm } from "@/src/features/auth/hooks/use-login-form";
 import { Link } from "expo-router";
-import { ScrollView, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
 export default function LoginForm() {
-  const { control, handleSubmit, onSubmit, errors, isSubmitting } =
-    useLoginForm();
+  const { control, onSubmit, errors, isSubmitting } = useLoginForm();
 
   return (
-    <ScrollView
-      contentContainerClassName="flex-grow p-6"
-      className="flex-1"
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
+    <>
       <AuthHeader subtitle="Connectez-vous pour retrouver vos matchs et statistiques" />
-      <View className="my-4">
+      <View className="my-4 gap-y-4">
         <ControlledInput
           control={control}
           label="Email"
@@ -42,11 +36,13 @@ export default function LoginForm() {
           textContentType="password"
           autoComplete="password"
           returnKeyType="done"
-          onSubmitEditing={handleSubmit(onSubmit)}
+          onSubmitEditing={onSubmit}
           isPassword
         />
-        <Link className="self-end mt-2" href="/(auth)/forgot-password">
-          <Text className="text-muted text-sm">Mot de passe oublié ?</Text>
+        <Link asChild href="/(auth)/forgot-password">
+          <Pressable className="mt-2 self-end active:opacity-70">
+            <Text className="text-muted text-sm">Mot de passe oublié ?</Text>
+          </Pressable>
         </Link>
       </View>
       {errors.root && (
@@ -59,7 +55,7 @@ export default function LoginForm() {
           <Button
             title="Se connecter"
             variant="primary"
-            onPress={handleSubmit(onSubmit)}
+            onPress={onSubmit}
             isLoading={isSubmitting}
           />
           <Link href="/(auth)/register" asChild>
@@ -68,6 +64,6 @@ export default function LoginForm() {
         </View>
         <GoogleSignInButton title="Continuer avec Google" />
       </View>
-    </ScrollView>
+    </>
   );
 }

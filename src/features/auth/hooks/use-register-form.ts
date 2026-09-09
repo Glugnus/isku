@@ -42,7 +42,6 @@ export const useRegisterForm = () => {
     control: form.control,
     errors: form.formState.errors,
     isSubmitting: form.formState.isSubmitting,
-    handleSubmit: form.handleSubmit,
-    onSubmit,
+    onSubmit: form.handleSubmit(onSubmit),
   };
 };

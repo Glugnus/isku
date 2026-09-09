@@ -4,7 +4,7 @@ import ForgotPasswordForm from "@/src/features/auth/components/form/forgot-passw
 
 export default function ForgotPasswordScreen() {
   return (
-    <ScreenLayout>
+    <ScreenLayout scrollable>
       <ForgotPasswordForm />
     </ScreenLayout>
   );

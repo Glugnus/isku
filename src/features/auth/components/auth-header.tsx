@@ -1,5 +1,5 @@
-import { Image } from "expo-image";
-import { Text, View } from "react-native";
+import { TextLogo } from "@/src/components/ui/text-logo";
+import { Text } from "react-native";
 
 interface AuthHeaderProps {
   subtitle?: string;
@@ -8,14 +8,11 @@ interface AuthHeaderProps {
 export default function AuthHeader({ subtitle }: AuthHeaderProps) {
   return (
     <>
-      <View className="items-center justify-center mb-2 mt-6">
-        <Image
-          source={require("@/assets/images/Logo-Isku-Texte.svg")}
-          style={{ width: 300, height: 120 }}
-
-          contentFit="contain"
-        />
-      </View>
+      <TextLogo
+        className="items-center justify-center mb-2 mt-6"
+        width={300}
+        height={120}
+      />
       <Text className="text-muted text-center mb-8">{subtitle}</Text>
     </>
   );

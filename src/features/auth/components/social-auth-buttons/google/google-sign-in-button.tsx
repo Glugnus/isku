@@ -1,15 +1,16 @@
 import { useOAuth } from "@/src/features/auth/hooks/use-oauth";
 import { Image } from "expo-image";
 import * as WebBrowser from "expo-web-browser";
-import { Text, TouchableOpacity } from "react-native";
+import { Pressable, Text } from "react-native";
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function GoogleSignInButton({ title }: { title: string }) {
   const { signInWithProvider, isLoading } = useOAuth();
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() => signInWithProvider("google")}
+      className="active:opacity-70"
       style={{
         flexDirection: "row",
         alignItems: "center",
@@ -26,7 +27,6 @@ export default function GoogleSignInButton({ title }: { title: string }) {
         shadowRadius: 2,
         elevation: 2, // For Android shadow
       }}
-      activeOpacity={0.8}
       disabled={isLoading}
     >
       <Image
@@ -45,6 +45,6 @@ export default function GoogleSignInButton({ title }: { title: string }) {
       >
         {title}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
