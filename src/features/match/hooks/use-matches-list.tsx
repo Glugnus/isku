@@ -23,7 +23,6 @@ export const useMatchesList = () => {
       const matches = await getAllMatches();
       const groupedMatches = groupMatchesByStatus(matches);
       setSections(groupedMatches);
-      console.log(JSON.stringify(groupedMatches, null, 2));
     } catch (err) {
       if (typeof err === "string") setError(err);
       else if (err instanceof Error) setError(err.message);

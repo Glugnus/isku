@@ -1,5 +1,5 @@
 import { supabase } from "@/src/lib/supabase";
-import { TablesInsert, TablesUpdate } from "@/src/types/database.types";
+import { Tables, TablesInsert, TablesUpdate } from "@/src/types/database.types";
 
 export const createMatch = async (match: TablesInsert<"matches">) => {
   const { error, data } = await supabase
@@ -34,16 +34,20 @@ export const updateMatch = async (
 
 export const updateParticipantsMatch = async (
   matchId: string,
-  participants: TablesUpdate<"match_participants">[],
+  participants: (Omit<TablesUpdate<"match_participants">, "id"> &
+    Pick<Tables<"match_participants">, "id">)[],
 ) => {
-  for (const p of participants) {
-    const { error } = await supabase
-      .from("match_participants")
-      .update(p)
-      .eq("match_id", matchId)
-      .eq("team", p.team as number);
-    if (error) throw new Error(error.message);
-  }
+  await Promise.all(
+    participants.map(async (p) => {
+      const { id, ...rest } = p;
+      const { error } = await supabase
+        .from("match_participants")
+        .update(rest)
+        .eq("match_id", matchId)
+        .eq("id", id);
+      if (error) throw new Error(error.message);
+    }),
+  );
 };
 
 export const getAllMatches = async () => {

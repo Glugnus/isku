@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import { SplashScreenController } from "@/src/components/utils/splash-screen-controller";
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import AuthProvider from "@/src/features/auth/providers/auth-provider";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Separate RootNavigator so we can access the AuthContext
 function RootNavigator() {
@@ -28,10 +29,12 @@ function RootNavigator() {
 
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <SplashScreenController />
-      <RootNavigator />
-      <StatusBar style="light" />
-    </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <SplashScreenController />
+        <RootNavigator />
+        <StatusBar style="light" />
+      </AuthProvider>
+    </GestureHandlerRootView>
   );
 }
