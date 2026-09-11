@@ -2,25 +2,38 @@ import ScreenLayout from "@/src/components/ui/screen-layout";
 import MatchListCard from "@/src/features/match/components/matches/match-list-card";
 import MatchesEmptyState from "@/src/features/match/components/matches/matches-empty-state";
 import MatchesHeader from "@/src/features/match/components/matches/matches-header";
-import { MOCK_MATCHES } from "@/src/features/match/constants/mock-matches";
+import { useMatchesList } from "@/src/features/match/hooks/use-matches-list";
+import { useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 import { SectionList } from "react-native";
 
 export default function MatchesScreen() {
+  const { sections, getMatches, isLoading, error } = useMatchesList();
+  useFocusEffect(
+    useCallback(() => {
+      getMatches();
+    }, [getMatches]),
+  );
+
   return (
     <ScreenLayout edges={["left", "right"]}>
       <SectionList
-        sections={MOCK_MATCHES}
+        sections={sections}
         keyExtractor={(item) => item.id}
+        refreshing={isLoading}
+        onRefresh={getMatches}
         renderSectionHeader={({ section }) => (
           <MatchesHeader
-            title={section.status}
-            isPrepared={section.status === "planned"}
+            title={section.title}
+            isPrepared={section.isPrepared}
           />
         )}
-        renderItem={({ item, section }) => {
-          return <MatchListCard match={item} section={section} />;
+        renderItem={({ item }) => {
+          return <MatchListCard match={item} />;
         }}
-        ListEmptyComponent={<MatchesEmptyState />}
+        ListEmptyComponent={
+          isLoading ? null : <MatchesEmptyState error={error ?? undefined} />
+        }
       />
     </ScreenLayout>
   );

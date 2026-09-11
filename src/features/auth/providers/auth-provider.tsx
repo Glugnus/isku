@@ -14,7 +14,6 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   // Fetch the claims once, and subscribe to auth state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChange(async (event) => {
-      setIsLoading(true);
       if (event === "PASSWORD_RECOVERY") {
         setIsPasswordRecovery(true);
       } else if (event === "SIGNED_OUT") {
@@ -33,9 +32,12 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   // Fetch the profile when the claims change
   useEffect(() => {
     const fetchProfile = async () => {
+      if (claims === undefined) return;
       if (claims) {
-        const data = await getProfile(claims.sub);
-        setProfile(data);
+        if (profile?.id !== claims.sub) {
+          const data = await getProfile(claims.sub);
+          setProfile(data);
+        }
       } else {
         setProfile(null);
       }
@@ -43,7 +45,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     };
 
     fetchProfile();
-  }, [claims]);
+  }, [profile?.id, claims]);
 
   return (
     <AuthContext.Provider
