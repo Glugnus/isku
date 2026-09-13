@@ -29,7 +29,7 @@ export default function MatchesScreen() {
           />
         )}
         renderItem={({ item }) => {
-          return <MatchListCard match={item} />;
+          return <MatchListCard match={item} onDeleted={getMatches} />;
         }}
         ListEmptyComponent={
           isLoading ? null : <MatchesEmptyState error={error ?? undefined} />

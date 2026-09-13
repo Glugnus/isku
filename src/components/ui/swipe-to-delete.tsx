@@ -28,7 +28,7 @@ export default function SwipeToDelete({
     width: dragX.value,
     opacity: interpolate(
       dragX.value,
-      [0, cardWidth.value * 0.8],
+      [0, cardWidth.value * 0.7],
       [0, 1],
       Extrapolation.CLAMP,
     ),
@@ -40,10 +40,16 @@ export default function SwipeToDelete({
       dragX.value = Math.max(0, -e.translationX);
     })
     .onEnd(() => {
-      if (dragX.value > cardWidth.value * 0.8) {
-        dragX.value = withTiming(cardWidth.value, {
-          duration: 200,
-        });
+      if (dragX.value > cardWidth.value * 0.7) {
+        dragX.value = withTiming(
+          cardWidth.value,
+          {
+            duration: 200,
+          },
+          () => {
+            dragX.value = withTiming(0);
+          },
+        );
         scheduleOnRN(onDelete);
       } else {
         dragX.value = withTiming(0);

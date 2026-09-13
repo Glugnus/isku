@@ -33,7 +33,7 @@ const BUTTON_VARIANTS = {
     iconColor: "white",
   },
   surface: {
-    container: "bg-surface",
+    container: "bg-surface border border-muted",
     text: "text-white",
     iconColor: "white",
   },
@@ -59,7 +59,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <Pressable
-      className={`py-5 active:opacity-70 flex-row justify-center items-center ${BUTTON_VARIANTS[variant].container} rounded-2xl gap-x-3 ${isLoading || disabled ? "opacity-70" : ""} `}
+      className={`p-5 active:opacity-70 flex-row justify-center items-center ${BUTTON_VARIANTS[variant].container} rounded-2xl gap-x-3 ${isLoading || disabled ? "opacity-70" : ""} `}
       disabled={isLoading || disabled}
       {...props}
     >

@@ -50,6 +50,11 @@ export const updateParticipantsMatch = async (
   );
 };
 
+export const deleteMatch = async (matchId: string) => {
+  const { error } = await supabase.from("matches").delete().eq("id", matchId);
+  if (error) throw new Error(error.message);
+};
+
 export const getAllMatches = async () => {
   const { data, error } = await supabase
     .from("matches")
