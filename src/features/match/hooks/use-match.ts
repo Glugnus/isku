@@ -14,8 +14,8 @@ export const useMatch = (matchId?: string) => {
 
   const teams = useMemo(() => {
     if (!match) return null;
-    return getMatchParticipantsTeams(match.match_participants, profile.id);
-  }, [match, profile.id]);
+    return getMatchParticipantsTeams(match.match_participants, profile?.id);
+  }, [match, profile?.id]);
 
   useEffect(() => {
     const fetchMatch = async () => {

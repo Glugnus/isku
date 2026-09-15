@@ -13,11 +13,13 @@ const APP_TABS = [
   { name: "profile", label: "Profil", Icon: User },
 ];
 
+const headerTitle = () => <TextLogo width={200} height={38} />;
+
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerTitle: () => <TextLogo width={200} height={38} />,
+        headerTitle,
         headerTitleAlign: "center",
         headerStyle: {
           backgroundColor: colors.background,

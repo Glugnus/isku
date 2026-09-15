@@ -1,7 +1,7 @@
 import { getClaims, onAuthStateChange } from "@/src/features/auth/api/auth-api";
 import { AuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import { getProfile } from "@/src/features/profile/api/profile-api";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useMemo, useState } from "react";
 
 export default function AuthProvider({ children }: PropsWithChildren) {
   const [claims, setClaims] = useState<
@@ -11,7 +11,6 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isPasswordRecovery, setIsPasswordRecovery] = useState<boolean>(false);
 
-  // Fetch the claims once, and subscribe to auth state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChange(async (event) => {
       if (event === "PASSWORD_RECOVERY") {
@@ -19,44 +18,52 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       } else if (event === "SIGNED_OUT") {
         setIsPasswordRecovery(false);
       }
-      const claims = await getClaims();
-      setClaims(claims);
+      const newClaims = await getClaims();
+      setClaims(newClaims);
     });
-
-    // Cleanup subscription on unmount
     return () => {
       unsubscribe();
     };
   }, []);
 
-  // Fetch the profile when the claims change
+  const userId = claims?.sub;
+
   useEffect(() => {
-    const fetchProfile = async () => {
-      if (claims === undefined) return;
-      if (claims) {
-        if (profile?.id !== claims.sub) {
-          const data = await getProfile(claims.sub);
-          setProfile(data);
+    if (claims === undefined) return;
+    let isMounted = true;
+
+    const loadProfile = async () => {
+      try {
+        if (userId) {
+          const data = await getProfile(userId);
+          if (isMounted) setProfile(data);
+        } else {
+          if (isMounted) {
+            setProfile(null);
+          }
         }
-      } else {
-        setProfile(null);
+      } catch (err) {
+        console.error("Erreur lors de la récupération du profil : ", err);
+      } finally {
+        if (isMounted) setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
-    fetchProfile();
-  }, [profile?.id, claims]);
+    loadProfile();
+    return () => {
+      isMounted = false;
+    };
+  }, [userId, claims]);
 
-  return (
-    <AuthContext.Provider
-      value={{
-        claims,
-        isLoading,
-        profile,
-        isLoggedIn: !!claims && !isPasswordRecovery,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      claims,
+      isLoading,
+      profile,
+      isLoggedIn: !!claims && !isPasswordRecovery,
+    }),
+    [claims, isLoading, profile, isPasswordRecovery],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
