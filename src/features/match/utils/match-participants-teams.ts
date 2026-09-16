@@ -18,10 +18,12 @@ export const getMatchParticipantsTeams = (
     team1?.profile_id === profileId ? "1" : "2";
 
   return {
-    team1,
-    team2,
-    team1Name,
-    team2Name,
-    currentProfilePosition,
+    teams: {
+      team1,
+      team2,
+      team1Name,
+      team2Name,
+      currentProfilePosition,
+    },
   };
 };

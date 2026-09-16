@@ -11,17 +11,3 @@ export const setupMatchSchema = z.object({
 });
 
 export type SetupMatchFormData = z.infer<typeof setupMatchSchema>;
-
-export const getSetupMatchDefaultValues = (
-  profileUsername: string,
-): SetupMatchFormData => {
-  return {
-    p1Name: profileUsername,
-    p2Name: "",
-    currentProfilePosition: "1",
-    location: "",
-    scheduledAt: undefined,
-    setsToWin: 3,
-    matchMode: "umpire",
-  };
-};

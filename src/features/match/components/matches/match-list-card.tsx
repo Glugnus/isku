@@ -19,9 +19,7 @@ export default function MatchListCard({
   const [showModal, setShowModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { team1Name, team2Name } = getMatchParticipantsTeams(
-    match.match_participants,
-  );
+  const { teams } = getMatchParticipantsTeams(match.match_participants);
 
   const handleDelete = async () => {
     setError(null);
@@ -52,6 +50,13 @@ export default function MatchListCard({
     }
   };
 
+  const handleEditPress = () => {
+    router.push({
+      pathname: "/match/[id]/edit",
+      params: { id: match.id },
+    });
+  };
+
   return (
     <SwipeToDelete
       onDelete={() => {
@@ -59,20 +64,17 @@ export default function MatchListCard({
       }}
     >
       <Pressable
-        onPress={
-          match.status === "planned"
-            ? () =>
-                router.push({
-                  pathname: "/(tabs)",
-                  params: { matchId: match.id },
-                })
-            : undefined
-        }
+        onPress={() => {
+          if (match.status === "planned") {
+            handleEditPress();
+          }
+        }}
         className="flex-row p-4 justify-between items-center bg-surface rounded-2xl border border-background/20"
       >
         <View className="flex-1 mr-4">
           <Text className="text-white font-bold mb-1">
-            {team1Name?.toLocaleUpperCase()} vs {team2Name?.toLocaleUpperCase()}
+            {teams.team1Name?.toLocaleUpperCase()} vs{" "}
+            {teams.team2Name?.toLocaleUpperCase()}
           </Text>
           <Text className="text-muted text-xs capitalize">
             Tennis de table • {""}
