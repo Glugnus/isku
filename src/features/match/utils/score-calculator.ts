@@ -19,7 +19,7 @@ export const getMatchWinner = (
   p1SetsWon: number,
   p2SetsWon: number,
   setsToWin: number,
-) => {
+): "p1" | "p2" | null => {
   const matchOver = p1SetsWon === setsToWin || p2SetsWon === setsToWin;
   if (matchOver) {
     return p1SetsWon > p2SetsWon ? "p1" : "p2";
@@ -56,22 +56,31 @@ export const calculateQuickResult = (
     setWinner: "p1" | "p2" | null;
     isCompleted?: boolean;
     hasError?: boolean;
+    matchError?: boolean;
   }[] = [];
 
   scores.forEach((score, index) => {
     const p1Points = parseInt(score.p1);
     const p2Points = parseInt(score.p2);
-    const hasError =
+    let hasError =
       !isNaN(p1Points) &&
       !isNaN(p2Points) &&
       isSetScoreError(p1Points, p2Points, rules);
 
-    const setWinner = hasError ? null : getSetWinner(p1Points, p2Points, rules);
+    let setWinner = hasError ? null : getSetWinner(p1Points, p2Points, rules);
+    const isMatchOver = !!getMatchWinner(p1SetsWon, p2SetsWon, setsToWin);
 
-    if (setWinner === "p1") {
-      p1SetsWon++;
-    } else if (setWinner === "p2") {
-      p2SetsWon++;
+    if (isMatchOver && (score.p1 !== "" || score.p2 !== "")) {
+      hasError = true;
+      setWinner = null;
+    }
+
+    if (!isMatchOver) {
+      if (setWinner === "p1") {
+        p1SetsWon++;
+      } else if (setWinner === "p2") {
+        p2SetsWon++;
+      }
     }
     setDetails.push({
       p1Points,
@@ -86,13 +95,18 @@ export const calculateQuickResult = (
   const matchWinner = getMatchWinner(p1SetsWon, p2SetsWon, setsToWin);
   const activeSetIndex = setDetails.findIndex((set) => !set.isCompleted);
 
+  const isMatchOver =
+    matchWinner !== null &&
+    setDetails.every((set) => !set.hasError) &&
+    setDetails.every((set) => !set.isCompleted);
+
   return {
     p1SetsWon,
     p2SetsWon,
     matchWinner,
     setDetails,
     activeSetIndex,
-    isMatchOver: matchWinner !== null,
+    isMatchOver,
   };
 };
 
