@@ -1,4 +1,7 @@
 import ScreenLayout from "@/src/components/ui/screen-layout";
+import ScreenLoader from "@/src/components/ui/screen-loader";
+import UndoButton from "@/src/components/ui/undo-button";
+import QuickResultFooter from "@/src/features/match/components/quick-result/quick-result-footer";
 import QuickResultHeader from "@/src/features/match/components/quick-result/quick-result-header";
 import QuickResultTable from "@/src/features/match/components/quick-result/quick-result-table";
 import { useQuickResult } from "@/src/features/match/hooks/use-quick-result";
@@ -9,22 +12,42 @@ export default function QuickResultScreen() {
     id: string;
   }>();
 
-  const { matchResult, players, handleScoreChange, scoreSets } =
-    useQuickResult(matchId);
+  const {
+    matchResult,
+    players,
+    handleScoreChange,
+    handleUndo,
+    scoreSets,
+    handleSaveMatchResult,
+    isSaving,
+    isFetching,
+  } = useQuickResult(matchId);
 
   return (
     <ScreenLayout>
-      <QuickResultHeader
-        p1SetsWon={matchResult.p1SetsWon}
-        p2SetsWon={matchResult.p2SetsWon}
-        winner={matchResult.matchWinner}
-      />
-      <QuickResultTable
-        players={players}
-        handleScoreChange={handleScoreChange}
-        scoreSets={scoreSets}
-        matchResult={matchResult}
-      />
+      {isFetching ? (
+        <ScreenLoader />
+      ) : (
+        <>
+          <QuickResultHeader
+            p1SetsWon={matchResult.p1SetsWon}
+            p2SetsWon={matchResult.p2SetsWon}
+            winner={matchResult.matchWinner}
+          />
+          <QuickResultTable
+            players={players}
+            handleScoreChange={handleScoreChange}
+            scoreSets={scoreSets}
+            matchResult={matchResult}
+          />
+          <UndoButton onPress={handleUndo} label="Annuler le dernier set" />
+          <QuickResultFooter
+            winner={matchResult.matchWinner}
+            onPress={handleSaveMatchResult}
+            isLoading={isSaving}
+          />
+        </>
+      )}
     </ScreenLayout>
   );
 }

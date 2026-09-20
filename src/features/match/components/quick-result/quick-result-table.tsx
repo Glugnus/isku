@@ -3,7 +3,7 @@ import { SetScore } from "@/src/features/match/types/match.types";
 import { QuickMatchResult } from "@/src/features/match/utils/score-calculator";
 import { colors } from "@/src/lib/colors";
 import { Check } from "lucide-react-native";
-import React from "react";
+import React, { useRef } from "react";
 import { ScrollView, Text, View } from "react-native";
 
 interface QuickResultTableProps {
@@ -23,10 +23,12 @@ export default function QuickResultTable({
   scoreSets,
   handleScoreChange,
 }: QuickResultTableProps) {
+  const scrollViewRef = useRef<ScrollView>(null);
+
   return (
     <View className="bg-surface rounded-2xl mt-10 overflow-hidden border border-muted/20">
       <View className="flex-row border-b-2 border-primary/20 bg-background/50 p-3">
-        <Text className="text-muted font-bold text-[10px] uppercase flex-1">
+        <Text className="text-muted font-bold text-[10px] uppercase w-32">
           Joueur
         </Text>
         <Text className="text-muted font-bold text-[10px] uppercase text-center flex-1">
@@ -34,7 +36,7 @@ export default function QuickResultTable({
         </Text>
       </View>
       <View className="flex-row p-3">
-        <View className="flex-1 border-r border-muted/20 pr-3">
+        <View className="w-32 border-r border-muted/20 pr-3">
           {players.map((player) => {
             const isWinner = matchResult.matchWinner === player.id;
             return (
@@ -72,9 +74,14 @@ export default function QuickResultTable({
           })}
         </View>
         <ScrollView
+          ref={scrollViewRef}
           horizontal
           showsHorizontalScrollIndicator={false}
-          className="ml-3"
+          className="ml-3 flex-1"
+          keyboardShouldPersistTaps="handled"
+          onContentSizeChange={() =>
+            scrollViewRef.current?.scrollToEnd({ animated: true })
+          }
         >
           <View className="flex-col">
             {players.map((player) => {

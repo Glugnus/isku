@@ -15,7 +15,7 @@ export default function SwapPlayersButton() {
 
     setValue("p1Name", p2Name);
     setValue("p2Name", p1Name);
-    setValue("currentProfilePosition", currentPosition === "1" ? "2" : "1");
+    setValue("currentProfilePosition", currentPosition === "p1" ? "p2" : "p1");
   };
 
   return (

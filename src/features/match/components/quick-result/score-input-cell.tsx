@@ -54,6 +54,8 @@ export default function ScoreInputCell({
       placeholderTextColor={colors.placeholder}
       maxLength={2}
       keyboardType="number-pad"
+      editable={isActive}
+      pointerEvents={isActive ? "auto" : "none"}
       className={`w-12 h-12 rounded-xl text-center font-oswald text-xl border ${inputClassNames}`}
     />
   );

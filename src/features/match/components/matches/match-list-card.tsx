@@ -1,8 +1,13 @@
 import ConfirmModal from "@/src/components/ui/confirm-modal";
 import SwipeToDelete from "@/src/components/ui/swipe-to-delete";
+import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import { deleteMatch } from "@/src/features/match/api/matches-api";
 import { MatchListItem } from "@/src/features/match/hooks/use-matches-list";
 import { getMatchParticipantsTeams } from "@/src/features/match/utils/match-participants-teams";
+import {
+  calculateMatchScore,
+  getMatchWinner,
+} from "@/src/features/match/utils/score-calculator";
 import { colors } from "@/src/lib/colors";
 import { router } from "expo-router";
 import { Play, Share2 } from "lucide-react-native";
@@ -16,10 +21,17 @@ export default function MatchListCard({
   match: MatchListItem;
   onDeleted: () => void;
 }) {
+  const { profile } = useAuthContext();
   const [showModal, setShowModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { teams } = getMatchParticipantsTeams(match.match_participants);
+  const { teams } = getMatchParticipantsTeams(
+    match.match_participants,
+    profile?.id,
+  );
+  const { p1SetsWon, p2SetsWon } = calculateMatchScore(match.match_sets);
+  const winner = getMatchWinner(p1SetsWon, p2SetsWon, match.format);
+  const isProfileWinner = winner === teams.currentProfilePosition;
 
   const handleDelete = async () => {
     setError(null);
@@ -98,7 +110,11 @@ export default function MatchListCard({
               <Play color={colors.white} size={18} />
             </Pressable>
           ) : (
-            <Text className="font-oswald text-lg text-primary">2 - 1</Text>
+            <Text
+              className={`font-oswald text-lg ${isProfileWinner ? "text-primary" : winner ? "text-secondary" : "text-white"}`}
+            >
+              {p1SetsWon} - {p2SetsWon}
+            </Text>
           )}
         </View>
       </Pressable>

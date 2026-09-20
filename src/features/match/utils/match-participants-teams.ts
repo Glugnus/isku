@@ -14,8 +14,8 @@ export const getMatchParticipantsTeams = (
   const team1Name = team1?.profiles?.username ?? team1?.guest_name;
   const team2Name = team2?.profiles?.username ?? team2?.guest_name;
 
-  const currentProfilePosition: "1" | "2" =
-    team1?.profile_id === profileId ? "1" : "2";
+  const currentProfilePosition: "p1" | "p2" =
+    team1?.profile_id === profileId ? "p1" : "p2";
 
   return {
     teams: {

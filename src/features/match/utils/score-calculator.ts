@@ -27,6 +27,23 @@ export const getMatchWinner = (
   return null;
 };
 
+export const calculateMatchScore = (
+  sets: { score_team_1: number; score_team_2: number }[] = [],
+) => {
+  const { p1SetsWon, p2SetsWon } = sets.reduce(
+    (acc, set) => {
+      if (set.score_team_1 > set.score_team_2) {
+        acc.p1SetsWon++;
+      } else if (set.score_team_2 > set.score_team_1) {
+        acc.p2SetsWon++;
+      }
+      return acc;
+    },
+    { p1SetsWon: 0, p2SetsWon: 0 },
+  );
+  return { p1SetsWon, p2SetsWon };
+};
+
 export const isSetScoreError = (
   p1Points: number,
   p2Points: number,
@@ -62,18 +79,13 @@ export const calculateQuickResult = (
   scores.forEach((score, index) => {
     const p1Points = parseInt(score.p1);
     const p2Points = parseInt(score.p2);
-    let hasError =
+    const hasError =
       !isNaN(p1Points) &&
       !isNaN(p2Points) &&
       isSetScoreError(p1Points, p2Points, rules);
 
-    let setWinner = hasError ? null : getSetWinner(p1Points, p2Points, rules);
+    const setWinner = hasError ? null : getSetWinner(p1Points, p2Points, rules);
     const isMatchOver = !!getMatchWinner(p1SetsWon, p2SetsWon, setsToWin);
-
-    if (isMatchOver && (score.p1 !== "" || score.p2 !== "")) {
-      hasError = true;
-      setWinner = null;
-    }
 
     if (!isMatchOver) {
       if (setWinner === "p1") {
@@ -98,7 +110,7 @@ export const calculateQuickResult = (
   const isMatchOver =
     matchWinner !== null &&
     setDetails.every((set) => !set.hasError) &&
-    setDetails.every((set) => !set.isCompleted);
+    setDetails.every((set) => set.isCompleted);
 
   return {
     p1SetsWon,

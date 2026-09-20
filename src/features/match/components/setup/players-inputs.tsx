@@ -21,7 +21,7 @@ export default function PlayersInputs() {
           autoCapitalize="characters"
           uppercase
           returnKeyType="next"
-          editable={currentPosition !== "1"}
+          editable={currentPosition !== "p1"}
         />
         <ControlledInput
           control={control}
@@ -33,7 +33,7 @@ export default function PlayersInputs() {
           containerClassName="flex-1"
           autoCapitalize="characters"
           uppercase
-          editable={currentPosition !== "2"}
+          editable={currentPosition !== "p2"}
         />
       </View>
       <SwapPlayersButton />

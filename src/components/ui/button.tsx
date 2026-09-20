@@ -43,7 +43,8 @@ const BUTTON_VARIANTS = {
     iconColor: colors.danger,
   },
   ghost: {
-    container: "bg-transparent border border-muted/30",
+    container:
+      "bg-transparent border border-muted/30 shadow-2xl shadow-muted/30",
     text: "text-textBase",
     iconColor: colors.muted,
   },

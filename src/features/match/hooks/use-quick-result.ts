@@ -1,12 +1,18 @@
-import { getMatch } from "@/src/features/match/api/matches-api";
+import {
+  createSetsMatch,
+  getMatch,
+  updateMatch,
+} from "@/src/features/match/api/matches-api";
 import { Match, MatchTeams } from "@/src/features/match/types/match.types";
 import { getMatchParticipantsTeams } from "@/src/features/match/utils/match-participants-teams";
+import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { SPORTS_RULES } from "../constants/sports-rules";
 import { calculateQuickResult } from "../utils/score-calculator";
 
 export const useQuickResult = (matchId: string) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [match, setMatch] = useState<Match | null>(null);
   const [teams, setTeams] = useState<MatchTeams | null>(null);
@@ -20,12 +26,10 @@ export const useQuickResult = (matchId: string) => {
   ];
   const setsToWin = match?.format;
 
-  //TODO sécuriser les saisie avec des retours en arrière
-
   useEffect(() => {
     if (matchId) {
       const fetchMatch = async () => {
-        setIsLoading(true);
+        setIsFetching(true);
         try {
           const match = await getMatch(matchId.toString());
           const { teams } = getMatchParticipantsTeams(match.match_participants);
@@ -35,7 +39,7 @@ export const useQuickResult = (matchId: string) => {
           setError("Erreur lors de la récupération du match" + err);
           console.log(err);
         } finally {
-          setIsLoading(false);
+          setIsFetching(false);
         }
       };
       fetchMatch();
@@ -74,12 +78,52 @@ export const useQuickResult = (matchId: string) => {
     });
   };
 
+  const handleUndo = () => {
+    if (scoreSets.length > 1) {
+      setScoreSets((prev) => {
+        const updated = matchResult.isMatchOver
+          ? [...prev]
+          : prev.slice(0, prev.length - 1);
+        updated[updated.length - 1] = { p1: "", p2: "" };
+        return updated;
+      });
+    }
+  };
+
+  const handleSaveMatchResult = async () => {
+    if (matchResult.isMatchOver) {
+      setIsSaving(true);
+      try {
+        await createSetsMatch(
+          scoreSets.map((set, index) => ({
+            match_id: matchId.toString(),
+            score_team_1: parseInt(set.p1, 10),
+            score_team_2: parseInt(set.p2, 10),
+            set_number: index + 1,
+          })),
+        );
+        await updateMatch(matchId.toString(), {
+          status: "completed",
+        });
+        router.back();
+      } catch (err) {
+        setError("Erreur lors de l'enregistrement des sets" + err);
+        console.log(err);
+      } finally {
+        setIsSaving(false);
+      }
+    }
+  };
+
   return {
     scoreSets,
     handleScoreChange,
     matchResult,
-    isLoading,
+    isFetching,
+    isSaving,
     error,
     players,
+    handleUndo,
+    handleSaveMatchResult,
   };
 };

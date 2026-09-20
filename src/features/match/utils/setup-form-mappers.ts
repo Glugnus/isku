@@ -18,16 +18,16 @@ export const mapCreateMatchParticipants = (
 ) => {
   const team1Participant = {
     match_id: matchId,
-    profile_id: data.currentProfilePosition === "1" ? profileId : null,
+    profile_id: data.currentProfilePosition === "p1" ? profileId : null,
     team: 1,
-    guest_name: data.currentProfilePosition === "1" ? null : data.p1Name,
+    guest_name: data.currentProfilePosition === "p1" ? null : data.p1Name,
   };
 
   const team2Participant = {
     match_id: matchId,
-    profile_id: data.currentProfilePosition === "2" ? profileId : null,
+    profile_id: data.currentProfilePosition === "p2" ? profileId : null,
     team: 2,
-    guest_name: data.currentProfilePosition === "2" ? null : data.p2Name,
+    guest_name: data.currentProfilePosition === "p2" ? null : data.p2Name,
   };
 
   return [team1Participant, team2Participant];

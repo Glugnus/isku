@@ -21,6 +21,11 @@ export const createParticipantsMatch = async (
   if (error) throw new Error(error.message);
 };
 
+export const createSetsMatch = async (sets: TablesInsert<"match_sets">[]) => {
+  const { error } = await supabase.from("match_sets").insert(sets);
+  if (error) throw new Error(error.message);
+};
+
 export const updateMatch = async (
   matchId: string,
   match: TablesUpdate<"matches">,
@@ -63,6 +68,11 @@ export const getAllMatches = async () => {
       id, 
       mode, 
       status,
+      format,
+      match_sets(
+        score_team_1,
+        score_team_2
+      ),
       match_participants(
         *,
         profiles(
@@ -70,7 +80,7 @@ export const getAllMatches = async () => {
         )
       )`,
     )
-    .order("created_at", { ascending: false });
+    .order("scheduled_at", { ascending: true });
   if (error) throw new Error(error.message);
   return data;
 };

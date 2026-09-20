@@ -35,7 +35,7 @@ export const useSetupForm = () => {
     defaultValues: {
       p1Name: profile?.username,
       p2Name: "",
-      currentProfilePosition: "1",
+      currentProfilePosition: "p1",
       location: "",
       scheduledAt: undefined,
       setsToWin: 3,
