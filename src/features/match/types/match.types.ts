@@ -4,3 +4,4 @@ import { getMatchParticipantsTeams } from "@/src/features/match/utils/match-part
 export type Match = Awaited<ReturnType<typeof getMatch>>;
 export type MatchTeams = ReturnType<typeof getMatchParticipantsTeams>["teams"];
 export type SetScore = { p1: string; p2: string };
+export type PlayerKey = "p1" | "p2";

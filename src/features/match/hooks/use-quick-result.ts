@@ -1,50 +1,32 @@
 import {
   createSetsMatch,
-  getMatch,
   updateMatch,
 } from "@/src/features/match/api/matches-api";
-import { Match, MatchTeams } from "@/src/features/match/types/match.types";
-import { getMatchParticipantsTeams } from "@/src/features/match/utils/match-participants-teams";
+import { PlayerKey } from "@/src/features/match/types/match.types";
 import { router } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { SPORTS_RULES } from "../constants/sports-rules";
 import { calculateQuickResult } from "../utils/score-calculator";
+import { useFetchMatch } from "./use-fetch-match";
 
 export const useQuickResult = (matchId: string) => {
-  const [isFetching, setIsFetching] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [match, setMatch] = useState<Match | null>(null);
-  const [teams, setTeams] = useState<MatchTeams | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [scoreSets, setScoreSets] = useState<{ p1: string; p2: string }[]>([
     { p1: "", p2: "" },
   ]);
+  const {
+    isFetching,
+    error: fetchError,
+    match,
+    teams,
+  } = useFetchMatch(matchId);
 
   const players = [
     { id: "p1" as const, name: teams?.team1Name },
     { id: "p2" as const, name: teams?.team2Name },
   ];
   const setsToWin = match?.format;
-
-  useEffect(() => {
-    if (matchId) {
-      const fetchMatch = async () => {
-        setIsFetching(true);
-        try {
-          const match = await getMatch(matchId.toString());
-          const { teams } = getMatchParticipantsTeams(match.match_participants);
-          setMatch(match);
-          setTeams(teams);
-        } catch (err) {
-          setError("Erreur lors de la récupération du match" + err);
-          console.log(err);
-        } finally {
-          setIsFetching(false);
-        }
-      };
-      fetchMatch();
-    }
-  }, [matchId]);
 
   const matchResult = useMemo(() => {
     return calculateQuickResult(
@@ -56,7 +38,7 @@ export const useQuickResult = (matchId: string) => {
 
   const handleScoreChange = (
     index: number,
-    playerKey: "p1" | "p2",
+    playerKey: PlayerKey,
     value: string,
   ) => {
     setScoreSets((prev) => {
@@ -107,7 +89,7 @@ export const useQuickResult = (matchId: string) => {
         });
         router.back();
       } catch (err) {
-        setError("Erreur lors de l'enregistrement des sets" + err);
+        setSaveError("Erreur lors de l'enregistrement des sets" + err);
         console.log(err);
       } finally {
         setIsSaving(false);
@@ -121,7 +103,8 @@ export const useQuickResult = (matchId: string) => {
     matchResult,
     isFetching,
     isSaving,
-    error,
+    saveError,
+    fetchError,
     players,
     handleUndo,
     handleSaveMatchResult,

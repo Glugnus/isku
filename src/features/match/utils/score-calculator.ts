@@ -1,4 +1,5 @@
 import { SportsRules } from "@/src/features/match/types/sports-rules.types";
+import { PlayerKey } from "@/src/features/match/types/match.types";
 
 export const getSetWinner = (
   p1Points: number,
@@ -19,7 +20,7 @@ export const getMatchWinner = (
   p1SetsWon: number,
   p2SetsWon: number,
   setsToWin: number,
-): "p1" | "p2" | null => {
+): PlayerKey | null => {
   const matchOver = p1SetsWon === setsToWin || p2SetsWon === setsToWin;
   if (matchOver) {
     return p1SetsWon > p2SetsWon ? "p1" : "p2";
@@ -70,7 +71,7 @@ export const calculateQuickResult = (
     p1Points: number;
     p2Points: number;
     setIndex: number;
-    setWinner: "p1" | "p2" | null;
+    setWinner: PlayerKey | null;
     isCompleted?: boolean;
     hasError?: boolean;
     matchError?: boolean;

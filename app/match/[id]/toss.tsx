@@ -1,6 +1,7 @@
 import Button from "@/src/components/ui/button";
 import ScreenLayout from "@/src/components/ui/screen-layout";
 import TossComponent from "@/src/features/match/components/toss/toss-component";
+import { useToss } from "@/src/features/match/hooks/use-toss";
 import { useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 
@@ -8,6 +9,8 @@ export default function TossScreen() {
   const { id: matchId } = useLocalSearchParams<{
     id: string;
   }>();
+
+  const { teams, firstServer, setFirstServer } = useToss(matchId!);
 
   return (
     <ScreenLayout>
@@ -19,7 +22,11 @@ export default function TossScreen() {
           Définissez le premier serveur
         </Text>
       </View>
-      <TossComponent />
+      <TossComponent
+        teams={teams}
+        firstServer={firstServer}
+        setFirstServer={setFirstServer}
+      />
       <Button title="Démarrer le match" />
     </ScreenLayout>
   );

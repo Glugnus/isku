@@ -1,9 +1,18 @@
 import SelectableCard from "@/src/components/ui/selectable-card";
+import { MatchTeams, PlayerKey } from "@/src/features/match/types/match.types";
 import { colors } from "@/src/lib/colors";
 import { Dices, Lock } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 
-export default function TossComponent() {
+export default function TossComponent({
+  teams,
+  firstServer,
+  setFirstServer,
+}: {
+  teams: MatchTeams | null;
+  firstServer: PlayerKey;
+  setFirstServer: (firstServer: PlayerKey) => void;
+}) {
   return (
     <View className="mb-12">
       <View className="flex-row items-center justify-between mb-12">
@@ -23,8 +32,16 @@ export default function TossComponent() {
         </Pressable>
       </View>
       <View className="flex-row gap-x-4">
-        <SelectableCard title="Joueur 1" isSelected={true} />
-        <SelectableCard title="Joueur 2" isSelected={false} />
+        <SelectableCard
+          title={teams?.team1Name || "Joueur 1"}
+          isSelected={firstServer === "p1"}
+          onPress={() => setFirstServer("p1")}
+        />
+        <SelectableCard
+          title={teams?.team2Name || "Joueur 2"}
+          isSelected={firstServer === "p2"}
+          onPress={() => setFirstServer("p2")}
+        />
       </View>
     </View>
   );
