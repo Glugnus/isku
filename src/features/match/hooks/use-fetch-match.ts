@@ -19,7 +19,7 @@ export const useFetchMatch = (matchId: string) => {
           setMatch(match);
           setTeams(teams);
         } catch (err) {
-          setError("Erreur lors de la récupération du match" + err);
+          setError("Erreur lors de la récupération du match");
           console.log(err);
         } finally {
           setIsFetching(false);

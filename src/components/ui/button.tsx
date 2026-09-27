@@ -14,7 +14,23 @@ interface ButtonProps extends TouchableOpacityProps {
     "primary" | "secondary" | "neutral" | "surface" | "danger" | "ghost";
   disabled?: boolean;
   leftIcon?: ReactNode;
+  size?: "sm" | "md" | "lg" | "xl";
 }
+
+const BUTTON_SIZES = {
+  padding: {
+    sm: "px-4 py-3.5",
+    md: "p-3",
+    lg: "p-4",
+    xl: "p-5",
+  },
+  text: {
+    sm: "text-sm",
+    md: "text-base",
+    lg: "text-lg",
+    xl: "text-xl",
+  },
+};
 
 const BUTTON_VARIANTS = {
   primary: {
@@ -34,8 +50,8 @@ const BUTTON_VARIANTS = {
   },
   surface: {
     container: "bg-surface border border-muted",
-    text: "text-white",
-    iconColor: "white",
+    text: "text-muted",
+    iconColor: colors.muted,
   },
   danger: {
     container: "bg-danger/10 border border-danger/30",
@@ -43,9 +59,8 @@ const BUTTON_VARIANTS = {
     iconColor: colors.danger,
   },
   ghost: {
-    container:
-      "bg-transparent border border-muted/30 shadow-2xl shadow-muted/30",
-    text: "text-textBase",
+    container: "bg-background border border-muted/30",
+    text: "text-muted",
     iconColor: colors.muted,
   },
 };
@@ -56,11 +71,13 @@ export default function Button({
   variant = "primary",
   disabled = false,
   leftIcon,
+  size = "xl",
+  className,
   ...props
 }: ButtonProps) {
   return (
     <Pressable
-      className={`p-5 active:opacity-70 flex-row justify-center items-center ${BUTTON_VARIANTS[variant].container} rounded-2xl gap-x-3 ${isLoading || disabled ? "opacity-70" : ""} `}
+      className={`${BUTTON_SIZES.padding[size]} active:opacity-70 flex-row justify-center items-center ${BUTTON_VARIANTS[variant].container} rounded-2xl gap-x-3 ${isLoading || disabled ? "opacity-70" : ""} ${className}`}
       disabled={isLoading || disabled}
       {...props}
     >
@@ -73,7 +90,7 @@ export default function Button({
         leftIcon && leftIcon
       )}
       <Text
-        className={`${BUTTON_VARIANTS[variant].text} text-xl uppercase font-oswald tracking-widest`}
+        className={`${BUTTON_VARIANTS[variant].text} ${BUTTON_SIZES.text[size]} uppercase font-oswald tracking-widest`}
       >
         {title}
       </Text>

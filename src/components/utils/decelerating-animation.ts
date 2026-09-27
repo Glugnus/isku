@@ -16,12 +16,10 @@ export const runDeceleratingAnimation = ({
   let delay = initialDelay;
   let step = 0;
   let timeoutId: ReturnType<typeof setTimeout>;
-  let isCancelled = false;
 
-  if (isCancelled) return;
   if (maxSteps <= 0) {
     onComplete();
-    return;
+    return () => {};
   }
   const loop = () => {
     onStep(step);
@@ -38,7 +36,6 @@ export const runDeceleratingAnimation = ({
   loop();
 
   return () => {
-    isCancelled = true;
     clearTimeout(timeoutId);
   };
 };

@@ -1,5 +1,12 @@
-import { SportsRules } from "@/src/features/match/types/sports-rules.types";
 import { PlayerKey } from "@/src/features/match/types/match.types";
+import { SportsRules } from "@/src/features/match/types/sports-rules.types";
+
+export const isDeuce = (
+  p1Points: number,
+  p2Points: number,
+  rules: SportsRules,
+) =>
+  p1Points >= rules.pointsToWinSet - 1 && p2Points >= rules.pointsToWinSet - 1;
 
 export const getSetWinner = (
   p1Points: number,
