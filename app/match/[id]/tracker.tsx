@@ -10,8 +10,6 @@ export default function TrackerScreen() {
     currentServer,
     servesLeft,
     sets,
-    p1SetsWon,
-    p2SetsWon,
     currentSet,
     p1Score,
     p2Score,
@@ -27,8 +25,8 @@ export default function TrackerScreen() {
         currentServer={currentServer}
         servesLeft={servesLeft}
         sets={sets}
-        p1SetsWon={p1SetsWon}
-        p2SetsWon={p2SetsWon}
+        p1Score={p1Score}
+        p2Score={p2Score}
         currentSet={currentSet}
       />
       <TrackerCourt

@@ -8,8 +8,8 @@ interface TrackerHeaderProps {
   currentServer: PlayerKey;
   servesLeft: number;
   sets: MatchSet[];
-  p1SetsWon: number;
-  p2SetsWon: number;
+  p1Score: number;
+  p2Score: number;
   currentSet: number;
 }
 
@@ -19,8 +19,8 @@ export default function TrackerHeader({
   currentServer,
   servesLeft,
   sets,
-  p1SetsWon,
-  p2SetsWon,
+  p1Score,
+  p2Score,
   currentSet,
 }: TrackerHeaderProps) {
   return (
@@ -38,8 +38,8 @@ export default function TrackerHeader({
             SET {currentSet}
           </Text>
           <Text className="text-white text-lg font-oswald tracking-widest">
-            <Text className="text-primary">{p1SetsWon}</Text> -{" "}
-            <Text className="text-secondary">{p2SetsWon}</Text>
+            <Text className="text-primary">{p1Score}</Text> -{" "}
+            <Text className="text-secondary">{p2Score}</Text>
           </Text>
         </View>
         <TrackerHeaderPlayer

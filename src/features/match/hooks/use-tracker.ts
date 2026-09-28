@@ -53,12 +53,22 @@ export const useTracker = () => {
     const opponent = getOpponent(player);
     const scoredBy = action === "unforced_error" ? opponent : player;
 
+    const newP1Score = scoredBy === "p1" ? p1Score + 1 : p1Score;
+    const newP2Score = scoredBy === "p2" ? p2Score + 1 : p2Score;
+    const isSetOver = getSetWinner(newP1Score, newP2Score, rules);
     addPoint({
       setNumber: currentSet,
       scoredBy,
       actionType: action,
       server: currentServer,
     });
+    if (isSetOver) {
+      addSet({
+        setNumber: currentSet,
+        p1SetScore: newP1Score,
+        p2SetScore: newP2Score,
+      });
+    }
   };
 
   const undoPoint = () => {
@@ -71,16 +81,6 @@ export const useTracker = () => {
     }
   };
 
-  const validateSet = () => {
-    if (setWinner) {
-      addSet({
-        setNumber: currentSet,
-        p1SetScore: p1Score,
-        p2SetScore: p2Score,
-      });
-    }
-  };
-
   return {
     currentSet,
     p1Score,
@@ -88,8 +88,6 @@ export const useTracker = () => {
     scorePoint,
     undoPoint,
     canUndo: points.length > 0,
-    validateSet,
-    setWinner,
     matchWinner,
     p1SetsWon,
     p2SetsWon,

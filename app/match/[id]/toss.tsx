@@ -2,6 +2,7 @@ import ScreenLayout from "@/src/components/ui/screen-layout";
 import ScreenLoader from "@/src/components/ui/screen-loader";
 import TossComponent from "@/src/features/match/components/toss/toss-component";
 import { useInitMatch } from "@/src/features/match/hooks/use-init-match";
+import { useMatchStore } from "@/src/features/match/store/use-match-store";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Text, View } from "react-native";
 
@@ -12,14 +13,16 @@ export default function TossScreen() {
   }>();
 
   const { teams, isFetching, fetchError } = useInitMatch(matchId!);
-  const onStartMatch = () =>
+  const { updateMatchStatus } = useMatchStore();
+  const onStartMatch = () => {
+    updateMatchStatus("ongoing");
     router.push({
       pathname: "/match/[id]/tracker",
       params: {
         id: matchId,
       },
     });
-
+  };
   return (
     <ScreenLayout>
       {isFetching ? (
