@@ -1,4 +1,8 @@
-import { PlayerKey } from "@/src/features/match/types/match.types";
+import {
+  MatchPoint,
+  MatchSet,
+  PlayerKey,
+} from "@/src/features/match/types/match.types";
 import { SportsRules } from "@/src/features/match/types/sports-rules.types";
 
 export const isDeuce = (
@@ -52,82 +56,24 @@ export const calculateMatchScore = (
   return { p1SetsWon, p2SetsWon };
 };
 
-export const isSetScoreError = (
-  p1Points: number,
-  p2Points: number,
-  rules: SportsRules,
+export const calculateCurrentSetScore = (
+  points: MatchPoint[],
+  currentSet: number,
 ) => {
-  const max = Math.max(p1Points, p2Points);
-  const min = Math.min(p1Points, p2Points);
-  if (
-    (max > rules.pointsToWinSet && min < rules.pointsToWinSet - 1) ||
-    (max > rules.pointsToWinSet && max - min > rules.pointsDifferenceToWinSet)
-  )
-    return true;
-  return false;
+  const p1Score = points.filter(
+    (p) => p.scoredBy === "p1" && p.setNumber === currentSet,
+  ).length;
+  const p2Score = points.filter(
+    (p) => p.scoredBy === "p2" && p.setNumber === currentSet,
+  ).length;
+  return { p1Score, p2Score };
 };
 
-export const calculateQuickResult = (
-  scores: { p1: string; p2: string }[],
-  setsToWin: number,
-  rules: SportsRules,
-) => {
-  let p1SetsWon = 0;
-  let p2SetsWon = 0;
-  let setDetails: {
-    p1Points: number;
-    p2Points: number;
-    setIndex: number;
-    setWinner: PlayerKey | null;
-    isCompleted?: boolean;
-    hasError?: boolean;
-    matchError?: boolean;
-  }[] = [];
-
-  scores.forEach((score, index) => {
-    const p1Points = parseInt(score.p1);
-    const p2Points = parseInt(score.p2);
-    const hasError =
-      !isNaN(p1Points) &&
-      !isNaN(p2Points) &&
-      isSetScoreError(p1Points, p2Points, rules);
-
-    const setWinner = hasError ? null : getSetWinner(p1Points, p2Points, rules);
-    const isMatchOver = !!getMatchWinner(p1SetsWon, p2SetsWon, setsToWin);
-
-    if (!isMatchOver) {
-      if (setWinner === "p1") {
-        p1SetsWon++;
-      } else if (setWinner === "p2") {
-        p2SetsWon++;
-      }
-    }
-    setDetails.push({
-      p1Points,
-      p2Points,
-      setIndex: index,
-      setWinner,
-      hasError,
-      isCompleted: setWinner !== null,
-    });
-  });
-
-  const matchWinner = getMatchWinner(p1SetsWon, p2SetsWon, setsToWin);
-  const activeSetIndex = setDetails.findIndex((set) => !set.isCompleted);
-
-  const isMatchOver =
-    matchWinner !== null &&
-    setDetails.every((set) => !set.hasError) &&
-    setDetails.every((set) => set.isCompleted);
-
-  return {
-    p1SetsWon,
-    p2SetsWon,
-    matchWinner,
-    setDetails,
-    activeSetIndex,
-    isMatchOver,
-  };
+export const calculatePlayersSetsWon = (sets: MatchSet[]) => {
+  const p1SetsWon = sets.filter((s) => s.p1SetScore > s.p2SetScore).length;
+  const p2SetsWon = sets.filter((s) => s.p2SetScore > s.p1SetScore).length;
+  return { p1SetsWon, p2SetsWon };
 };
 
-export type QuickMatchResult = ReturnType<typeof calculateQuickResult>;
+export const getOpponent = (player: PlayerKey): PlayerKey =>
+  player === "p1" ? "p2" : "p1";

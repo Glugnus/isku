@@ -1,4 +1,5 @@
 import { SetupMatchFormData } from "@/src/features/match/schema/setup-match-schema";
+import { getOpponent } from "@/src/features/match/utils/score-calculator";
 import { colors } from "@/src/lib/colors";
 import { ArrowLeftRight } from "lucide-react-native";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -15,7 +16,7 @@ export default function SwapPlayersButton() {
 
     setValue("p1Name", p2Name);
     setValue("p2Name", p1Name);
-    setValue("currentProfilePosition", currentPosition === "p1" ? "p2" : "p1");
+    setValue("currentProfilePosition", getOpponent(currentPosition));
   };
 
   return (

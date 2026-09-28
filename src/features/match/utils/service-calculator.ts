@@ -1,18 +1,24 @@
-import { SPORTS_RULES } from "@/src/features/match/constants/sports-rules";
-import { useMatchStore } from "@/src/features/match/store/use-match-store";
-import { Sport } from "@/src/features/match/types/sports-rules.types";
-import { isDeuce } from "@/src/features/match/utils/score-calculator";
+import { PlayerKey } from "@/src/features/match/types/match.types";
+import { SportsRules } from "@/src/features/match/types/sports-rules.types";
+import {
+  getOpponent,
+  isDeuce,
+} from "@/src/features/match/utils/score-calculator";
 
-export const useTrackerService = (
-  p1Score: number,
-  p2Score: number,
-  currentSet: number,
-) => {
-  const { firstServer, match } = useMatchStore();
+export const calculateCurrentServer = ({
+  p1Score,
+  p2Score,
+  currentSet,
+  firstServer,
+  rules,
+}: {
+  p1Score: number;
+  p2Score: number;
+  currentSet: number;
+  firstServer: PlayerKey;
+  rules: SportsRules;
+}) => {
   const totalPoints = p1Score + p2Score;
-
-  const sport = match?.sport as Sport;
-  const rules = sport ? SPORTS_RULES[sport] : SPORTS_RULES.table_tennis;
   const isCurrentDeuce = isDeuce(p1Score, p2Score, rules);
 
   const servesPerPlayer = isCurrentDeuce
@@ -21,7 +27,7 @@ export const useTrackerService = (
 
   const servesLeft = servesPerPlayer - (totalPoints % servesPerPlayer);
 
-  const matchOpponent = firstServer === "p1" ? "p2" : "p1";
+  const matchOpponent = getOpponent(firstServer);
   const setInitialServer = currentSet % 2 === 1 ? firstServer : matchOpponent;
 
   const serviceChanges = Math.floor(totalPoints / rules.servesPerPlayer);
@@ -39,6 +45,5 @@ export const useTrackerService = (
   return {
     servesLeft,
     currentServer,
-    isDeuce: isCurrentDeuce,
   };
 };

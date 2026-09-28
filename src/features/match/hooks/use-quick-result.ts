@@ -2,12 +2,12 @@ import {
   createSetsMatch,
   updateMatch,
 } from "@/src/features/match/api/matches-api";
+import { SPORTS_RULES } from "@/src/features/match/constants/sports-rules";
+import { useFetchMatch } from "@/src/features/match/hooks/use-fetch-match";
 import { PlayerKey } from "@/src/features/match/types/match.types";
+import { calculateQuickResult } from "@/src/features/match/utils/quick-result-calculator";
 import { router } from "expo-router";
 import { useMemo, useState } from "react";
-import { SPORTS_RULES } from "../constants/sports-rules";
-import { calculateQuickResult } from "../utils/score-calculator";
-import { useFetchMatch } from "./use-fetch-match";
 
 export const useQuickResult = (matchId: string) => {
   const [isSaving, setIsSaving] = useState(false);

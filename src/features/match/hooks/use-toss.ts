@@ -1,5 +1,6 @@
 import { runDeceleratingAnimation } from "@/src/components/utils/decelerating-animation";
 import { useMatchStore } from "@/src/features/match/store/use-match-store";
+import { getOpponent } from "@/src/features/match/utils/score-calculator";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useToss = () => {
@@ -29,7 +30,7 @@ export const useToss = () => {
     const finalServer = Math.floor(Math.random() * 2) + 1 === 1 ? "p1" : "p2";
     cancelAnimationRef.current = runDeceleratingAnimation({
       maxSteps: finalServer === "p1" ? 16 : 15,
-      onStep: () => setAnnimServer((prev) => (prev === "p1" ? "p2" : "p1")),
+      onStep: () => setAnnimServer((prev) => getOpponent(prev)),
       onComplete: () => {
         setFirstServer(finalServer);
         setIsTossing(false);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { SetupMatchFormData } from "../schema/setup-match-schema";
+import { SetupMatchFormData } from "@/src/features/match/schema/setup-match-schema";
 
 export default function useMatchDateTime() {
   const { control, setValue } = useFormContext<SetupMatchFormData>();

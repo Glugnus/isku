@@ -1,6 +1,6 @@
 import ScoreInputCell from "@/src/features/match/components/quick-result/score-input-cell";
 import { SetScore } from "@/src/features/match/types/match.types";
-import { QuickMatchResult } from "@/src/features/match/utils/score-calculator";
+import { QuickMatchResult } from "@/src/features/match/utils/quick-result-calculator";
 import { colors } from "@/src/lib/colors";
 import { Check } from "lucide-react-native";
 import React, { useRef } from "react";
