@@ -13,6 +13,7 @@ import {
   getSetWinner,
 } from "@/src/features/match/utils/score-calculator";
 import { calculateCurrentServer } from "@/src/features/match/utils/service-calculator";
+import { router } from "expo-router";
 
 export const useTracker = () => {
   const {
@@ -25,6 +26,7 @@ export const useTracker = () => {
     firstServer,
     match,
     teams,
+    resetMatch,
   } = useMatchStore();
 
   const sport = match?.sport as Sport;
@@ -81,6 +83,11 @@ export const useTracker = () => {
     }
   };
 
+  const abandonMatch = () => {
+    resetMatch();
+    router.replace(`/(tabs)/matches`);
+  };
+
   return {
     currentSet,
     p1Score,
@@ -97,5 +104,6 @@ export const useTracker = () => {
     currentServer,
     sets,
     teams,
+    abandonMatch,
   };
 };

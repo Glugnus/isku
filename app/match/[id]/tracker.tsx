@@ -16,7 +16,9 @@ export default function TrackerScreen() {
     scorePoint,
     undoPoint,
     canUndo,
+    abandonMatch,
   } = useTracker();
+
   return (
     <ScreenLayout>
       <TrackerHeader
@@ -36,7 +38,11 @@ export default function TrackerScreen() {
         servesLeft={servesLeft}
         scorePoint={scorePoint}
       />
-      <TrackerFooter onUndo={undoPoint} canUndo={canUndo} />
+      <TrackerFooter
+        onUndo={undoPoint}
+        canUndo={canUndo}
+        onConfirmAbandon={abandonMatch}
+      />
     </ScreenLayout>
   );
 }

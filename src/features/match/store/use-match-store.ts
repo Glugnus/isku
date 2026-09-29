@@ -33,6 +33,7 @@ export const useMatchStore = create<MatchStore>()(
       firstServer: "p1",
 
       initMatch: (match, teams) => set({ match, teams }),
+
       resetMatch: () =>
         set({
           match: null,
@@ -41,6 +42,7 @@ export const useMatchStore = create<MatchStore>()(
           sets: [],
           points: [],
         }),
+
       setFirstServer: (firstServer) => set({ firstServer }),
 
       sets: [],
