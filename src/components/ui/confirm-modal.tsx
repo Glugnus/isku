@@ -37,23 +37,19 @@ export default function ConfirmModal({
             {title}
           </Text>
           <Text className="text-muted text-md text-center mb-6">{message}</Text>
-          <View className="flex-row gap-3 justify-between">
-            <View className="flex-1">
-              <Button
-                onPress={onClose}
-                variant="surface"
-                title={cancelText}
-                disabled={isLoading}
-              />
-            </View>
-            <View className="flex-1">
-              <Button
-                onPress={onConfirm}
-                isLoading={isLoading}
-                variant="danger"
-                title={confirmText}
-              />
-            </View>
+          <View className="gap-3">
+            <Button
+              onPress={onClose}
+              variant="surface"
+              title={cancelText}
+              disabled={isLoading}
+            />
+            <Button
+              onPress={onConfirm}
+              isLoading={isLoading}
+              variant="danger"
+              title={confirmText}
+            />
           </View>
           {error && (
             <Text className="text-danger text-center text-xs mt-4">
