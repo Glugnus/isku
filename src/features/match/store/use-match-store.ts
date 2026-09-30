@@ -85,22 +85,3 @@ export const useMatchStore = create<MatchStore>()(
     },
   ),
 );
-
-/**
- * ARCHITECTURE DES HOOKS DU TRACKER (src/features/match/hooks/)
-
-A traiter : quand un match est terminé, il faut afficher automatiquement l'écran summary et sauvegarder le amtch et réinitialiser.
-Pareil avec l'abandon en repassant en planned
-
- *
- * 4. use-match-stats.ts (useMatchStats)
- *    - Rôle : Agrégation des métriques de jeu à partir de points[].
- *    - Données calculées :
- *        • coups gagnants (winners) par joueur (global / par set)
- *        • fautes directes (unforced errors) par joueur
- *        • total des points joués et pourcentages
- *
- * 5. use-tracker-modals.ts (useTrackerModals)
- *    - Rôle : Gestion de l'affichage et de la navigation locale.
- *    - États : modale de stats ouverte/fermée, confirmation d'abandon, fin de match.
- */
