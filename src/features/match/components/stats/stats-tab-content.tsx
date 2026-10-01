@@ -1,16 +1,29 @@
 import MatchEvolutionChart from "@/src/features/match/components/stats/match-evolution-chart";
 import StatProgressBar from "@/src/features/match/components/stats/stat-progress-bar";
 import { ScrollView, Text, View } from "react-native";
+import { useStats } from "../../hooks/use-stats";
 
 export default function StatsTabContent({
   mode,
-  p1Name,
-  p2Name,
+  tab,
 }: {
   mode: "quick" | "umpire";
-  p1Name: string;
-  p2Name: string;
+  tab: string;
 }) {
+  const {
+    pointsWon,
+    pointsWonOnOwnServe,
+    pointsWonOnOpponentServe,
+    maxLead,
+    longestStreak,
+    winners,
+    unforcedErrors,
+    maxDeficitOvercome,
+    scoreEvolution,
+    p1Name,
+    p2Name,
+  } = useStats(tab);
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -34,34 +47,55 @@ export default function StatsTabContent({
       <View className="flex-row flex-wrap justify-between">
         <StatProgressBar
           title="Points Gagnés"
-          valueP1={4}
-          valueP2={8}
+          valueP1={pointsWon.p1}
+          valueP2={pointsWon.p2}
           isFullWidth={mode === "quick"}
         />
         {mode === "umpire" && (
           <>
-            <StatProgressBar title="Sur son service" valueP1={4} valueP2={8} />
+            <StatProgressBar
+              title="Sur son service"
+              valueP1={pointsWonOnOwnServe.p1}
+              valueP2={pointsWonOnOwnServe.p2}
+            />
             <StatProgressBar
               title="Sur service adverse"
-              valueP1={4}
-              valueP2={8}
+              valueP1={pointsWonOnOpponentServe.p1}
+              valueP2={pointsWonOnOpponentServe.p2}
             />
             <StatProgressBar
               title="Plus grande avance"
-              valueP1={4}
-              valueP2={8}
+              valueP1={maxLead.p1}
+              valueP2={maxLead.p2}
             />
             <StatProgressBar
               title="Plus longue série"
-              valueP1={4}
-              valueP2={8}
+              valueP1={longestStreak.p1}
+              valueP2={longestStreak.p2}
             />
-            <StatProgressBar title="Retard remonté" valueP1={4} valueP2={8} />
-            <StatProgressBar title="Coups gagnants" valueP1={4} valueP2={8} />
-            <StatProgressBar title="Fautes directes" valueP1={4} valueP2={8} />
+            <StatProgressBar
+              title="Retard remonté"
+              valueP1={maxDeficitOvercome.p1}
+              valueP2={maxDeficitOvercome.p2}
+            />
+            <StatProgressBar
+              title="Coups gagnants"
+              valueP1={winners.p1}
+              valueP2={winners.p2}
+            />
+            <StatProgressBar
+              title="Fautes directes"
+              valueP1={unforcedErrors.p1}
+              valueP2={unforcedErrors.p2}
+            />
           </>
         )}
-        <MatchEvolutionChart p1Name={p1Name} p2Name={p2Name} />
+        <MatchEvolutionChart
+          p1Name={p1Name}
+          p2Name={p2Name}
+          dataP1={scoreEvolution.dataP1}
+          dataP2={scoreEvolution.dataP2}
+        />
       </View>
     </ScrollView>
   );

@@ -7,57 +7,15 @@ import { LineChart } from "react-native-gifted-charts";
 export default function MatchEvolutionChart({
   p1Name,
   p2Name,
+  dataP1,
+  dataP2,
 }: {
   p1Name: string;
   p2Name: string;
+  dataP1: { value: number }[];
+  dataP2: { value: number }[];
 }) {
   const [containerWidth, setContainerWidth] = useState(0);
-  // Exemple de forme attendue :
-  const dataP1 = [
-    { value: 0 },
-    { value: 1 },
-    { value: 1 },
-    { value: 2 },
-    { value: 3 },
-    { value: 3 },
-    { value: 4 },
-    { value: 4 },
-    { value: 5 },
-    { value: 6 },
-    { value: 6 },
-    { value: 7 },
-    { value: 7 },
-    { value: 8 },
-    { value: 8 },
-    { value: 9 },
-    { value: 9 },
-    { value: 10 },
-    { value: 10 },
-    { value: 11 },
-  ];
-
-  const dataP2 = [
-    { value: 0 },
-    { value: 0 },
-    { value: 1 },
-    { value: 1 },
-    { value: 1 },
-    { value: 2 },
-    { value: 2 },
-    { value: 3 },
-    { value: 3 },
-    { value: 3 },
-    { value: 4 },
-    { value: 4 },
-    { value: 5 },
-    { value: 5 },
-    { value: 6 },
-    { value: 6 },
-    { value: 7 },
-    { value: 7 },
-    { value: 8 },
-    { value: 9 },
-  ];
 
   return (
     <View
@@ -92,7 +50,7 @@ export default function MatchEvolutionChart({
           </View>
         </View>
       </View>
-      {containerWidth && (
+      {!!containerWidth && (
         <LineChart
           data={dataP1}
           data2={dataP2}
