@@ -63,10 +63,17 @@ export default function MatchListCard({
   };
 
   const handleEditPress = () => {
-    router.push({
-      pathname: "/match/[id]/edit",
-      params: { id: match.id },
-    });
+    if (match.status === "planned") {
+      router.push({
+        pathname: "/match/[id]/edit",
+        params: { id: match.id },
+      });
+    } else {
+      router.push({
+        pathname: "/match/[id]/stats",
+        params: { id: match.id },
+      });
+    }
   };
 
   return (
@@ -76,11 +83,7 @@ export default function MatchListCard({
       }}
     >
       <Pressable
-        onPress={() => {
-          if (match.status === "planned") {
-            handleEditPress();
-          }
-        }}
+        onPress={handleEditPress}
         className="flex-row p-4 justify-between items-center bg-surface rounded-2xl border border-background/20"
       >
         <View className="flex-1 mr-4">

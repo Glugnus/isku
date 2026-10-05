@@ -3,6 +3,7 @@ import TrackerCourt from "@/src/features/match/components/tracker/tracker-court"
 import TrackerFooter from "@/src/features/match/components/tracker/tracker-footer";
 import TrackerHeader from "@/src/features/match/components/tracker/tracker-header";
 import { useTracker } from "@/src/features/match/hooks/use-tracker";
+import { Text } from "react-native";
 
 export default function TrackerScreen() {
   const {
@@ -17,6 +18,7 @@ export default function TrackerScreen() {
     undoPoint,
     canUndo,
     abandonMatch,
+    saveError,
   } = useTracker();
 
   return (
@@ -39,10 +41,16 @@ export default function TrackerScreen() {
         scorePoint={scorePoint}
       />
       <TrackerFooter
+        currentSet={currentSet}
         onUndo={undoPoint}
         canUndo={canUndo}
         onConfirmAbandon={abandonMatch}
       />
+      {saveError && (
+        <Text className="text-center mb-4 font-bold text-danger">
+          {saveError}
+        </Text>
+      )}
     </ScreenLayout>
   );
 }

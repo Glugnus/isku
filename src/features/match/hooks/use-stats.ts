@@ -1,3 +1,4 @@
+import { getMatchDetails } from "@/src/features/match/api/matches-api";
 import { useMatchStore } from "@/src/features/match/store/use-match-store";
 import {
   calculateLongestStreak,
@@ -11,9 +12,26 @@ import {
   countWinnersPoints,
   filterPointsByTab,
 } from "@/src/features/match/utils/stats-calculator";
+import { useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 
 export const useStats = (tab: string) => {
+  const { id: matchId } = useLocalSearchParams<{
+    id: string;
+  }>();
+
   const { points, teams } = useMatchStore();
+
+  useEffect(() => {
+    const fetchMatchDetails = async () => {
+      if (!teams) {
+        try {
+          const data = await getMatchDetails(matchId);
+        } catch (err) {}
+      }
+    };
+    fetchMatchDetails();
+  }, [teams]);
 
   const filteredPoints = filterPointsByTab(tab, points);
 

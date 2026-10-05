@@ -50,7 +50,7 @@ export default function MatchEvolutionChart({
           </View>
         </View>
       </View>
-      {!!containerWidth && (
+      {!!containerWidth && dataP1.length > 0 && dataP2.length > 0 ? (
         <LineChart
           data={dataP1}
           data2={dataP2}
@@ -68,12 +68,20 @@ export default function MatchEvolutionChart({
           yAxisColor="rgba(156, 163, 175, 0.3)"
           xAxisLabelTextStyle={{ color: colors.muted, fontSize: 10 }}
           backgroundColor="transparent"
-          initialSpacing={5}
-          endSpacing={5}
+          initialSpacing={0}
+          endSpacing={0}
           adjustToWidth
           parentWidth={containerWidth - 40}
           disableScroll
+          roundToDigits={0}
+          maxValue={dataP1.length}
         />
+      ) : (
+        <View className="h-60 justify-center items-center">
+          <Text className="text-muted text-xs text-center">
+            Aucun point enregistré dans ce set.
+          </Text>
+        </View>
       )}
     </View>
   );

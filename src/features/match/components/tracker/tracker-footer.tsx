@@ -7,10 +7,12 @@ import { useState } from "react";
 import { View } from "react-native";
 
 export default function TrackerFooter({
+  currentSet,
   onUndo,
   canUndo,
   onConfirmAbandon,
 }: {
+  currentSet: number;
   onUndo: () => void;
   canUndo: boolean;
   onConfirmAbandon: () => void;
@@ -38,7 +40,7 @@ export default function TrackerFooter({
         onPress={() =>
           router.push({
             pathname: `/match/[id]/stats`,
-            params: { id: matchId },
+            params: { id: matchId, currentSet },
           })
         }
       />

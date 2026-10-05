@@ -1,4 +1,5 @@
 import { SPORTS_RULES } from "@/src/features/match/constants/sports-rules";
+import { useSaveTrackerMatch } from "@/src/features/match/hooks/use-save-tracker-match";
 import { useMatchStore } from "@/src/features/match/store/use-match-store";
 import {
   PlayerKey,
@@ -14,6 +15,7 @@ import {
 } from "@/src/features/match/utils/score-calculator";
 import { calculateCurrentServer } from "@/src/features/match/utils/service-calculator";
 import { router } from "expo-router";
+import { useEffect } from "react";
 
 export const useTracker = () => {
   const {
@@ -27,7 +29,9 @@ export const useTracker = () => {
     match,
     teams,
     resetMatch,
+    updateMatchStatus,
   } = useMatchStore();
+  const { handleSaveMatchResult, isSaving, saveError } = useSaveTrackerMatch();
 
   const sport = match?.sport as Sport;
   const rules = sport ? SPORTS_RULES[sport] : SPORTS_RULES.table_tennis;
@@ -88,13 +92,20 @@ export const useTracker = () => {
     router.replace(`/(tabs)/matches`);
   };
 
+  useEffect(() => {
+    if (matchWinner && match?.status === "ongoing") {
+      updateMatchStatus("completed");
+      handleSaveMatchResult();
+    }
+  }, [matchWinner, match?.status, updateMatchStatus, handleSaveMatchResult]);
+
   return {
     currentSet,
     p1Score,
     p2Score,
     scorePoint,
     undoPoint,
-    canUndo: points.length > 0,
+    canUndo: points.length > 0 && match?.status === "ongoing",
     matchWinner,
     p1SetsWon,
     p2SetsWon,
@@ -105,5 +116,7 @@ export const useTracker = () => {
     sets,
     teams,
     abandonMatch,
+    isSaving,
+    saveError,
   };
 };

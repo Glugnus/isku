@@ -22,7 +22,18 @@ export const createParticipantsMatch = async (
 };
 
 export const createSetsMatch = async (sets: TablesInsert<"match_sets">[]) => {
-  const { error } = await supabase.from("match_sets").insert(sets);
+  const { error, data } = await supabase
+    .from("match_sets")
+    .insert(sets)
+    .select();
+  if (error) throw new Error(error.message);
+  return data;
+};
+
+export const createPointsMatch = async (
+  points: TablesInsert<"match_points">[],
+) => {
+  const { error } = await supabase.from("match_points").insert(points);
   if (error) throw new Error(error.message);
 };
 
@@ -96,6 +107,32 @@ export const getMatch = async (matchId: string) => {
         profiles(
           username
         )
+      )`,
+    )
+    .eq("id", matchId)
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+};
+
+export const getMatchDetails = async (matchId: string) => {
+  //TODO j'ensuis là !!
+  const { data, error } = await supabase
+    .from("matches")
+    .select(
+      `
+      *,
+      match_participants(
+        *,
+        profiles(
+          username
+        )
+      ),
+      match_sets(
+        *
+      ),
+      match_points(
+        *
       )`,
     )
     .eq("id", matchId)

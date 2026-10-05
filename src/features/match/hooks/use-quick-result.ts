@@ -89,7 +89,7 @@ export const useQuickResult = (matchId: string) => {
         });
         router.back();
       } catch (err) {
-        setSaveError("Erreur lors de l'enregistrement des sets" + err);
+        setSaveError("Erreur lors de l'enregistrement des sets");
         console.log(err);
       } finally {
         setIsSaving(false);

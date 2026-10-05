@@ -176,8 +176,6 @@ export type Database = {
           scored_by_team: number;
           server_team: number;
           type: "unforced_error" | "winner" | null;
-          score_team_1: number;
-          score_team_2: number;
         };
         Insert: {
           id?: string;
@@ -188,8 +186,6 @@ export type Database = {
           scored_by_team: number;
           server_team: number;
           type?: "unforced_error" | "winner" | null;
-          score_team_1: number;
-          score_team_2: number;
         };
         Update: {
           id?: string;
@@ -200,8 +196,6 @@ export type Database = {
           scored_by_team?: number;
           server_team?: number;
           type?: "unforced_error" | "winner" | null;
-          score_team_1?: number;
-          score_team_2?: number;
         };
         Relationships: [
           {

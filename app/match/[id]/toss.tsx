@@ -16,7 +16,7 @@ export default function TossScreen() {
   const { updateMatchStatus } = useMatchStore();
   const onStartMatch = () => {
     updateMatchStatus("ongoing");
-    router.push({
+    router.replace({
       pathname: "/match/[id]/tracker",
       params: {
         id: matchId,

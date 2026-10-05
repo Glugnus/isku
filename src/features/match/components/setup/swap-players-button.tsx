@@ -27,7 +27,8 @@ export default function SwapPlayersButton() {
       >
         <ArrowLeftRight size={16} color={colors.primary} />
         <Text className="text-white text-sm font-medium ml-2">
-          Changer ma position (Je suis Joueur {currentPosition})
+          Changer ma position (Je suis Joueur{" "}
+          {currentPosition === "p1" ? "1" : "2"})
         </Text>
       </Pressable>
     </View>
