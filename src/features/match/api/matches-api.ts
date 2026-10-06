@@ -116,7 +116,6 @@ export const getMatch = async (matchId: string) => {
 };
 
 export const getMatchDetails = async (matchId: string) => {
-  //TODO j'ensuis là !!
   const { data, error } = await supabase
     .from("matches")
     .select(
@@ -129,10 +128,10 @@ export const getMatchDetails = async (matchId: string) => {
         )
       ),
       match_sets(
-        *
-      ),
-      match_points(
-        *
+        *,
+        match_points(
+          *
+        )
       )`,
     )
     .eq("id", matchId)

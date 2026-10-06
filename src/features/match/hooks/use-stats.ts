@@ -1,5 +1,9 @@
-import { getMatchDetails } from "@/src/features/match/api/matches-api";
 import { useMatchStore } from "@/src/features/match/store/use-match-store";
+import {
+  MatchPoint,
+  MatchSet,
+  MatchTeams,
+} from "@/src/features/match/types/match.types";
 import {
   calculateLongestStreak,
   calculateMaxDeficitOvercome,
@@ -12,31 +16,34 @@ import {
   countWinnersPoints,
   filterPointsByTab,
 } from "@/src/features/match/utils/stats-calculator";
-import { useLocalSearchParams } from "expo-router";
-import { useEffect } from "react";
+import { calculateMatchScore } from "../utils/score-calculator";
 
-export const useStats = (tab: string) => {
-  const { id: matchId } = useLocalSearchParams<{
-    id: string;
-  }>();
+export const useStats = (
+  tab: string,
+  override?: {
+    points?: MatchPoint[];
+    teams?: MatchTeams | null;
+    sets?: MatchSet[];
+  },
+) => {
+  const store = useMatchStore();
 
-  const { points, teams } = useMatchStore();
-
-  useEffect(() => {
-    const fetchMatchDetails = async () => {
-      if (!teams) {
-        try {
-          const data = await getMatchDetails(matchId);
-        } catch (err) {}
-      }
-    };
-    fetchMatchDetails();
-  }, [teams]);
+  const points = override?.points ?? store.points;
+  const teams = override?.teams ?? store.teams;
+  const sets = override?.sets ?? store.sets;
 
   const filteredPoints = filterPointsByTab(tab, points);
 
-  const pointsWonP1 = countPointsWon(filteredPoints, "p1");
-  const pointsWonP2 = countPointsWon(filteredPoints, "p2");
+  const { p1SetsWon, p2SetsWon } = calculateMatchScore(sets);
+
+  const pointsWonP1 =
+    points.length === 0
+      ? sets.reduce((acc, set) => acc + set.p1SetScore, 0)
+      : countPointsWon(filteredPoints, "p1");
+  const pointsWonP2 =
+    points.length === 0
+      ? sets.reduce((acc, set) => acc + set.p2SetScore, 0)
+      : countPointsWon(filteredPoints, "p2");
 
   const pointsWonP1OnOwnServe = countPointsWonOnOwnServe(filteredPoints, "p1");
   const pointsWonP2OnOwnServe = countPointsWonOnOwnServe(filteredPoints, "p2");
@@ -74,6 +81,7 @@ export const useStats = (tab: string) => {
   const scoreEvolution = calculateScoreEvolution(filteredPoints);
 
   return {
+    setsWon: { p1: p1SetsWon, p2: p2SetsWon },
     pointsWon: { p1: pointsWonP1, p2: pointsWonP2 },
     pointsWonOnOwnServe: {
       p1: pointsWonP1OnOwnServe,

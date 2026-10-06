@@ -1,7 +1,13 @@
 import { getClaims, onAuthStateChange } from "@/src/features/auth/api/auth-api";
 import { AuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import { getProfile } from "@/src/features/profile/api/profile-api";
-import { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 export default function AuthProvider({ children }: PropsWithChildren) {
   const [claims, setClaims] = useState<
@@ -55,14 +61,22 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     };
   }, [userId, claims]);
 
+  const refreshProfile = useCallback(async () => {
+    if (userId) {
+      const data = await getProfile(userId);
+      setProfile(data);
+    }
+  }, [userId]);
+
   const value = useMemo(
     () => ({
       claims,
       isLoading,
       profile,
+      refreshProfile,
       isLoggedIn: !!claims && !isPasswordRecovery,
     }),
-    [claims, isLoading, profile, isPasswordRecovery],
+    [claims, isLoading, profile, refreshProfile, isPasswordRecovery],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

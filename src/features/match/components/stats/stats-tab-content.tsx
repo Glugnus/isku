@@ -1,16 +1,29 @@
 import MatchEvolutionChart from "@/src/features/match/components/stats/match-evolution-chart";
 import StatProgressBar from "@/src/features/match/components/stats/stat-progress-bar";
+import SummarySetBadge from "@/src/features/match/components/summary/summary-set-badge";
+import { useStats } from "@/src/features/match/hooks/use-stats";
+import {
+  MatchPoint,
+  MatchSet,
+  MatchTeams,
+} from "@/src/features/match/types/match.types";
 import { ScrollView, Text, View } from "react-native";
-import { useStats } from "../../hooks/use-stats";
 
 export default function StatsTabContent({
   mode,
   tab,
+  points,
+  teams,
+  sets,
 }: {
   mode: "quick" | "umpire";
   tab: string;
+  points?: MatchPoint[];
+  teams?: MatchTeams | null;
+  sets?: MatchSet[];
 }) {
   const {
+    setsWon,
     pointsWon,
     pointsWonOnOwnServe,
     pointsWonOnOpponentServe,
@@ -22,7 +35,7 @@ export default function StatsTabContent({
     scoreEvolution,
     p1Name,
     p2Name,
-  } = useStats(tab);
+  } = useStats(tab, { points, teams, sets });
 
   return (
     <ScrollView
@@ -36,7 +49,13 @@ export default function StatsTabContent({
         >
           {p1Name}
         </Text>
-        <Text className="text-muted text-xs font-bold px-3">VS</Text>
+        <View className="flex-row items-center gap-x-2 px-3">
+          <Text className="text-primary font-oswald text-lg">{setsWon.p1}</Text>
+          <Text className="text-muted text-sm font-bold">VS</Text>
+          <Text className="text-secondary font-oswald text-lg">
+            {setsWon.p2}
+          </Text>
+        </View>
         <Text
           className="text-secondary font-oswald text-base uppercase flex-1 text-right"
           numberOfLines={1}
@@ -45,6 +64,13 @@ export default function StatsTabContent({
         </Text>
       </View>
       <View className="flex-row flex-wrap justify-between">
+        {mode === "quick" && (
+          <View className="flex-row flex-wrap justify-center gap-x-2 items-center w-full mb-3">
+            {sets?.map((s) => (
+              <SummarySetBadge key={s.setNumber} set={s} />
+            ))}
+          </View>
+        )}
         <StatProgressBar
           title="Points Gagnés"
           valueP1={pointsWon.p1}
@@ -90,12 +116,14 @@ export default function StatsTabContent({
             />
           </>
         )}
-        <MatchEvolutionChart
-          p1Name={p1Name}
-          p2Name={p2Name}
-          dataP1={scoreEvolution.dataP1}
-          dataP2={scoreEvolution.dataP2}
-        />
+        {mode === "umpire" && (
+          <MatchEvolutionChart
+            p1Name={p1Name}
+            p2Name={p2Name}
+            dataP1={scoreEvolution.dataP1}
+            dataP2={scoreEvolution.dataP2}
+          />
+        )}
       </View>
     </ScrollView>
   );

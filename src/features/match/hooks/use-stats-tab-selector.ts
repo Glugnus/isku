@@ -4,13 +4,23 @@ import { useRef, useState } from "react";
 import PagerView, {
   PagerViewOnPageSelectedEvent,
 } from "react-native-pager-view";
+import { MatchDetails, MatchSet } from "../types/match.types";
 
-export const useStatsTabSelector = () => {
-  const { match, sets } = useMatchStore();
+export const useStatsTabSelector = (override?: {
+  sets?: MatchSet[];
+  mode?: MatchDetails["mode"];
+  status?: string;
+}) => {
+  const store = useMatchStore();
+
+  const match = store.match;
+
+  const sets = override?.sets ?? store.sets;
+  const mode = override?.mode ?? match?.mode;
+  const status = override?.status ?? match?.status;
+
   const { currentSet } = useLocalSearchParams<{ currentSet: string }>();
-  const mode = match?.mode;
-  const totalSetsCount =
-    match?.status === "completed" ? sets.length : sets.length + 1;
+  const totalSetsCount = status === "completed" ? sets.length : sets.length + 1;
   const tabs = [
     "Match",
     ...Array.from({ length: totalSetsCount }, (_, i) => `Set ${i + 1}`),

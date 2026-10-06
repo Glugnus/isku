@@ -40,13 +40,15 @@ export const getMatchWinner = (
 };
 
 export const calculateMatchScore = (
-  sets: { score_team_1: number; score_team_2: number }[] = [],
+  sets: { score_team_1: number; score_team_2: number }[] | MatchSet[] = [],
 ) => {
   const { p1SetsWon, p2SetsWon } = sets.reduce(
     (acc, set) => {
-      if (set.score_team_1 > set.score_team_2) {
+      const s1 = "p1SetScore" in set ? set.p1SetScore : set.score_team_1;
+      const s2 = "p2SetScore" in set ? set.p2SetScore : set.score_team_2;
+      if (s1 > s2) {
         acc.p1SetsWon++;
-      } else if (set.score_team_2 > set.score_team_1) {
+      } else if (s2 > s1) {
         acc.p2SetsWon++;
       }
       return acc;
