@@ -46,3 +46,28 @@ export const updateProfile = async (
     throw new Error("Erreur lors de la mise à jour du profil.");
   }
 };
+
+export const getProfileMatchData = async (profileId: string) => {
+  const { data, error } = await supabase
+    .from("match_participants")
+    .select(
+      `
+      team,
+      match_id,
+      matches(
+        status,
+        match_sets(
+          *,
+          match_points(
+            *
+          )
+        )
+      )
+      `,
+    )
+    .eq("profile_id", profileId);
+  if (error) {
+    throw new Error("Erreur lors de la récupération des données des matchs.");
+  }
+  return data;
+};

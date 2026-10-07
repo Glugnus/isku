@@ -7,7 +7,7 @@ export interface InputProps extends TextInputProps {
   variant?: "primary" | "secondary" | "neutral";
   isRight?: boolean;
   rightIcon?: ReactNode;
-  errorMessage?: string;
+  errorMessage?: string | null;
   containerClassName?: string;
   size?: "default" | "sm" | "lg";
   uppercase?: boolean;

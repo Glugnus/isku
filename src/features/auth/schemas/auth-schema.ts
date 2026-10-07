@@ -16,6 +16,11 @@ const confirmPasswordValidation = z
   .string()
   .min(1, "La confirmation du mot de passe est requise");
 
+export const usernameValidation = z
+  .string()
+  .min(3, "Le pseudo doit contenir au moins 3 caractères")
+  .max(20, "Le pseudo doit contenir au plus 20 caractères");
+
 export const loginSchema = z.object({
   email: emailValidation,
   password: z.string().min(1, "Le mot de passe est requis"),
@@ -23,9 +28,7 @@ export const loginSchema = z.object({
 
 export const registerSchema = z
   .object({
-    username: z
-      .string()
-      .min(3, "Le pseudo doit contenir au moins 3 caractères"),
+    username: usernameValidation,
     email: emailValidation,
     password: passwordValidation,
     confirmPassword: confirmPasswordValidation,

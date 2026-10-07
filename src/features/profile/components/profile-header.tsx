@@ -3,10 +3,14 @@ import { useUploadAvatar } from "@/src/features/profile/hooks/use-upload-avatar"
 import { colors } from "@/src/lib/colors";
 import { Image } from "expo-image";
 import { Camera, Pencil } from "lucide-react-native";
+import { useState } from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import EditUsernameModal from "./edit-username-modal";
 
 export default function ProfileHeader() {
   const { profile, claims } = useAuthContext();
+  const [isEditUsernameModalVisible, setIsEditUsernameModalVisible] =
+    useState<boolean>(false);
   const { image, uploading, pickImage, error } = useUploadAvatar();
   return (
     <View className="items-center mb-6 mt-2">
@@ -47,11 +51,16 @@ export default function ProfileHeader() {
         <Pressable
           className="p-1"
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          onPress={() => setIsEditUsernameModalVisible(true)}
         >
           <Pencil color={colors.primary} size={18} />
         </Pressable>
       </View>
       <Text className="text-muted mt-1">{claims?.email ?? ""}</Text>
+      <EditUsernameModal
+        visible={isEditUsernameModalVisible}
+        onClose={() => setIsEditUsernameModalVisible(false)}
+      />
     </View>
   );
 }
