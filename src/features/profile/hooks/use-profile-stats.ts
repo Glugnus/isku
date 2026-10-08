@@ -4,7 +4,8 @@ import { calculateProfileQuickstats } from "@/src/features/profile/utils/quick-s
 import { useMemo } from "react";
 
 export const useProfileStats = (profileId?: string) => {
-  const { matchesData, isFetching, error } = useFetchMatchData(profileId);
+  const { matchesData, isFetching, error, refetch } =
+    useFetchMatchData(profileId);
   const { quickStats } = useMemo(
     () => calculateProfileQuickstats(matchesData ?? []),
     [matchesData],
@@ -21,5 +22,6 @@ export const useProfileStats = (profileId?: string) => {
     performanceStats,
     isFetching,
     error,
+    refetch,
   };
 };

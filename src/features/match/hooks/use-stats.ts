@@ -57,8 +57,38 @@ export const useStats = (
     "p2",
   );
 
-  const maxLeadP1 = calculateMaxLead(filteredPoints, "p1");
-  const maxLeadP2 = calculateMaxLead(filteredPoints, "p2");
+  const totalServesP1 = filteredPoints.filter((p) => p.server === "p1").length;
+  const servePercentageP1 =
+    totalServesP1 > 0
+      ? Math.round((pointsWonP1OnOwnServe / totalServesP1) * 100)
+      : 0;
+
+  const totalServesP2 = filteredPoints.filter((p) => p.server === "p2").length;
+  const servePercentageP2 =
+    totalServesP2 > 0
+      ? Math.round((pointsWonP2OnOwnServe / totalServesP2) * 100)
+      : 0;
+
+  const totalReturnP1 = filteredPoints.filter((p) => p.server === "p2").length;
+  const returnPercentageP1 =
+    totalReturnP1 > 0
+      ? Math.round((pointsWonP1OnOpponentServe / totalReturnP1) * 100)
+      : 0;
+
+  const totalReturnP2 = filteredPoints.filter((p) => p.server === "p1").length;
+  const returnPercentageP2 =
+    totalReturnP2 > 0
+      ? Math.round((pointsWonP2OnOpponentServe / totalReturnP2) * 100)
+      : 0;
+
+  const maxLeadP1 =
+    filteredPoints.length > 0
+      ? calculateMaxLead(filteredPoints, "p1")
+      : Math.max(0, ...sets.map((s) => s.p1SetScore - s.p2SetScore));
+  const maxLeadP2 =
+    filteredPoints.length > 0
+      ? calculateMaxLead(filteredPoints, "p2")
+      : Math.max(0, ...sets.map((s) => s.p2SetScore - s.p1SetScore));
 
   const longestStreakP1 = calculateLongestStreak(filteredPoints, "p1");
   const longestStreakP2 = calculateLongestStreak(filteredPoints, "p2");
@@ -82,6 +112,7 @@ export const useStats = (
 
   return {
     setsWon: { p1: p1SetsWon, p2: p2SetsWon },
+    profilePosition: teams?.currentProfilePosition ?? "p1",
     pointsWon: { p1: pointsWonP1, p2: pointsWonP2 },
     pointsWonOnOwnServe: {
       p1: pointsWonP1OnOwnServe,
@@ -90,6 +121,14 @@ export const useStats = (
     pointsWonOnOpponentServe: {
       p1: pointsWonP1OnOpponentServe,
       p2: pointsWonP2OnOpponentServe,
+    },
+    servePercentage: {
+      p1: servePercentageP1,
+      p2: servePercentageP2,
+    },
+    returnPercentage: {
+      p1: returnPercentageP1,
+      p2: returnPercentageP2,
     },
     maxLead: {
       p1: maxLeadP1,

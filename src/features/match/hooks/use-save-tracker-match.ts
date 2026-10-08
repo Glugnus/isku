@@ -8,11 +8,12 @@ import { router } from "expo-router";
 import { useState } from "react";
 
 export const useSaveTrackerMatch = () => {
-  const { sets, points, match } = useMatchStore();
+  const { sets, points, match, updateMatchStatus } = useMatchStore();
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
   const handleSaveMatchResult = async () => {
+    setSaveError(null);
     if (isSaving) return;
     if (match?.id && sets.length > 0) {
       try {
@@ -37,6 +38,7 @@ export const useSaveTrackerMatch = () => {
         await updateMatch(match.id.toString(), {
           status: "completed",
         });
+        updateMatchStatus("completed");
         router.replace({
           pathname: "/match/[id]/summary",
           params: { id: match.id },

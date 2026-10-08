@@ -27,6 +27,7 @@ export const calculateProfilePerformanceStats = (
         maxLead: 0,
         longestStreak: 0,
         maxDeficit: 0,
+        pointsPlayed: 0,
       },
     };
   let maxLead = 0;
@@ -79,15 +80,18 @@ export const calculateProfilePerformanceStats = (
     pointsPlayed.length > 0 ? Math.round((ufe / pointsPlayed.length) * 100) : 0;
 
   for (const match of completedMatches) {
-    const matchPoints: MatchPoint[] = (match.matches?.match_sets ?? []).flatMap(
-      (set) =>
-        (set.match_points ?? []).map((point) => ({
-          setNumber: set.set_number,
-          scoredBy: point.scored_by_team === match.team ? "p1" : "p2",
-          server: point.server_team === match.team ? "p1" : "p2",
-          actionType: point.type,
-        })),
-    );
+    const matchPoints: MatchPoint[] = (match.matches?.match_sets ?? [])
+      .sort((a, b) => a.set_number - b.set_number)
+      .flatMap((set) =>
+        (set.match_points ?? [])
+          .sort((a, b) => a.point_number - b.point_number)
+          .map((point) => ({
+            setNumber: set.set_number,
+            scoredBy: point.scored_by_team === match.team ? "p1" : "p2",
+            server: point.server_team === match.team ? "p1" : "p2",
+            actionType: point.type,
+          })),
+      );
     maxLead = Math.max(maxLead, calculateMaxLead(matchPoints, "p1"));
     longestStreak = Math.max(
       longestStreak,
@@ -115,6 +119,7 @@ export const calculateProfilePerformanceStats = (
           : 0,
     },
     performanceStats: {
+      pointsPlayed: pointsPlayed.length,
       winners,
       winnersRate,
       ufe,

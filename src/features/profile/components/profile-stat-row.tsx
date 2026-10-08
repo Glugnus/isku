@@ -10,7 +10,7 @@ export default function ProfileStatRow({
 }: {
   icon?: ReactNode;
   label: string;
-  value: string | number;
+  value: string | number | undefined;
   subValue?: string;
   isLast?: boolean;
 }) {

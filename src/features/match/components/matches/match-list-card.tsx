@@ -102,7 +102,15 @@ export default function MatchListCard({
               {match.mode === "quick" ? "Mode rapide" : "Mode arbitre"}
             </Text>
           )}
-          <Pressable className="bg-background border border-background/30 p-2.5 rounded-xl items-center mr-3 justify-center active:opacity-70">
+          <Pressable
+            onPress={() =>
+              router.push({
+                pathname: "/match/[id]/stories",
+                params: { id: match?.id },
+              })
+            }
+            className="bg-background border border-background/30 p-2.5 rounded-xl items-center mr-3 justify-center active:opacity-70"
+          >
             <Share2 color={colors.muted} size={18} />
           </Pressable>
           {match.status === "planned" ? (

@@ -1,11 +1,14 @@
+import Button from "@/src/components/ui/button";
 import ScreenLayout from "@/src/components/ui/screen-layout";
 import TrackerCourt from "@/src/features/match/components/tracker/tracker-court";
 import TrackerFooter from "@/src/features/match/components/tracker/tracker-footer";
 import TrackerHeader from "@/src/features/match/components/tracker/tracker-header";
 import { useTracker } from "@/src/features/match/hooks/use-tracker";
+import { useKeepAwake } from "expo-keep-awake";
 import { Text } from "react-native";
 
 export default function TrackerScreen() {
+  useKeepAwake();
   const {
     teams,
     currentServer,
@@ -19,6 +22,8 @@ export default function TrackerScreen() {
     canUndo,
     abandonMatch,
     saveError,
+    retrySave,
+    isSaving,
   } = useTracker();
 
   return (
@@ -47,9 +52,17 @@ export default function TrackerScreen() {
         onConfirmAbandon={abandonMatch}
       />
       {saveError && (
-        <Text className="text-center mb-4 font-bold text-danger">
-          {saveError}
-        </Text>
+        <>
+          <Text className="text-center mb-4 font-bold text-danger">
+            {saveError}
+          </Text>
+          <Button
+            title="Réessayer"
+            onPress={retrySave}
+            isLoading={isSaving}
+            variant="surface"
+          />
+        </>
       )}
     </ScreenLayout>
   );

@@ -14,6 +14,7 @@ import {
   getSetWinner,
 } from "@/src/features/match/utils/score-calculator";
 import { calculateCurrentServer } from "@/src/features/match/utils/service-calculator";
+import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
 import { useEffect } from "react";
 
@@ -29,7 +30,6 @@ export const useTracker = () => {
     match,
     teams,
     resetMatch,
-    updateMatchStatus,
   } = useMatchStore();
   const { handleSaveMatchResult, isSaving, saveError } = useSaveTrackerMatch();
 
@@ -62,6 +62,16 @@ export const useTracker = () => {
     const newP1Score = scoredBy === "p1" ? p1Score + 1 : p1Score;
     const newP2Score = scoredBy === "p2" ? p2Score + 1 : p2Score;
     const isSetOver = getSetWinner(newP1Score, newP2Score, rules);
+    if (isSetOver) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    } else {
+      Haptics.impactAsync(
+        action === "winner"
+          ? Haptics.ImpactFeedbackStyle.Medium
+          : Haptics.ImpactFeedbackStyle.Light,
+      );
+    }
+
     addPoint({
       setNumber: currentSet,
       scoredBy,
@@ -78,6 +88,7 @@ export const useTracker = () => {
   };
 
   const undoPoint = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     if (points.length === 0) return;
     if (currentSet > 1 && p1Score === 0 && p2Score === 0) {
       undoLastSet();
@@ -93,11 +104,10 @@ export const useTracker = () => {
   };
 
   useEffect(() => {
-    if (matchWinner && match?.status === "ongoing") {
-      updateMatchStatus("completed");
+    if (matchWinner && match?.status === "ongoing" && !saveError && !isSaving) {
       handleSaveMatchResult();
     }
-  }, [matchWinner, match?.status, updateMatchStatus, handleSaveMatchResult]);
+  }, [matchWinner, match?.status, handleSaveMatchResult, saveError, isSaving]);
 
   return {
     currentSet,
@@ -105,7 +115,7 @@ export const useTracker = () => {
     p2Score,
     scorePoint,
     undoPoint,
-    canUndo: points.length > 0 && match?.status === "ongoing",
+    canUndo: points.length > 0 && match?.status === "ongoing" && !isSaving,
     matchWinner,
     p1SetsWon,
     p2SetsWon,
@@ -118,5 +128,6 @@ export const useTracker = () => {
     abandonMatch,
     isSaving,
     saveError,
+    retrySave: handleSaveMatchResult,
   };
 };

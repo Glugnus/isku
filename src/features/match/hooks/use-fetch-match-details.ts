@@ -1,3 +1,4 @@
+import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import { getMatchDetails } from "@/src/features/match/api/matches-api";
 import {
   MatchDetails,
@@ -12,6 +13,7 @@ export const useFetchMatchDetails = (matchId: string) => {
   const [error, setError] = useState<string | null>(null);
   const [match, setMatch] = useState<MatchDetails | null>(null);
   const [teams, setTeams] = useState<MatchTeams | null>(null);
+  const { profile } = useAuthContext();
 
   useEffect(() => {
     if (matchId) {
@@ -19,7 +21,10 @@ export const useFetchMatchDetails = (matchId: string) => {
         setIsFetching(true);
         try {
           const match = await getMatchDetails(matchId);
-          const { teams } = getMatchParticipantsTeams(match.match_participants);
+          const { teams } = getMatchParticipantsTeams(
+            match.match_participants,
+            profile?.id,
+          );
           setMatch(match);
           setTeams(teams);
         } catch (err) {
@@ -31,11 +36,12 @@ export const useFetchMatchDetails = (matchId: string) => {
       };
       fetchDetailsMatch();
     }
-  }, [matchId]);
+  }, [matchId, profile?.id]);
 
   const { sets, points } = adaptMatchDetails(match?.match_sets || []);
 
   return {
+    match,
     isFetching,
     error,
     teams,

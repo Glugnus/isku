@@ -14,7 +14,6 @@ export default function MatchesScreen() {
       getMatches();
     }, [getMatches]),
   );
-
   return (
     <ScreenLayout edges={["left", "right"]}>
       <SectionList

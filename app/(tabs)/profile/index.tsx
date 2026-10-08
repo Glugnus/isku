@@ -6,11 +6,7 @@ import ProfileQuickStats from "@/src/features/profile/components/profile-quick-s
 
 export default function ProfileScreen() {
   return (
-    <ScreenLayout
-      scrollable
-      edges={["left", "right"]}
-      className="justify-center"
-    >
+    <ScreenLayout scrollable edges={["left", "right"]}>
       <ProfileHeader />
       <ProfileQuickStats />
       <ProfileDonation />

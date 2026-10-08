@@ -4,12 +4,14 @@ import { ProfileMatchData } from "@/src/features/profile/types/profiles-types";
 export const calculateProfileQuickstats = (matchesData: ProfileMatchData) => {
   if (!matchesData || matchesData.length === 0)
     return {
-      matchesPlayed: 0,
-      wins: 0,
-      losses: 0,
-      winRate: 0,
-      pending: 0,
-      setsPlayed: 0,
+      quickStats: {
+        matchesPlayed: 0,
+        wins: 0,
+        losses: 0,
+        winRate: 0,
+        pending: 0,
+        setsPlayed: 0,
+      },
     };
 
   const completedMatches = matchesData.filter(

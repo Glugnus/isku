@@ -5,19 +5,25 @@ import {
 } from "@/src/features/match/types/match.types";
 
 export const adaptMatchDetails = (sets: MatchDetails["match_sets"]) => {
-  const adaptSets: MatchSet[] = sets.map((s) => ({
-    setNumber: s.set_number,
-    p1SetScore: s.score_team_1,
-    p2SetScore: s.score_team_2,
-  }));
-  const adaptPoints: MatchPoint[] = sets.flatMap((s) =>
-    s.match_points.map((p) => ({
+  const adaptSets: MatchSet[] = sets
+    .sort((a, b) => a.set_number - b.set_number)
+    .map((s) => ({
       setNumber: s.set_number,
-      scoredBy: p.scored_by_team === 1 ? "p1" : "p2",
-      server: p.server_team === 1 ? "p1" : "p2",
-      actionType: p.type,
-    })),
-  );
+      p1SetScore: s.score_team_1,
+      p2SetScore: s.score_team_2,
+    }));
+  const adaptPoints: MatchPoint[] = sets
+    .sort((a, b) => a.set_number - b.set_number)
+    .flatMap((s) =>
+      s.match_points
+        .sort((a, b) => a.point_number - b.point_number)
+        .map((p) => ({
+          setNumber: s.set_number,
+          scoredBy: p.scored_by_team === 1 ? "p1" : "p2",
+          server: p.server_team === 1 ? "p1" : "p2",
+          actionType: p.type,
+        })),
+    );
 
   return {
     sets: adaptSets,

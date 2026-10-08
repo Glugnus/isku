@@ -35,6 +35,12 @@ export default function SummaryActions({
       <Button
         title="Partager le résultat"
         variant="ghost"
+        onPress={() =>
+          router.push({
+            pathname: "/match/[id]/stories",
+            params: { id: matchId },
+          })
+        }
         leftIcon={
           <Share2
             size={24}
