@@ -1,4 +1,4 @@
-import { ProfileStatsProvider } from "@/src/features/profile/providers/profile-stats-providers";
+import { ProfileStatsProvider } from "@/src/features/profile/providers/profile-stats-provider";
 import { colors } from "@/src/lib/colors";
 import TopTabs from "expo-router/js-top-tabs";
 import { View } from "react-native";

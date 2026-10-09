@@ -4,6 +4,7 @@ import {
   MatchSet,
   MatchTeams,
 } from "@/src/features/match/types/match.types";
+import { calculateMatchScore } from "@/src/features/match/utils/score-calculator";
 import {
   calculateLongestStreak,
   calculateMaxDeficitOvercome,
@@ -16,7 +17,6 @@ import {
   countWinnersPoints,
   filterPointsByTab,
 } from "@/src/features/match/utils/stats-calculator";
-import { calculateMatchScore } from "../utils/score-calculator";
 
 export const useStats = (
   tab: string,

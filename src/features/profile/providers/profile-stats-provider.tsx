@@ -1,10 +1,11 @@
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
-import { createContext, useContext } from "react";
-import { useProfileStats } from "../hooks/use-profile-stats";
+import { useProfileStats } from "@/src/features/profile/hooks/use-profile-stats";
+import { createContext } from "react";
 
 type ProfileStatsContextType = ReturnType<typeof useProfileStats>;
 
-const ProfileStatsContext = createContext<ProfileStatsContextType | null>(null);
+export const ProfileStatsContext =
+  createContext<ProfileStatsContextType | null>(null);
 
 export const ProfileStatsProvider = ({
   children,
@@ -18,14 +19,4 @@ export const ProfileStatsProvider = ({
       {children}
     </ProfileStatsContext.Provider>
   );
-};
-
-export const useProfileStatsContext = () => {
-  const context = useContext(ProfileStatsContext);
-  if (!context) {
-    throw new Error(
-      "useProfileStatsContext must be used within a ProfileStatsProvider",
-    );
-  }
-  return context;
 };

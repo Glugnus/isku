@@ -2,7 +2,7 @@ import ScreenLoader from "@/src/components/ui/screen-loader";
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import ProfileStatCard from "@/src/features/profile/components/profile-stat-card";
 import ProfileStatRow from "@/src/features/profile/components/profile-stat-row";
-import { useProfileStatsContext } from "@/src/features/profile/providers/profile-stats-providers";
+import { useProfileStatsContext } from "@/src/features/profile/hooks/use-profile-stats-context";
 import { colors } from "@/src/lib/colors";
 import { Activity, Share2, Target, Trophy } from "lucide-react-native";
 import { Text, View } from "react-native";

@@ -1,10 +1,10 @@
 import { useMatchStore } from "@/src/features/match/store/use-match-store";
+import { MatchDetails, MatchSet } from "@/src/features/match/types/match.types";
 import { useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
 import PagerView, {
   PagerViewOnPageSelectedEvent,
 } from "react-native-pager-view";
-import { MatchDetails, MatchSet } from "../types/match.types";
 
 export const useStatsTabSelector = (override?: {
   sets?: MatchSet[];

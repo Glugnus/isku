@@ -1,9 +1,9 @@
+import TrackerCourtSide from "@/src/features/match/components/tracker/tracker-court-side";
 import {
   PlayerKey,
   PointActionType,
 } from "@/src/features/match/types/match.types";
 import { View } from "react-native";
-import TrackerCourtSide from "./tracker-court-side";
 
 interface TrackerCourtProps {
   p1Score: number;

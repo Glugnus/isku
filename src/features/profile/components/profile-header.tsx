@@ -1,11 +1,11 @@
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
+import EditUsernameModal from "@/src/features/profile/components/edit-username-modal";
 import { useUploadAvatar } from "@/src/features/profile/hooks/use-upload-avatar";
 import { colors } from "@/src/lib/colors";
 import { Image } from "expo-image";
 import { Camera, Pencil } from "lucide-react-native";
 import { useState } from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
-import EditUsernameModal from "./edit-username-modal";
 
 export default function ProfileHeader() {
   const { profile, claims } = useAuthContext();

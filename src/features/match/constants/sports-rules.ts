@@ -1,4 +1,7 @@
-import { Sport, SportsRules } from "../types/sports-rules.types";
+import {
+  Sport,
+  SportsRules,
+} from "@/src/features/match/types/sports-rules.types";
 
 export const SPORTS_RULES: Record<Sport, SportsRules> = {
   table_tennis: {

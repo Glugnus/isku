@@ -1,10 +1,10 @@
 import Button from "@/src/components/ui/button";
 import ControlledInput from "@/src/components/utils/controlled-input";
+import AuthHeader from "@/src/features/auth/components/auth-header";
 import { useResendOtp } from "@/src/features/auth/hooks/use-resend-otp";
 import { useVerifyOtpForm } from "@/src/features/auth/hooks/use-verify-otp-form";
 import { EmailOtpType } from "@supabase/supabase-js";
 import { Text, View } from "react-native";
-import AuthHeader from "../auth-header";
 
 export default function VerifyOtpForm({
   type,

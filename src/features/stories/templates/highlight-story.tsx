@@ -4,13 +4,13 @@ import {
   MatchTeams,
 } from "@/src/features/match/types/match.types";
 import { adaptMatchDetails } from "@/src/features/match/utils/adapt-match-details";
+import StoryQuickStats from "@/src/features/stories/components/story-quick-stats";
+import StoryScoreBanner from "@/src/features/stories/components/story-score-banner";
+import StoryScoresSets from "@/src/features/stories/components/story-scores-sets";
 import StoryTemplateFooter from "@/src/features/stories/components/story-template-footer";
 import StoryTemplateHeader from "@/src/features/stories/components/story-template-header";
+import StoryUmpireStats from "@/src/features/stories/components/story-umpire-stats";
 import { View } from "react-native";
-import StoryQuickStats from "../components/story-quick-stats";
-import StoryScoreBanner from "../components/story-score-banner";
-import StoryScoresSets from "../components/story-scores-sets";
-import StoryUmpireStats from "../components/story-umpire-stats";
 
 interface HighlightStoryTemplateProps {
   match: MatchDetails;
