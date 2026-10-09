@@ -84,6 +84,12 @@ export const useSetupForm = () => {
     }
   }, [matchId, profile?.id, form]);
 
+  useEffect(() => {
+    if (!matchId && profile?.username) {
+      form.setValue("p1Name", profile.username);
+    }
+  }, [profile?.username, form, matchId]);
+
   const handleCreateMatch = async (data: SetupMatchFormData) => {
     const matchInfo = mapSetupMatchInfo(data);
 
