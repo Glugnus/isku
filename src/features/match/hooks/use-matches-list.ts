@@ -1,3 +1,4 @@
+import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import { getAllMatches } from "@/src/features/match/api/matches-api";
 import { useCallback, useState } from "react";
 
@@ -12,24 +13,29 @@ export type MatchListItem = NonNullable<
 >[number];
 
 export const useMatchesList = () => {
+  const { profile } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sections, setSections] = useState<Section[]>([]);
 
+  const profileId = profile?.id;
+
   const getMatches = useCallback(async () => {
-    setError(null);
-    try {
-      setIsLoading(true);
-      const matches = await getAllMatches();
-      const groupedMatches = groupMatchesByStatus(matches);
-      setSections(groupedMatches);
-    } catch (err) {
-      if (typeof err === "string") setError(err);
-      else if (err instanceof Error) setError(err.message);
-    } finally {
-      setIsLoading(false);
+    if (profileId) {
+      setError(null);
+      try {
+        setIsLoading(true);
+        const matches = await getAllMatches(profileId);
+        const groupedMatches = groupMatchesByStatus(matches);
+        setSections(groupedMatches);
+      } catch (err) {
+        if (typeof err === "string") setError(err);
+        else if (err instanceof Error) setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }, []);
+  }, [profileId]);
   return { sections, getMatches, isLoading, error };
 };
 
