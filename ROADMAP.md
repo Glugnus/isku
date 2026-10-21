@@ -10,17 +10,17 @@ Ce document retrace la vision produit, les jalons de développement et les persp
 
 > **Objectif** : Valider l'expérience utilisateur sur le sport de prédilection, garantir une prise en main fluide sur le terrain, favoriser le partage social et sécuriser la validation sur les Stores.
 
-- [ ] **Arbitrage & Suivi en direct** :
+- [x] **Arbitrage & Suivi en direct** :
   - Comptage des points intuitif (optimisé pour usage à une main / bord de table).
   - Gestion des règles officielles (changements de service, manches, avantages).
-- [ ] **Historique & Fiches de matchs** :
+- [x] **Historique & Fiches de matchs** :
   - Sauvegarde locale et cloud des rencontres.
   - Détail des sets, scores et durées.
-- [ ] **Statistiques Essentielles** :
+- [x] **Statistiques Essentielles** :
   - Ratios victoires/défaites, séries, sets gagnés/perdus.
-- [ ] **Génération de visuels & Stories** :
+- [x] **Génération de visuels & Stories** :
   - Export d'images récapitulatives prêtes à partager sur les réseaux sociaux (Instagram Stories, WhatsApp).
-- [ ] **Conformité & Lancement Stores (Ajustements de validation)** :
+- [x] **Conformité & Lancement Stores (Ajustements de validation)** :
   - **Alerte Guideline Apple 3.1.1** : Conditionner l'affichage du bouton de soutien / pourboire (_Buy Me a Coffee_) pour éviter tout rejet (masqué sur mobile via feature flag ou activé uniquement sur le Web `Platform.OS === 'web'`).
   - **Optimisation de l'appel au soutien** : Présentation du soutien au pic d'engagement (après une victoire ou lors de l'export d'une Story).
   - Suivi de la validation des comptes Stores (gestion des testeurs Google Play / statut développeur).
@@ -49,6 +49,10 @@ Ce document retrace la vision produit, les jalons de développement et les persp
   - Intégration des liens officiels et badges de téléchargement vers l'App Store et le Google Play Store sur [isku-app.fr](https://isku-app.fr).
   - QR Code dynamique de téléchargement direct pour les visiteurs sur ordinateur.
   - Configuration SEO : génération du `sitemap.xml`, `robots.txt` et soumission dans la Google Search Console pour indexation du domaine.
+- [ ] **Conformité & Optimisations Android (Recommandations Google Play)** :
+  - **Optimisation du code DEX / Obscurcissement (R8/ProGuard)** : Évaluer l'activation de ProGuard dans la configuration de build Android pour dépasser le seuil d'obscurcissement et réduire la taille du binaire.
+  - **Affichage Bord à Bord (Edge-to-Edge)** : Anticiper la mise à jour des insets d'Android 15 via les futures versions d'Expo (échéance Google : février 2027).
+  - **Compatibilité Grands Écrans & Pliables (Android 16)** : Réfléchir à l'adaptation de l'orientation ou au responsive sur tablettes/foldables si nécessaire.
 
 ---
 
