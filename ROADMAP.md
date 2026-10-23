@@ -21,9 +21,9 @@ Ce document retrace la vision produit, les jalons de développement et les persp
 - [x] **Génération de visuels & Stories** :
   - Export d'images récapitulatives prêtes à partager sur les réseaux sociaux (Instagram Stories, WhatsApp).
 - [x] **Conformité & Lancement Stores (Ajustements de validation)** :
-  - **Alerte Guideline Apple 3.1.1** : Conditionner l'affichage du bouton de soutien / pourboire (_Buy Me a Coffee_) pour éviter tout rejet (masqué sur mobile via feature flag ou activé uniquement sur le Web `Platform.OS === 'web'`).
-  - **Optimisation de l'appel au soutien** : Présentation du soutien au pic d'engagement (après une victoire ou lors de l'export d'une Story).
-  - Suivi de la validation des comptes Stores (gestion des testeurs Google Play / statut développeur).
+  - [x] **Alerte Guideline Apple 3.1.1** : Enlever la demande de soutien vers lien externe, non autorisé par apple.
+  - [x] Suivi de la validation des comptes Stores (gestion des testeurs Google Play / statut développeur).
+  - [x] **Conformité Guideline Apple 5.1.1(v) & 2.1 (Suppression de compte in-app)** : Intégration du bouton et du flux de suppression définitive du compte directement dans l'application (profil/paramètres), avec modale de confirmation et purge associée côté auth/données.
 
 ---
 
@@ -31,6 +31,10 @@ Ce document retrace la vision produit, les jalons de développement et les persp
 
 > **Objectif** : Élargir l'audience, amorcer la collecte de données matérielles sans complexité algorithmique et enrichir la viralité des Stories.
 
+- [ ] **Authentification Sociale Native (Google & Apple)** :
+  - Remplacement du flux OAuth web actuel par les flux natifs (Google One Tap / Credential Manager & Apple Authentication avec biométrie).
+  - Réduction drastique de la friction à l'inscription/connexion.
+  - Transition de l'environnement vers les Development Builds d'Expo (`expo-dev-client`) requise pour le SDK Google natif.
 - [ ] **Internationalisation (i18n)** :
   - Support natif de l'Anglais et du Français.
   - Architecture modulaire facilitant l'ajout ultérieur d'autres langues (Espagnol, Allemand, Italien).
@@ -53,6 +57,22 @@ Ce document retrace la vision produit, les jalons de développement et les persp
   - **Optimisation du code DEX / Obscurcissement (R8/ProGuard)** : Évaluer l'activation de ProGuard dans la configuration de build Android pour dépasser le seuil d'obscurcissement et réduire la taille du binaire.
   - **Affichage Bord à Bord (Edge-to-Edge)** : Anticiper la mise à jour des insets d'Android 15 via les futures versions d'Expo (échéance Google : février 2027).
   - **Compatibilité Grands Écrans & Pliables (Android 16)** : Réfléchir à l'adaptation de l'orientation ou au responsive sur tablettes/foldables si nécessaire.
+
+### 👥 V1.2 — Réseau & Partenaires de Jeu (Social & Profils Connectés)
+
+> **Objectif** : Activer l'effet de réseau en club, lier les joueurs entre eux et fluidifier la configuration des matchs grâce aux profils réels.
+
+- [ ] **Gestion des Profils & Système d'Amis** :
+  - Recherche d'utilisateurs (par identifiant unique / pseudo ou partage de QR code).
+  - Gestion des demandes d'amis (envoi, acceptation, liste d'amis).
+  - Consultation des profils amis : statistiques globales, matériel utilisé ("Mon Sac") et historique des matchs.
+- [ ] **Sélection d'Amis dans la Préparation de Match** :
+  - Sélecteur d'adversaire hybride (saisie libre pour joueur occasionnel OU sélection rapide parmi la liste d'amis).
+  - Association du compte adverse à la rencontre pour alimenter les historiques respectifs.
+- [ ] **Synchronisation & Partage de Résultats** :
+  - Répercussion de la rencontre dans l'historique et les statistiques des deux joueurs.
+  - Notifications in-app de fin de match / résumé de confrontation.
+  - Mise à niveau des règles de sécurité des données (**Row Level Security - RLS** sur Supabase).
 
 ---
 

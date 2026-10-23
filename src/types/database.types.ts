@@ -218,6 +218,10 @@ export type Database = {
         };
         Returns: undefined;
       };
+      delete_user: {
+        Args: Record<PropertyKey, never>;
+        Returns: undefined;
+      };
     };
     Enums: {
       [_ in never]: never;

@@ -1,7 +1,6 @@
 import Button from "@/src/components/ui/button";
 import ControlledInput from "@/src/components/utils/controlled-input";
 import AuthHeader from "@/src/features/auth/components/auth-header";
-import GoogleSignInButton from "@/src/features/auth/components/social-auth-buttons/google/google-sign-in-button";
 import { useLoginForm } from "@/src/features/auth/hooks/use-login-form";
 import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
@@ -62,7 +61,7 @@ export default function LoginForm() {
             <Button title="Créer un compte" variant="surface" />
           </Link>
         </View>
-        <GoogleSignInButton title="Continuer avec Google" />
+        {/* <GoogleSignInButton title="Continuer avec Google" /> */}
       </View>
     </>
   );
