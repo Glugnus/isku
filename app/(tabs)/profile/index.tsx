@@ -9,7 +9,6 @@ export default function ProfileScreen() {
     <ScreenLayout scrollable edges={["left", "right"]}>
       <ProfileHeader />
       <ProfileQuickStats />
-      {/* <ProfileDonation /> */}
       <SignOutButton />
       <DeleteUserButton />
     </ScreenLayout>

@@ -20,9 +20,8 @@ Ce document retrace la vision produit, les jalons de développement et les persp
   - Ratios victoires/défaites, séries, sets gagnés/perdus.
 - [x] **Génération de visuels & Stories** :
   - Export d'images récapitulatives prêtes à partager sur les réseaux sociaux (Instagram Stories, WhatsApp).
-- [ ] **Conformité & Lancement Stores (Ajustements de validation)** :
+- [x] **Conformité & Lancement Stores (Ajustements de validation)** :
   - [x] **Alerte Guideline Apple 3.1.1** : Enlever la demande de soutien vers lien externe, non autorisé par apple.
-  - [ ] **Optimisation de l'appel au soutien** : Présentation du soutien au pic d'engagement (après une victoire ou lors de l'export d'une Story).
   - [x] Suivi de la validation des comptes Stores (gestion des testeurs Google Play / statut développeur).
   - [x] **Conformité Guideline Apple 5.1.1(v) & 2.1 (Suppression de compte in-app)** : Intégration du bouton et du flux de suppression définitive du compte directement dans l'application (profil/paramètres), avec modale de confirmation et purge associée côté auth/données.
 
@@ -32,6 +31,10 @@ Ce document retrace la vision produit, les jalons de développement et les persp
 
 > **Objectif** : Élargir l'audience, amorcer la collecte de données matérielles sans complexité algorithmique et enrichir la viralité des Stories.
 
+- [ ] **Authentification Sociale Native (Google & Apple)** :
+  - Remplacement du flux OAuth web actuel par les flux natifs (Google One Tap / Credential Manager & Apple Authentication avec biométrie).
+  - Réduction drastique de la friction à l'inscription/connexion.
+  - Transition de l'environnement vers les Development Builds d'Expo (`expo-dev-client`) requise pour le SDK Google natif.
 - [ ] **Internationalisation (i18n)** :
   - Support natif de l'Anglais et du Français.
   - Architecture modulaire facilitant l'ajout ultérieur d'autres langues (Espagnol, Allemand, Italien).
