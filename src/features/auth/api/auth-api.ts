@@ -123,3 +123,9 @@ export const updateUserPassword = async ({
   const { error } = await supabase.auth.updateUser({ password: newPassword });
   if (error) throw new Error(error.message);
 };
+
+export const deleteUser = async () => {
+  const { error } = await supabase.rpc("delete_user");
+  if (error) throw new Error(error.message);
+  else await signOut();
+};

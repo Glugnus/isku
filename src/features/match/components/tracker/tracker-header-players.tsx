@@ -19,7 +19,7 @@ export default function TrackerHeaderPlayer({
       className={`flex-1  items-center ${align === "right" ? "justify-end flex-row-reverse" : "flex-row"}`}
     >
       <View
-        className={`size-3 rounded-full ${align === "right" ? "ml-2" : "mr-2"}  ${!isServing ? "bg-transparent" : playerKey === "p1" ? "bg-primary border-primary" : "bg-secondary border-secondary"}`}
+        className={`size-3 rounded-full ${align === "right" ? "ml-2" : "mr-2"}  ${!isServing ? "bg-transparent" : playerKey === "p1" ? "bg-primary" : "bg-secondary"}`}
       />
 
       <View className={`flex-1  ${align === "right" ? "items-end" : ""}`}>

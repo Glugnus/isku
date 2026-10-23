@@ -8,7 +8,10 @@ import { adaptMatchDetails } from "@/src/features/match/utils/adapt-match-detail
 import { getMatchParticipantsTeams } from "@/src/features/match/utils/match-participants-teams";
 import { useEffect, useState } from "react";
 
-export const useFetchMatchDetails = (matchId: string) => {
+export const useFetchMatchDetails = (
+  matchId: string,
+  { enabled = true }: { enabled?: boolean } = {},
+) => {
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [match, setMatch] = useState<MatchDetails | null>(null);
@@ -16,7 +19,7 @@ export const useFetchMatchDetails = (matchId: string) => {
   const { profile } = useAuthContext();
 
   useEffect(() => {
-    if (matchId) {
+    if (matchId && enabled) {
       const fetchDetailsMatch = async () => {
         setIsFetching(true);
         try {
@@ -36,7 +39,7 @@ export const useFetchMatchDetails = (matchId: string) => {
       };
       fetchDetailsMatch();
     }
-  }, [matchId, profile?.id]);
+  }, [matchId, profile?.id, enabled]);
 
   const { sets, points } = adaptMatchDetails(match?.match_sets || []);
 

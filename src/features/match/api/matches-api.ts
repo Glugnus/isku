@@ -71,7 +71,7 @@ export const deleteMatch = async (matchId: string) => {
   if (error) throw new Error(error.message);
 };
 
-export const getAllMatches = async () => {
+export const getAllMatches = async (profileId: string) => {
   const { data, error } = await supabase
     .from("matches")
     .select(
@@ -91,6 +91,7 @@ export const getAllMatches = async () => {
         )
       )`,
     )
+    .eq("created_by", profileId)
     .order("scheduled_at", { ascending: true });
   if (error) throw new Error(error.message);
   return data;

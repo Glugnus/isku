@@ -15,12 +15,14 @@ export default function StatsTabContent({
   points,
   teams,
   sets,
+  isLiveMatch = false,
 }: {
   mode: "quick" | "umpire";
   tab: string;
   points?: MatchPoint[];
   teams?: MatchTeams | null;
   sets?: MatchSet[];
+  isLiveMatch: boolean;
 }) {
   const {
     setsWon,
@@ -42,27 +44,32 @@ export default function StatsTabContent({
       showsVerticalScrollIndicator={false}
       contentContainerClassName="pb-6"
     >
-      <View className="flex-row justify-between items-center bg-surface py-3 px-4 rounded-xl border border-muted/20 mb-4">
-        <Text
-          className="text-primary font-oswald text-base uppercase flex-1"
-          numberOfLines={1}
-        >
-          {p1Name}
-        </Text>
-        <View className="flex-row items-center gap-x-2 px-3">
-          <Text className="text-primary font-oswald text-lg">{setsWon.p1}</Text>
-          <Text className="text-muted text-sm font-bold">VS</Text>
-          <Text className="text-secondary font-oswald text-lg">
-            {setsWon.p2}
+      {!isLiveMatch && (
+        <View className="flex-row justify-between items-center bg-surface py-3 px-4 rounded-xl border border-muted/20 mb-4">
+          <Text
+            className="text-primary font-oswald text-base uppercase flex-1"
+            numberOfLines={1}
+          >
+            {p1Name}
+          </Text>
+          <View className="flex-row items-center gap-x-2 px-3">
+            <Text className="text-primary font-oswald text-lg">
+              {setsWon.p1}
+            </Text>
+            <Text className="text-muted text-sm font-bold">VS</Text>
+            <Text className="text-secondary font-oswald text-lg">
+              {setsWon.p2}
+            </Text>
+          </View>
+          <Text
+            className="text-secondary font-oswald text-base uppercase flex-1 text-right"
+            numberOfLines={1}
+          >
+            {p2Name}
           </Text>
         </View>
-        <Text
-          className="text-secondary font-oswald text-base uppercase flex-1 text-right"
-          numberOfLines={1}
-        >
-          {p2Name}
-        </Text>
-      </View>
+      )}
+
       <View className="flex-row flex-wrap justify-between">
         {mode === "quick" && (
           <View className="flex-row flex-wrap justify-center gap-x-2 items-center w-full mb-3">

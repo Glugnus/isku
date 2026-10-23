@@ -2,14 +2,18 @@
   "expo": {
     "name": "isku",
     "slug": "isku",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "isku",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "bundleIdentifier": "com.isku.app",
       "supportsTablet": true,
-      "usesAppleSignIn": true
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -18,6 +22,7 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
+      "package": "com.isku.app",
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -64,6 +69,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6d2b18d9-f633-4104-a5f1-c9d4eed7abd5"
+      }
     }
   }
 }

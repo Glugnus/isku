@@ -4,6 +4,7 @@ import StatsTabContent from "@/src/features/match/components/stats/stats-tab-con
 import { StatsTabSelector } from "@/src/features/match/components/stats/stats-tab-selector";
 import { useFetchMatchDetails } from "@/src/features/match/hooks/use-fetch-match-details";
 import { useStatsTabSelector } from "@/src/features/match/hooks/use-stats-tab-selector";
+import { useMatchStore } from "@/src/features/match/store/use-match-store";
 import { colors } from "@/src/lib/colors";
 import { router, useLocalSearchParams } from "expo-router";
 import { BarChart2, ChevronLeft } from "lucide-react-native";
@@ -11,28 +12,40 @@ import { Pressable, Text, View } from "react-native";
 import PagerView from "react-native-pager-view";
 
 export default function StatsScreen() {
+  const {
+    match,
+    sets: setsStore,
+    points: pointsStore,
+    teams: teamsStore,
+  } = useMatchStore();
   const { id: matchId } = useLocalSearchParams<{
     id: string;
   }>();
+  const isLiveMatch = match?.id === matchId && match?.status === "ongoing";
   const {
     isFetching,
     error,
-    teams,
+    teams: teamsApi,
     mode: fetchMode,
-    points,
-    sets,
-    status,
-  } = useFetchMatchDetails(matchId);
+    points: pointsApi,
+    sets: setsApi,
+    status: statusApi,
+  } = useFetchMatchDetails(matchId, { enabled: !isLiveMatch });
+
+  const points = isLiveMatch ? pointsStore : pointsApi;
+  const sets = isLiveMatch ? setsStore : setsApi;
+  const teams = isLiveMatch ? teamsStore : teamsApi;
+  const status = isLiveMatch ? match?.status : statusApi;
+  const mode = isLiveMatch ? match?.mode : fetchMode;
 
   const {
-    mode,
     tabs,
     onTabChange,
     selectedTab,
     pagerRef,
     initialPage,
     onPageSelected,
-  } = useStatsTabSelector({ sets, mode: fetchMode, status });
+  } = useStatsTabSelector({ sets, mode, status });
 
   return (
     <ScreenLayout>
@@ -79,10 +92,11 @@ export default function StatsScreen() {
               <View key={tab} className="flex-1">
                 <StatsTabContent
                   tab={tab}
-                  mode={fetchMode ?? mode!}
+                  mode={mode!}
                   points={points}
                   teams={teams}
                   sets={sets}
+                  isLiveMatch={isLiveMatch}
                 />
               </View>
             ))}
