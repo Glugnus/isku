@@ -71,3 +71,10 @@ export const getProfileMatchData = async (profileId: string) => {
   }
   return data;
 };
+
+export const deleteAvatarProfile = async (userId: string) => {
+  const { error } = await supabase.storage
+    .from("avatars")
+    .remove([`${userId}/avatar`]);
+  if (error) throw new Error("Erreur lors de la suppression de l'avatar.");
+};

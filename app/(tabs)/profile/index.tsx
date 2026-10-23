@@ -1,4 +1,5 @@
 import ScreenLayout from "@/src/components/ui/screen-layout";
+import DeleteUserButton from "@/src/features/auth/components/social-auth-buttons/delete-user-button";
 import SignOutButton from "@/src/features/auth/components/social-auth-buttons/sign-out-button";
 import ProfileHeader from "@/src/features/profile/components/profile-header";
 import ProfileQuickStats from "@/src/features/profile/components/profile-quick-stats";
@@ -10,6 +11,7 @@ export default function ProfileScreen() {
       <ProfileQuickStats />
       {/* <ProfileDonation /> */}
       <SignOutButton />
+      <DeleteUserButton />
     </ScreenLayout>
   );
 }
