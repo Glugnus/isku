@@ -1,0 +1,9 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "home": {
+    "welcome": "Welcome to Isku"
+  }
+}

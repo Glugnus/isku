@@ -1,0 +1,9 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler"
+  },
+  "home": {
+    "welcome": "Bienvenue sur Isku"
+  }
+}
