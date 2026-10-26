@@ -1,4 +1,5 @@
 import "@/global.css";
+import "@/src/lib/i18n/config";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
