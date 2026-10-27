@@ -7,23 +7,35 @@ import fr from "@/src/lib/i18n/locales/fr.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LANGUAGE_KEY = "user-language";
+const DEFAULT_LANGUAGE = "en";
+const resources = {
+  en,
+  fr,
+};
 
 const languageDetector: LanguageDetectorAsyncModule = {
   type: "languageDetector",
   async: true,
   detect: async () => {
     try {
-      const storagedLanguage = await AsyncStorage.getItem(LANGUAGE_KEY);
-      if (storagedLanguage) return storagedLanguage;
-      else return getLocales()[0]?.languageCode ?? "fr";
+      const storedLanguage = await AsyncStorage.getItem(LANGUAGE_KEY);
+      if (storedLanguage) return storedLanguage;
+      const deviceLang = getLocales()[0]?.languageCode;
+      return deviceLang && deviceLang in resources
+        ? deviceLang
+        : DEFAULT_LANGUAGE;
     } catch (err) {
-      console.error(err);
-      return getLocales()[0]?.languageCode ?? "fr";
+      console.error("Failed to detect language", err);
+      return DEFAULT_LANGUAGE;
     }
   },
   init: () => {},
   cacheUserLanguage: async (lng: string) => {
-    await AsyncStorage.setItem(LANGUAGE_KEY, lng);
+    try {
+      await AsyncStorage.setItem(LANGUAGE_KEY, lng);
+    } catch (err) {
+      console.error("Failed to cache user language", err);
+    }
   },
 };
 
@@ -32,14 +44,14 @@ i18next
   .use(initReactI18next)
   .init({
     debug: true,
-    fallbackLng: "en",
+    fallbackLng: DEFAULT_LANGUAGE,
     interpolation: {
       escapeValue: false,
     },
     defaultNS: "common",
-    resources: {
-      en,
-      fr,
+    resources,
+    react: {
+      useSuspense: false,
     },
   });
 

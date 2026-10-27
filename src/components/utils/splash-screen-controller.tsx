@@ -1,5 +1,6 @@
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import useAppFonts from "@/src/hooks/use-app-fonts";
+import { useI18nReady } from "@/src/hooks/use-i18n-ready";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
@@ -8,6 +9,7 @@ SplashScreen.preventAutoHideAsync();
 export function SplashScreenController() {
   const { loaded: fontsReady, error: fontError } = useAppFonts();
   const { isLoading } = useAuthContext();
+  const i18nReady = useI18nReady();
 
   useEffect(() => {
     if (fontError) {
@@ -16,12 +18,12 @@ export function SplashScreenController() {
   }, [fontError]);
 
   useEffect(() => {
-    const isAppReady = (fontsReady || fontError) && !isLoading;
+    const isAppReady = (fontsReady || fontError) && !isLoading && i18nReady;
 
     if (isAppReady) {
       SplashScreen.hideAsync();
     }
-  }, [fontsReady, fontError, isLoading]);
+  }, [fontsReady, fontError, isLoading, i18nReady]);
 
   return null;
 }

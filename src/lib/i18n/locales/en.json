@@ -5,5 +5,11 @@
   },
   "home": {
     "welcome": "Welcome to Isku"
+  },
+  "matches": {
+    "emptyTitle": "No history",
+    "emptyDescription": "You haven't prepared or played any matches yet.",
+    "preparedTitle": "Prepared matches",
+    "completedTitle": "Completed matches"
   }
 }
