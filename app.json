@@ -10,7 +10,6 @@
     "ios": {
       "bundleIdentifier": "com.isku.app",
       "supportsTablet": true,
-      "usesAppleSignIn": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
