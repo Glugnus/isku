@@ -3,9 +3,11 @@ import SelectableCard from "@/src/components/ui/selectable-card";
 import { SPORTS_RULES } from "@/src/features/match/constants/sports-rules";
 import { SetupMatchFormData } from "@/src/features/match/schema/setup-match-schema";
 import { useFormContext, useWatch } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function SetsToWinChoice() {
+  const { t } = useTranslation("match");
   const { setValue, control } = useFormContext<SetupMatchFormData>();
   const { possibleSetsToWin } = SPORTS_RULES["table_tennis"];
 
@@ -16,7 +18,7 @@ export default function SetsToWinChoice() {
 
   return (
     <View className="mb-6">
-      <SectionTitle title="Sets Gagnants" />
+      <SectionTitle title={t("setup.setsToWin")} />
       <View className="flex-row justify-between gap-x-3">
         {possibleSetsToWin.map((currentSetsToWin) => (
           <SelectableCard

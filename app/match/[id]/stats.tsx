@@ -8,10 +8,12 @@ import { useMatchStore } from "@/src/features/match/store/use-match-store";
 import { colors } from "@/src/lib/colors";
 import { router, useLocalSearchParams } from "expo-router";
 import { BarChart2, ChevronLeft } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import PagerView from "react-native-pager-view";
 
 export default function StatsScreen() {
+  const { t } = useTranslation("match");
   const {
     match,
     sets: setsStore,
@@ -70,7 +72,7 @@ export default function StatsScreen() {
                 className="text-white text-xl font-oswald uppercase tracking-widest text-center"
                 numberOfLines={1}
               >
-                Statistiques
+                {t("stats.title")}
               </Text>
             </View>
             <View className="flex-1" />

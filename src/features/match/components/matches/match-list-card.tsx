@@ -12,6 +12,7 @@ import { colors } from "@/src/lib/colors";
 import { router } from "expo-router";
 import { Play, Share2 } from "lucide-react-native";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 export default function MatchListCard({
@@ -21,6 +22,8 @@ export default function MatchListCard({
   match: MatchListItem;
   onDeleted: () => void;
 }) {
+  const { t } = useTranslation("match");
+  const { t: tc } = useTranslation();
   const { profile } = useAuthContext();
   const [showModal, setShowModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -41,7 +44,7 @@ export default function MatchListCard({
       setShowModal(false);
       onDeleted();
     } catch (err) {
-      setError("Une erreur est survenue pendant la suppression du match");
+      setError(t("matches.deleteModal.error"));
       console.error(err);
     } finally {
       setIsDeleting(false);
@@ -92,14 +95,18 @@ export default function MatchListCard({
             {teams.team2Name?.toLocaleUpperCase()}
           </Text>
           <Text className="text-muted text-xs capitalize">
-            Tennis de table • {""}
-            {match.status === "planned" ? "Préparé" : "Terminé"}
+            {tc("sports.table_tennis")} • {""}
+            {match.status === "planned"
+              ? t("matches.status.planned")
+              : t("matches.status.completed")}
           </Text>
         </View>
         <View className="flex-row items-center">
           {match.status === "planned" && (
             <Text className="text-muted text-xs mr-4 font-medium">
-              {match.mode === "quick" ? "Mode rapide" : "Mode arbitre"}
+              {match.mode === "quick"
+                ? t("matches.mode.quick")
+                : t("matches.mode.umpire")}
             </Text>
           )}
           <Pressable
@@ -135,10 +142,9 @@ export default function MatchListCard({
           setShowModal(false);
         }}
         onConfirm={handleDelete}
-        title="Supprimer la rencontre ?"
-        message="Êtes-vous sûr de vouloir supprimer ce match ?"
-        cancelText="Annuler"
-        confirmText="Supprimer"
+        title={t("matches.deleteModal.title")}
+        message={t("matches.deleteModal.message")}
+        confirmText={tc("actions.delete")}
         isLoading={isDeleting}
         error={error}
       />

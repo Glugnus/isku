@@ -1,0 +1,25 @@
+{
+  "setup": {
+    "title": "Nouveau match",
+    "mode": {
+      "singles": "Simple",
+      "doubles": "Double"
+    },
+    "setsCount": "Sets gagnants",
+    "playerPlaceholder": "Joueur {{number}}"
+  },
+  "tracker": {
+    "score": "Score",
+    "service": "Au service",
+    "matchPoint": "Balle de match",
+    "setPoint": "Balle de set",
+    "undoPoint": "Annuler le point"
+  },
+  "summary": {
+    "victory": "Victoire",
+    "defeat": "Défaite",
+    "duration": "Durée : {{minutes}} min",
+    "setsWon_one": "{{count}} set remporté",
+    "setsWon_other": "{{count}} sets remportés"
+  }
+}

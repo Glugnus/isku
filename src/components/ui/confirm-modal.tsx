@@ -1,4 +1,5 @@
 import Button from "@/src/components/ui/button";
+import { useTranslation } from "react-i18next";
 import { Modal, Text, View } from "react-native";
 
 interface ModalProps {
@@ -19,11 +20,14 @@ export default function ConfirmModal({
   onConfirm,
   title,
   message,
-  cancelText = "Annuler",
-  confirmText = "Confirmer",
+  cancelText,
+  confirmText,
   isLoading,
   error = null,
 }: ModalProps) {
+  const { t } = useTranslation();
+  const finalCancelText = cancelText ?? t("actions.cancel");
+  const finalConfirmText = confirmText ?? t("actions.confirm");
   return (
     <Modal
       visible={visible}
@@ -41,14 +45,14 @@ export default function ConfirmModal({
             <Button
               onPress={onClose}
               variant="surface"
-              title={cancelText}
+              title={finalCancelText}
               disabled={isLoading}
             />
             <Button
               onPress={onConfirm}
               isLoading={isLoading}
               variant="danger"
-              title={confirmText}
+              title={finalConfirmText}
             />
           </View>
           {error && (

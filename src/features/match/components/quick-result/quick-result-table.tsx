@@ -4,6 +4,7 @@ import { QuickMatchResult } from "@/src/features/match/utils/quick-result-calcul
 import { colors } from "@/src/lib/colors";
 import { Check } from "lucide-react-native";
 import React, { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 
 interface QuickResultTableProps {
@@ -23,16 +24,17 @@ export default function QuickResultTable({
   scoreSets,
   handleScoreChange,
 }: QuickResultTableProps) {
+  const { t } = useTranslation("match");
   const scrollViewRef = useRef<ScrollView>(null);
 
   return (
     <View className="bg-surface rounded-2xl mt-10 overflow-hidden border border-muted/20">
       <View className="flex-row border-b-2 border-primary/20 bg-background/50 p-3">
         <Text className="text-muted font-bold text-[10px] uppercase w-32">
-          Joueur
+          {t("quickResult.table.player")}
         </Text>
         <Text className="text-muted font-bold text-[10px] uppercase text-center flex-1">
-          Points
+          {t("quickResult.table.points")}
         </Text>
       </View>
       <View className="flex-row p-3">

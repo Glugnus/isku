@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function QuickResultHeader({
@@ -9,14 +10,15 @@ export default function QuickResultHeader({
   p2SetsWon: number;
   winner: "p1" | "p2" | null;
 }) {
+  const { t } = useTranslation("match");
   return (
     <View className="flex-row items-end justify-between mb-6 mt-0">
       <View>
         <Text className="text-sm font-bold text-primary uppercase tracking-wider mb-1">
-          Résultat Rapide
+          {t("quickResult.eyebrow")}
         </Text>
         <Text className="text-2xl text-white font-oswald uppercase tracking-widest">
-          Score Final
+          {t("quickResult.title")}
         </Text>
       </View>
       <View>

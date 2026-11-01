@@ -2,20 +2,23 @@ import { TextLogo } from "@/src/components/ui/text-logo";
 import { colors } from "@/src/lib/colors";
 import { Tabs } from "expo-router";
 import { History, Home, User } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 
 const APP_TABS = [
-  { name: "index", label: "Nouveau", Icon: Home },
+  { name: "index", labelKey: "navigation.new", Icon: Home },
   {
     name: "matches",
-    label: "Mes Matchs",
+    labelKey: "navigation.matches",
     Icon: History,
   },
-  { name: "profile", label: "Profil", Icon: User },
-];
+  { name: "profile", labelKey: "navigation.profile", Icon: User },
+] as const;
 
 const headerTitle = () => <TextLogo width={200} height={38} />;
 
 export default function TabsLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={{
@@ -36,12 +39,12 @@ export default function TabsLayout() {
         tabBarInactiveTintColor: colors.muted,
       }}
     >
-      {APP_TABS.map(({ name, label, Icon }) => (
+      {APP_TABS.map(({ name, labelKey, Icon }) => (
         <Tabs.Screen
           key={name}
           name={name}
           options={{
-            tabBarLabel: label,
+            tabBarLabel: t(labelKey),
             tabBarIcon: ({ color, size }) => <Icon color={color} size={size} />,
           }}
         />

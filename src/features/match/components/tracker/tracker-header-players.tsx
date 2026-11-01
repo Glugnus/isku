@@ -1,4 +1,5 @@
 import { PlayerKey } from "@/src/features/match/types/match.types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function TrackerHeaderPlayer({
@@ -14,6 +15,7 @@ export default function TrackerHeaderPlayer({
   servesLeft: number;
   playerKey: PlayerKey;
 }) {
+  const { t } = useTranslation("match");
   return (
     <View
       className={`flex-1  items-center ${align === "right" ? "justify-end flex-row-reverse" : "flex-row"}`}
@@ -28,7 +30,9 @@ export default function TrackerHeaderPlayer({
             playerKey === "p1" ? "text-primary" : "text-secondary"
           } text-xs font-bold uppercase tracking-wider`}
         >
-          {isServing ? `Service (${servesLeft})` : "Réception"}
+          {isServing
+            ? t("tracker.header.serve", { count: servesLeft })
+            : t("tracker.header.receive")}
         </Text>
         <Text
           className={`${

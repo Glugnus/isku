@@ -6,8 +6,10 @@ import QuickResultHeader from "@/src/features/match/components/quick-result/quic
 import QuickResultTable from "@/src/features/match/components/quick-result/quick-result-table";
 import { useQuickResult } from "@/src/features/match/hooks/use-quick-result";
 import { useLocalSearchParams } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 export default function QuickResultScreen() {
+  const { t } = useTranslation("match");
   const { id: matchId } = useLocalSearchParams<{
     id: string;
   }>();
@@ -40,7 +42,10 @@ export default function QuickResultScreen() {
             scoreSets={scoreSets}
             matchResult={matchResult}
           />
-          <UndoButton onPress={handleUndo} label="Annuler le dernier set" />
+          <UndoButton
+            onPress={handleUndo}
+            label={t("quickResult.undoLastSet")}
+          />
           <QuickResultFooter
             winner={matchResult.matchWinner}
             onPress={handleSaveMatchResult}

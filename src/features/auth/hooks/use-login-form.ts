@@ -1,15 +1,17 @@
 import { resendOtp, signIn } from "@/src/features/auth/api/auth-api";
 import {
+  getLoginSchema,
   LoginFormValues,
-  loginSchema,
 } from "@/src/features/auth/schemas/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export const useLoginForm = () => {
+  const { t } = useTranslation("auth");
   const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(getLoginSchema(t)),
     defaultValues: { email: "", password: "" },
   });
 
@@ -37,7 +39,7 @@ export const useLoginForm = () => {
       }
       form.setError("root", {
         type: "manual",
-        message: "Email ou mot de passe incorrect",
+        message: t("login.errorInvalidCredentials"),
       });
       console.log(err);
     }

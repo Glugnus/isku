@@ -4,6 +4,7 @@ import AuthHeader from "@/src/features/auth/components/auth-header";
 import { useResendOtp } from "@/src/features/auth/hooks/use-resend-otp";
 import { useVerifyOtpForm } from "@/src/features/auth/hooks/use-verify-otp-form";
 import { EmailOtpType } from "@supabase/supabase-js";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function VerifyOtpForm({
@@ -13,6 +14,7 @@ export default function VerifyOtpForm({
   type: EmailOtpType;
   email: string;
 }) {
+  const { t } = useTranslation("auth");
   const { control, onSubmit, errors, isSubmitting } = useVerifyOtpForm({
     type,
     email,
@@ -23,17 +25,17 @@ export default function VerifyOtpForm({
 
   return (
     <>
-      <AuthHeader subtitle="Consultez votre boite mail pour renseigner le code" />
+      <AuthHeader subtitle={t("verifyOtp.subtitle")} />
 
       <View className="my-4">
         <ControlledInput
           control={control}
-          label="Code de vérification"
+          label={t("verifyOtp.codeLabel")}
           name="code"
           variant="secondary"
           keyboardType="number-pad"
           autoCapitalize="none"
-          placeholder="123456"
+          placeholder={t("verifyOtp.codePlaceholder")}
           textContentType="oneTimeCode"
           autoComplete="one-time-code"
           returnKeyType="done"
@@ -53,14 +55,16 @@ export default function VerifyOtpForm({
       <View className="gap-y-6 pb-4">
         <View className="gap-y-2">
           <Button
-            title="Valider"
+            title={t("verifyOtp.submit")}
             variant="primary"
             onPress={onSubmit}
             isLoading={isSubmitting}
           />
           <Button
             title={
-              isRunning ? `Renvoyer dans ${secondsLeft}s` : "Renvoyer le code"
+              isRunning
+                ? t("verifyOtp.resendWait", { seconds: secondsLeft })
+                : t("verifyOtp.resendCode")
             }
             variant="surface"
             onPress={handleResend}

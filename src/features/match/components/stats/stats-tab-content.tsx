@@ -7,6 +7,7 @@ import {
   MatchSet,
   MatchTeams,
 } from "@/src/features/match/types/match.types";
+import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 
 export default function StatsTabContent({
@@ -24,6 +25,7 @@ export default function StatsTabContent({
   sets?: MatchSet[];
   isLiveMatch: boolean;
 }) {
+  const { t } = useTranslation("match");
   const {
     setsWon,
     pointsWon,
@@ -79,7 +81,7 @@ export default function StatsTabContent({
           </View>
         )}
         <StatProgressBar
-          title="Points Gagnés"
+          title={t("stats.metrics.pointsWon")}
           valueP1={pointsWon.p1}
           valueP2={pointsWon.p2}
           isFullWidth={mode === "quick"}
@@ -87,37 +89,37 @@ export default function StatsTabContent({
         {mode === "umpire" && (
           <>
             <StatProgressBar
-              title="Sur son service"
+              title={t("stats.metrics.ownServe")}
               valueP1={pointsWonOnOwnServe.p1}
               valueP2={pointsWonOnOwnServe.p2}
             />
             <StatProgressBar
-              title="Sur service adverse"
+              title={t("stats.metrics.opponentServe")}
               valueP1={pointsWonOnOpponentServe.p1}
               valueP2={pointsWonOnOpponentServe.p2}
             />
             <StatProgressBar
-              title="Plus grande avance"
+              title={t("stats.metrics.maxLead")}
               valueP1={maxLead.p1}
               valueP2={maxLead.p2}
             />
             <StatProgressBar
-              title="Plus longue série"
+              title={t("stats.metrics.longestStreak")}
               valueP1={longestStreak.p1}
               valueP2={longestStreak.p2}
             />
             <StatProgressBar
-              title="Retard remonté"
+              title={t("stats.metrics.deficitOvercome")}
               valueP1={maxDeficitOvercome.p1}
               valueP2={maxDeficitOvercome.p2}
             />
             <StatProgressBar
-              title="Coups gagnants"
+              title={t("stats.metrics.winners")}
               valueP1={winners.p1}
               valueP2={winners.p2}
             />
             <StatProgressBar
-              title="Fautes directes"
+              title={t("stats.metrics.unforcedErrors")}
               valueP1={unforcedErrors.p1}
               valueP2={unforcedErrors.p2}
             />

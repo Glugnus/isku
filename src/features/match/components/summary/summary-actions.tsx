@@ -3,6 +3,7 @@ import { PlayerKey } from "@/src/features/match/types/match.types";
 import { colors } from "@/src/lib/colors";
 import { router } from "expo-router";
 import { BarChart2, Home, Share2 } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function SummaryActions({
@@ -14,10 +15,11 @@ export default function SummaryActions({
   resetMatch: () => void;
   profilePosition: PlayerKey;
 }) {
+  const { t } = useTranslation("match");
   return (
     <View className="w-full flex-col gap-4 mb-6">
       <Button
-        title="Statistiques du match"
+        title={t("summary.actions.stats")}
         variant="ghost"
         leftIcon={
           <BarChart2
@@ -33,7 +35,7 @@ export default function SummaryActions({
         }
       />
       <Button
-        title="Partager le résultat"
+        title={t("summary.actions.share")}
         variant="ghost"
         onPress={() =>
           router.push({
@@ -49,7 +51,7 @@ export default function SummaryActions({
         }
       />
       <Button
-        title="Retour à l'accueil"
+        title={t("summary.actions.backHome")}
         variant={profilePosition === "p1" ? "primary" : "secondary"}
         leftIcon={
           <Home

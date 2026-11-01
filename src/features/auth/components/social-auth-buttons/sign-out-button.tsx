@@ -1,24 +1,26 @@
 import Button from "@/src/components/ui/button";
+import { useSignOut } from "@/src/features/auth/hooks/use-sign-out";
 import { colors } from "@/src/lib/colors";
-import { supabase } from "@/src/lib/supabase";
 import { LogOut } from "lucide-react-native";
-
-async function onSignOutButtonPress() {
-  const { error } = await supabase.auth.signOut();
-
-  if (error) {
-    console.error("Error signing out:", error);
-  }
-}
+import { useTranslation } from "react-i18next";
+import { Text, View } from "react-native";
 
 export default function SignOutButton() {
+  const { t } = useTranslation();
+  const { handleSignOut, isLoading, error } = useSignOut();
   return (
-    <Button
-      title="Se déconnecter"
-      variant="danger"
-      leftIcon={<LogOut color={colors.danger} size={18} />}
-      onPress={onSignOutButtonPress}
-      size="md"
-    />
+    <View>
+      <Button
+        title={t("actions.signOut")}
+        variant="danger"
+        leftIcon={<LogOut color={colors.danger} size={18} />}
+        onPress={handleSignOut}
+        isLoading={isLoading}
+        size="md"
+      />
+      {error && (
+        <Text className="text-danger text-xs text-center mt-2">{error}</Text>
+      )}
+    </View>
   );
 }

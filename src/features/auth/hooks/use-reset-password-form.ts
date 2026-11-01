@@ -1,15 +1,17 @@
 import { signOut, updateUserPassword } from "@/src/features/auth/api/auth-api";
 import {
-  resetPasswordFormSchema,
+  getResetPasswordFormSchema,
   ResetPasswordFormValues,
 } from "@/src/features/auth/schemas/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export const useResetPasswordForm = () => {
+  const { t } = useTranslation("auth");
   const form = useForm<ResetPasswordFormValues>({
-    resolver: zodResolver(resetPasswordFormSchema),
+    resolver: zodResolver(getResetPasswordFormSchema(t)),
     defaultValues: {
       password: "",
       confirmPassword: "",
@@ -29,13 +31,13 @@ export const useResetPasswordForm = () => {
       ) {
         form.setError("root", {
           type: "manual",
-          message: "Le nouveau mot de passe doit être différent de l'ancien",
+          message: t("resetPassword.errorSamePassword"),
         });
         return;
       }
       form.setError("root", {
         type: "manual",
-        message: "Erreur lors de la modification du mot de passe",
+        message: t("resetPassword.errorGeneric"),
       });
       console.log(err);
     }

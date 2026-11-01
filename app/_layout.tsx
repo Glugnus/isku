@@ -1,12 +1,11 @@
 import "@/global.css";
-import "@/src/lib/i18n/config";
-import { Stack, useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-
 import { SplashScreenController } from "@/src/components/utils/splash-screen-controller";
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import AuthProvider from "@/src/features/auth/providers/auth-provider";
 import { useMatchStore } from "@/src/features/match/store/use-match-store";
+import "@/src/lib/i18n/config";
+import { Stack, useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 

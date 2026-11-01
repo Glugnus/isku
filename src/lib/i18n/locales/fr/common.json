@@ -1,0 +1,36 @@
+{
+  "navigation": {
+    "new": "Nouveau",
+    "matches": "Mes Matchs",
+    "profile": "Profil"
+  },
+  "actions": {
+    "retry": "Réessayer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "delete": "Supprimer",
+    "signOut": "Se déconnecter",
+    "save": "Enregistrer"
+  },
+  "fields": {
+    "email": {
+      "label": "Email",
+      "placeholder": "votre@email.com"
+    },
+    "password": {
+      "label": "Mot de passe",
+      "placeholder": "********"
+    },
+    "username": {
+      "label": "Pseudo",
+      "placeholder": "Votre pseudo"
+    },
+    "confirmPassword": {
+      "label": "Confirmer le mot de passe",
+      "placeholder": "********"
+    }
+  },
+  "sports": {
+    "table_tennis": "Tennis de table"
+  }
+}

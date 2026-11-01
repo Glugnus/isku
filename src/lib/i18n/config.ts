@@ -1,17 +1,11 @@
+import { defaultNS, LanguageCode, resources } from "@/src/lib/i18n/locales";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getLocales } from "expo-localization";
 import i18next, { LanguageDetectorAsyncModule } from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import en from "@/src/lib/i18n/locales/en.json";
-import fr from "@/src/lib/i18n/locales/fr.json";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 const LANGUAGE_KEY = "user-language";
-const DEFAULT_LANGUAGE = "en";
-const resources = {
-  en,
-  fr,
-};
+const DEFAULT_LANGUAGE: LanguageCode = "en";
 
 const languageDetector: LanguageDetectorAsyncModule = {
   type: "languageDetector",
@@ -19,8 +13,10 @@ const languageDetector: LanguageDetectorAsyncModule = {
   detect: async () => {
     try {
       const storedLanguage = await AsyncStorage.getItem(LANGUAGE_KEY);
-      if (storedLanguage) return storedLanguage;
-      const deviceLang = getLocales()[0]?.languageCode;
+      if (storedLanguage && storedLanguage in resources) return storedLanguage;
+      const deviceLang = getLocales()[0]?.languageCode as
+        | LanguageCode
+        | undefined;
       return deviceLang && deviceLang in resources
         ? deviceLang
         : DEFAULT_LANGUAGE;
@@ -48,7 +44,7 @@ i18next
     interpolation: {
       escapeValue: false,
     },
-    defaultNS: "common",
+    defaultNS,
     resources,
     react: {
       useSuspense: false,

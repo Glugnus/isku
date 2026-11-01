@@ -2,9 +2,11 @@ import ScreenLayout from "@/src/components/ui/screen-layout";
 import SummaryActions from "@/src/features/match/components/summary/summary-actions";
 import SummaryCard from "@/src/features/match/components/summary/summary-card";
 import { useSummary } from "@/src/features/match/hooks/use-summary";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function SummaryScreen() {
+  const { t } = useTranslation("match");
   const {
     profileIsWinner,
     p1SetsWon,
@@ -23,10 +25,10 @@ export default function SummaryScreen() {
             <Text
               className={`text-sm font-bold uppercase tracking-wider mb-1 ${profilePosition === "p1" ? "text-primary" : "text-secondary"}`}
             >
-              Bien joué !
+              {t("summary.wellPlayed")}
             </Text>
             <Text className="text-2xl font-oswald uppercase tracking-widest text-white">
-              Résultat Final
+              {t("summary.title")}
             </Text>
             <View
               className={`h-1 w-16 ${profilePosition === "p1" ? "bg-primary" : "bg-secondary"} rounded-full mt-1`}
@@ -48,7 +50,7 @@ export default function SummaryScreen() {
       ) : (
         <View className="h-60 justify-center items-center">
           <Text className="text-muted text-xs text-center">
-            Impossible de récupérer le match.
+            {t("summary.error")}
           </Text>
         </View>
       )}

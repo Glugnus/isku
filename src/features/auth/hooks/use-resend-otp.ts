@@ -5,6 +5,7 @@ import {
 import { useCountdown } from "@/src/hooks/use-countdown";
 import { EmailOtpType } from "@supabase/supabase-js";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useResendOtp = ({
   type,
@@ -13,6 +14,7 @@ export const useResendOtp = ({
   type: EmailOtpType;
   email: string;
 }) => {
+  const { t } = useTranslation("auth");
   const [isResending, setIsResending] = useState(false);
   const [message, setMessage] = useState("");
   const { secondsLeft, isRunning, start } = useCountdown();
@@ -29,10 +31,10 @@ export const useResendOtp = ({
         await resendOtp({ type: resendType, email });
       }
       start(60);
-      setMessage("Code envoyé avec succès");
+      setMessage(t("verifyOtp.codeSentSuccess"));
     } catch (err) {
       console.log(err);
-      setMessage("Erreur lors de l'envoi du code");
+      setMessage(t("verifyOtp.errorSendCode"));
     } finally {
       setIsResending(false);
       setTimeout(() => {

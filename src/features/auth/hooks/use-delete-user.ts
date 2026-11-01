@@ -2,8 +2,10 @@ import { deleteUser } from "@/src/features/auth/api/auth-api";
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import { deleteAvatarProfile } from "@/src/features/profile/api/profile-api";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useDeleteUser = () => {
+  const { t } = useTranslation("auth");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { profile } = useAuthContext();
@@ -17,12 +19,11 @@ export const useDeleteUser = () => {
       try {
         await deleteAvatarProfile(profile.id);
       } catch (error) {
-        console.log("Erreur lors de la suppression de l'avatar.");
         console.error(error);
       }
       await deleteUser();
     } catch (err) {
-      setError("Erreur lors de la suppression du compte.");
+      setError(t("deleteAccount.error"));
       console.error(err);
     } finally {
       setIsLoading(false);

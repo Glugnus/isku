@@ -1,14 +1,17 @@
 import { ProfileStatsProvider } from "@/src/features/profile/providers/profile-stats-provider";
 import { colors } from "@/src/lib/colors";
-import TopTabs from "expo-router/js-top-tabs";
+import { TopTabs } from "expo-router/js-top-tabs";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 const PROFILE_TABS = [
-  { name: "index", title: "APERÇU" },
-  { name: "statistics", title: "STATS" },
-];
+  { name: "index", titleKey: "tabs.overview" },
+  { name: "statistics", titleKey: "tabs.statistics" },
+] as const;
 
 export default function ProfileLayout() {
+  const { t } = useTranslation("profile");
+
   return (
     <View className="flex-1 bg-background">
       <ProfileStatsProvider>
@@ -25,7 +28,7 @@ export default function ProfileLayout() {
             <TopTabs.Screen
               key={tab.name}
               name={tab.name}
-              options={{ title: tab.title }}
+              options={{ title: t(tab.titleKey) }}
             />
           ))}
         </TopTabs>

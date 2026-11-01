@@ -1,15 +1,17 @@
 import { resetPasswordForEmail } from "@/src/features/auth/api/auth-api";
 import {
   ForgotPasswordFormValues,
-  forgotPasswordSchema,
+  getForgotPasswordSchema,
 } from "@/src/features/auth/schemas/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export const useForgotPasswordForm = () => {
+  const { t } = useTranslation("auth");
   const form = useForm<ForgotPasswordFormValues>({
-    resolver: zodResolver(forgotPasswordSchema),
+    resolver: zodResolver(getForgotPasswordSchema(t)),
     defaultValues: { email: "" },
   });
 
@@ -26,7 +28,7 @@ export const useForgotPasswordForm = () => {
     } catch (err) {
       form.setError("root", {
         type: "manual",
-        message: "Erreur lors de l'envoi du code",
+        message: t("forgotPassword.errorSendCode"),
       });
       console.log(err);
     }

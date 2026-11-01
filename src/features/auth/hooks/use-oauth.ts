@@ -4,11 +4,15 @@ import { extractParamsFromUrl } from "@/src/features/auth/utils/extract-params-f
 import { Provider } from "@supabase/supabase-js";
 import * as WebBrowser from "expo-web-browser";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useOAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation("auth");
 
   async function signInWithProvider(provider: Provider) {
+    setError(null);
     try {
       setIsLoading(true);
       const oauthUrl = await signInWithOAuth(provider);
@@ -29,6 +33,7 @@ export const useOAuth = () => {
       }
     } catch (err) {
       console.error(err);
+      setError(t("errors.oauthUrl"));
     } finally {
       setIsLoading(false);
     }
@@ -41,5 +46,5 @@ export const useOAuth = () => {
       WebBrowser.coolDownAsync();
     };
   }, []);
-  return { signInWithProvider, isLoading };
+  return { signInWithProvider, isLoading, error };
 };
