@@ -3,15 +3,20 @@ import { ReactNode } from "react";
 import {
   ActivityIndicator,
   Pressable,
+  PressableProps,
   Text,
-  TouchableOpacityProps,
 } from "react-native";
 
-interface ButtonProps extends TouchableOpacityProps {
+interface ButtonProps extends PressableProps {
   title: string;
   isLoading?: boolean;
   variant?:
-    "primary" | "secondary" | "neutral" | "surface" | "danger" | "ghost";
+    | "primary"
+    | "secondary"
+    | "neutral"
+    | "surface"
+    | "danger"
+    | "ghost";
   disabled?: boolean;
   leftIcon?: ReactNode;
   size?: "sm" | "md" | "lg" | "xl";

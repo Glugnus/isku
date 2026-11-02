@@ -3,7 +3,7 @@ import { SetScore } from "@/src/features/match/types/match.types";
 import { QuickMatchResult } from "@/src/features/match/utils/quick-result-calculator";
 import { colors } from "@/src/lib/colors";
 import { Check } from "lucide-react-native";
-import React, { useRef } from "react";
+import React, { ComponentRef, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, Text, View } from "react-native";
 
@@ -25,7 +25,7 @@ export default function QuickResultTable({
   handleScoreChange,
 }: QuickResultTableProps) {
   const { t } = useTranslation("match");
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useRef<ComponentRef<typeof ScrollView>>(null);
 
   return (
     <View className="bg-surface rounded-2xl mt-10 overflow-hidden border border-muted/20">

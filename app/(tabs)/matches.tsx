@@ -31,7 +31,9 @@ export default function MatchesScreen() {
           return <MatchListCard match={item} onDeleted={getMatches} />;
         }}
         ListEmptyComponent={
-          isLoading ? null : <MatchesEmptyState error={error ?? undefined} />
+          isLoading ? undefined : (
+            <MatchesEmptyState error={error ?? undefined} />
+          )
         }
       />
     </ScreenLayout>
