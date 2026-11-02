@@ -15,11 +15,11 @@ import {
   countPointsWonOnOwnServe,
   countUnforcedErrorsPoints,
   countWinnersPoints,
-  filterPointsByTab,
+  filterPointsBySet,
 } from "@/src/features/match/utils/stats-calculator";
 
 export const useStats = (
-  tab: string,
+  setNumber?: number,
   override?: {
     points?: MatchPoint[];
     teams?: MatchTeams | null;
@@ -32,7 +32,7 @@ export const useStats = (
   const teams = override?.teams ?? store.teams;
   const sets = override?.sets ?? store.sets;
 
-  const filteredPoints = filterPointsByTab(tab, points);
+  const filteredPoints = filterPointsBySet(setNumber, points);
 
   const { p1SetsWon, p2SetsWon } = calculateMatchScore(sets);
 

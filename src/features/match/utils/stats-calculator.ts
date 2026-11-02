@@ -1,12 +1,11 @@
 import { MatchPoint, PlayerKey } from "@/src/features/match/types/match.types";
 
-export const filterPointsByTab = (tab: string, points: MatchPoint[]) => {
-  if (tab === "Match") return points;
-  if (tab.startsWith("Set ")) {
-    const setNumber = parseInt(tab.split(" ")[1], 10);
-    return points.filter((p) => p.setNumber === setNumber);
-  }
-  return points;
+export const filterPointsBySet = (
+  setNumber: number | undefined,
+  points: MatchPoint[],
+) => {
+  if (!setNumber) return points;
+  return points.filter((p) => p.setNumber === setNumber);
 };
 
 export const countPointsWon = (points: MatchPoint[], player: PlayerKey) =>

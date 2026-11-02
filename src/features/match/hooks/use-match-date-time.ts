@@ -1,8 +1,10 @@
+import { SetupMatchFormData } from "@/src/features/match/schema/setup-match-schema";
 import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { SetupMatchFormData } from "@/src/features/match/schema/setup-match-schema";
+import { useTranslation } from "react-i18next";
 
 export default function useMatchDateTime() {
+  const { i18n } = useTranslation();
   const { control, setValue } = useFormContext<SetupMatchFormData>();
   const [pickerMode, setPickerMode] = useState<"date" | "time" | null>(null);
 
@@ -12,7 +14,7 @@ export default function useMatchDateTime() {
   });
 
   const formatedDate = scheduledAt
-    ? scheduledAt.toLocaleDateString("fr-FR", {
+    ? scheduledAt.toLocaleDateString(i18n.language, {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -20,9 +22,10 @@ export default function useMatchDateTime() {
     : "";
 
   const formatedTime = scheduledAt
-    ? scheduledAt.toLocaleTimeString("fr-FR", {
+    ? scheduledAt.toLocaleTimeString(i18n.language, {
         hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       })
     : "";
 

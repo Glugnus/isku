@@ -12,14 +12,14 @@ import { ScrollView, Text, View } from "react-native";
 
 export default function StatsTabContent({
   mode,
-  tab,
+  setNumber,
   points,
   teams,
   sets,
   isLiveMatch = false,
 }: {
   mode: "quick" | "umpire";
-  tab: string;
+  setNumber?: number;
   points?: MatchPoint[];
   teams?: MatchTeams | null;
   sets?: MatchSet[];
@@ -39,7 +39,7 @@ export default function StatsTabContent({
     scoreEvolution,
     p1Name,
     p2Name,
-  } = useStats(tab, { points, teams, sets });
+  } = useStats(setNumber, { points, teams, sets });
 
   return (
     <ScrollView

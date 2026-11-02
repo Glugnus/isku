@@ -43,7 +43,7 @@ export default function StatsScreen() {
   const {
     tabs,
     onTabChange,
-    selectedTab,
+    selectedTabKey,
     pagerRef,
     initialPage,
     onPageSelected,
@@ -80,7 +80,7 @@ export default function StatsScreen() {
           {mode === "umpire" && (
             <StatsTabSelector
               tabs={tabs}
-              selectedTab={selectedTab}
+              selectedTabKey={selectedTabKey}
               onTabChange={onTabChange}
             />
           )}
@@ -91,9 +91,9 @@ export default function StatsScreen() {
             initialPage={initialPage}
           >
             {tabs.map((tab) => (
-              <View key={tab} className="flex-1">
+              <View key={tab.key} className="flex-1">
                 <StatsTabContent
-                  tab={tab}
+                  setNumber={tab.setNumber}
                   mode={mode!}
                   points={points}
                   teams={teams}

@@ -4,6 +4,10 @@
       "planned": "Planned",
       "completed": "Completed"
     },
+    "sections": {
+      "planned": "Planned matches",
+      "completed": "Completed matches"
+    },
     "mode": {
       "quick": "Quick mode",
       "umpire": "Umpire mode"
@@ -66,6 +70,10 @@
     "chart": {
       "title": "Score progression",
       "empty": "No points recorded in this set."
+    },
+    "tabs": {
+      "match": "Match",
+      "set": "Set {{number}}"
     },
     "metrics": {
       "pointsWon": "Points won",
@@ -140,5 +148,12 @@
         "confirm": "Yes, abandon"
       }
     }
+  },
+  "errors": {
+    "fetchMatchDetails": "Error while retrieving match details",
+    "fetchMatch": "Error while retrieving match",
+    "saveSets": "Error while saving sets",
+    "createMatch": "Error while creating match",
+    "updateMatch": "Error while updating match"
   }
 }

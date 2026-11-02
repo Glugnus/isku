@@ -24,7 +24,7 @@ export default function HighlightStoryTemplate({
   const { sets, points } = adaptMatchDetails(match.match_sets);
   const profilePosition = teams?.currentProfilePosition;
 
-  const stats = useStats("Match", { points, teams, sets });
+  const stats = useStats(undefined, { points, teams, sets });
   const oppPosition = stats.profilePosition === "p1" ? "p2" : "p1";
 
   const hasWon =

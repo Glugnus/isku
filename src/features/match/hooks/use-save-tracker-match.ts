@@ -6,8 +6,10 @@ import {
 import { useMatchStore } from "@/src/features/match/store/use-match-store";
 import { router } from "expo-router";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useSaveTrackerMatch = () => {
+  const { t } = useTranslation("match");
   const { sets, points, match, updateMatchStatus } = useMatchStore();
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -44,7 +46,7 @@ export const useSaveTrackerMatch = () => {
           params: { id: match.id },
         });
       } catch (err) {
-        setSaveError("Erreur lors de l'enregistrement des sets");
+        setSaveError(t("errors.saveSets"));
         console.log(err);
       } finally {
         setIsSaving(false);

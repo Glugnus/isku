@@ -3,8 +3,10 @@ import { getMatch } from "@/src/features/match/api/matches-api";
 import { Match, MatchTeams } from "@/src/features/match/types/match.types";
 import { getMatchParticipantsTeams } from "@/src/features/match/utils/match-participants-teams";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useFetchMatch = (matchId: string) => {
+  const { t } = useTranslation("match");
   const { profile } = useAuthContext();
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +26,7 @@ export const useFetchMatch = (matchId: string) => {
           setMatch(match);
           setTeams(teams);
         } catch (err) {
-          setError("Erreur lors de la récupération du match");
+          setError(t("errors.fetchMatch"));
           console.log(err);
         } finally {
           setIsFetching(false);
@@ -32,7 +34,7 @@ export const useFetchMatch = (matchId: string) => {
       };
       fetchMatch();
     }
-  }, [matchId, profile?.id]);
+  }, [matchId, profile?.id, t]);
 
   return { isFetching, error, match, teams };
 };

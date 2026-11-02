@@ -20,8 +20,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export const useSetupForm = () => {
+  const { t } = useTranslation("match");
   const { id: matchId } = useLocalSearchParams<{ id?: string }>();
   const { profile } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -73,7 +75,7 @@ export const useSetupForm = () => {
         } catch (err) {
           form.setError("root", {
             type: "manual",
-            message: "Erreur lors de la récupération du match",
+            message: t("errors.fetchMatch"),
           });
           console.log(err);
         } finally {
@@ -82,7 +84,7 @@ export const useSetupForm = () => {
       };
       fetchMatch();
     }
-  }, [matchId, profile?.id, form]);
+  }, [matchId, profile?.id, form, t]);
 
   useEffect(() => {
     if (!matchId && profile?.username) {
@@ -135,9 +137,7 @@ export const useSetupForm = () => {
     } catch (err) {
       form.setError("root", {
         type: "manual",
-        message: matchId
-          ? "Erreur lors de la mise à jour du match"
-          : "Erreur lors de la création du match",
+        message: matchId ? t("errors.updateMatch") : t("errors.createMatch"),
       });
       console.log(err);
     }

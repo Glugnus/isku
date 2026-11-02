@@ -1,7 +1,12 @@
 import { useMatchStore } from "@/src/features/match/store/use-match-store";
-import { MatchDetails, MatchSet } from "@/src/features/match/types/match.types";
+import {
+  MatchDetails,
+  MatchSet,
+  StatsTab,
+} from "@/src/features/match/types/match.types";
 import { useLocalSearchParams } from "expo-router";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import PagerView, {
   PagerViewOnPageSelectedEvent,
 } from "react-native-pager-view";
@@ -11,8 +16,8 @@ export const useStatsTabSelector = (override?: {
   mode?: MatchDetails["mode"];
   status?: string;
 }) => {
+  const { t } = useTranslation("match");
   const store = useMatchStore();
-
   const match = store.match;
 
   const sets = override?.sets ?? store.sets;
@@ -21,36 +26,42 @@ export const useStatsTabSelector = (override?: {
 
   const { currentSet } = useLocalSearchParams<{ currentSet: string }>();
   const totalSetsCount = status === "completed" ? sets.length : sets.length + 1;
-  const tabs = [
-    "Match",
-    ...Array.from({ length: totalSetsCount }, (_, i) => `Set ${i + 1}`),
+  const tabs: StatsTab[] = [
+    { key: "match", label: t("stats.tabs.match") },
+    ...Array.from({ length: totalSetsCount }, (_, i) => ({
+      key: `set-${i + 1}`,
+      label: t("stats.tabs.set", { number: i + 1 }),
+      setNumber: i + 1,
+    })),
   ];
 
-  const targetTab = currentSet ? `Set ${currentSet}` : null;
-  const initialTab =
-    targetTab && tabs.includes(targetTab) ? targetTab : tabs[0];
+  const targetTabKey = currentSet ? `set-${currentSet}` : null;
+  const initialTabKey =
+    targetTabKey && tabs.some((t) => t.key === targetTabKey)
+      ? targetTabKey
+      : tabs[0].key;
 
-  const [selectedTab, setSelectedTab] = useState(initialTab);
+  const [selectedTabKey, setSelectedTabKey] = useState(initialTabKey);
 
   const pagerRef = useRef<PagerView>(null);
 
-  const onTabChange = (tab: string) => {
+  const onTabChange = (tab: StatsTab) => {
     const index = tabs.indexOf(tab);
     pagerRef.current?.setPage(index);
-    setSelectedTab(tab);
+    setSelectedTabKey(tab.key);
   };
 
   const onPageSelected = (e: PagerViewOnPageSelectedEvent) => {
-    setSelectedTab(tabs[e.nativeEvent.position]);
+    setSelectedTabKey(tabs[e.nativeEvent.position].key);
   };
 
-  const initialPage = tabs.indexOf(selectedTab);
+  const initialPage = tabs.findIndex((t) => t.key === selectedTabKey);
 
   return {
     tabs,
-    selectedTab,
+    selectedTabKey,
     pagerRef,
-    setSelectedTab,
+    setSelectedTabKey,
     onTabChange,
     mode,
     initialPage,
