@@ -6,9 +6,11 @@ import {
 import { decode } from "base64-arraybuffer";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert } from "react-native";
 
 export const useUploadAvatar = () => {
+  const { t } = useTranslation("profile");
   const { profile, refreshProfile } = useAuthContext();
   const [image, setImage] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -19,10 +21,7 @@ export const useUploadAvatar = () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
-      Alert.alert(
-        "Permission requise",
-        "Nous avons besoin de votre autorisation pour accéder à vos photos.",
-      );
+      Alert.alert(t("avatar.permissionTitle"), t("avatar.permissionMessage"));
       return;
     }
 
@@ -47,7 +46,7 @@ export const useUploadAvatar = () => {
       await updateProfile(profile?.id, { avatar_url: publicUrl });
       await refreshProfile();
     } catch (err) {
-      setError("Erreur lors de l'upload de l'avatar.");
+      setError(t("errors.uploadAvatar"));
       console.log(err);
     } finally {
       setUploading(false);

@@ -1,4 +1,5 @@
 import { MatchDetails } from "@/src/features/match/types/match.types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 interface StoryScoresSetsProps {
@@ -12,6 +13,7 @@ export default function StoryScoresSets({
   isUserP1,
   hasWon,
 }: StoryScoresSetsProps) {
+  const { t } = useTranslation("stories");
   const profileColor = hasWon ? "text-primary" : "text-secondary";
 
   return (
@@ -32,7 +34,7 @@ export default function StoryScoresSets({
             }`}
           >
             <Text className="text-muted text-[9px] font-bold tracking-wider uppercase mb-0.5">
-              Set {set.set_number}
+              {t("sets.setLabel", { number: set.set_number })}
             </Text>
             <View className="flex-row items-center gap-1">
               <Text

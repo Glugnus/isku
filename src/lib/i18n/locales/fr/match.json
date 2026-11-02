@@ -67,6 +67,7 @@
   },
   "stats": {
     "title": "Statistiques",
+    "playerFallback": "Joueur {{number}}",
     "chart": {
       "title": "Évolution du score",
       "empty": "Aucun point enregistré dans ce set."
@@ -155,5 +156,8 @@
     "saveSets": "Erreur lors de l'enregistrement des sets",
     "createMatch": "Erreur lors de la création du match",
     "updateMatch": "Erreur lors de la mise à jour du match"
+  },
+  "validation": {
+    "nameRequired": "Le nom est requis"
   }
 }

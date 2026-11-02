@@ -24,9 +24,8 @@ export const uploadAvatarToStorage = async (
       contentType: "image/jpeg",
       upsert: true,
     });
-  if (error) {
-    throw new Error("Erreur lors de l'upload de l'avatar.");
-  }
+  if (error) throw new Error(error.message);
+
   const { data } = supabase.storage
     .from("avatars")
     .getPublicUrl(`${userId}/avatar`);
@@ -42,9 +41,7 @@ export const updateProfile = async (
     .from("profiles")
     .update(updates)
     .eq("id", userId);
-  if (error) {
-    throw new Error("Erreur lors de la mise à jour du profil.");
-  }
+  if (error) throw new Error(error.message);
 };
 
 export const getProfileMatchData = async (profileId: string) => {
@@ -66,9 +63,7 @@ export const getProfileMatchData = async (profileId: string) => {
       `,
     )
     .eq("profile_id", profileId);
-  if (error) {
-    throw new Error("Erreur lors de la récupération des données des matchs.");
-  }
+  if (error) throw new Error(error.message);
   return data;
 };
 
@@ -76,5 +71,5 @@ export const deleteAvatarProfile = async (userId: string) => {
   const { error } = await supabase.storage
     .from("avatars")
     .remove([`${userId}/avatar`]);
-  if (error) throw new Error("Erreur lors de la suppression de l'avatar.");
+  if (error) throw new Error(error.message);
 };

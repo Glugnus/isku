@@ -2,5 +2,50 @@
   "tabs": {
     "overview": "Overview",
     "statistics": "Stats"
+  },
+  "header": {
+    "usernameFallback": "My profile"
+  },
+  "editUsernameModal": {
+    "title": "Edit username",
+    "placeholder": "New username"
+  },
+  "quickStats": {
+    "cards": {
+      "wins": "Wins",
+      "winRate": "Win rate",
+      "stories": "Stories"
+    },
+    "global": {
+      "title": "Overall record",
+      "completedMatches": "Completed matches",
+      "lostMatches": "Matches lost",
+      "setsPlayed": "Sets played",
+      "pendingMatches": "Pending matches"
+    }
+  },
+  "stats": {
+    "service": {
+      "title": "Serve & return",
+      "ownServe": "On own serve",
+      "return": "On return"
+    },
+    "performance": {
+      "title": "Performance",
+      "winners": "Winners",
+      "unforcedErrors": "Unforced errors",
+      "maxLead": "Biggest lead",
+      "longestStreak": "Longest streak (points)",
+      "maxDeficit": "Max deficit overcome"
+    }
+  },
+  "avatar": {
+    "permissionTitle": "Permission required",
+    "permissionMessage": "We need your permission to access your photos."
+  },
+  "errors": {
+    "fetchMatchData": "Error while retrieving match data",
+    "updateUsername": "Error while updating username",
+    "uploadAvatar": "Error while uploading avatar"
   }
 }

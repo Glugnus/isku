@@ -3,10 +3,10 @@ import { useContext } from "react";
 
 export const useProfileStatsContext = () => {
   const context = useContext(ProfileStatsContext);
-  if (!context) {
+  if (!context)
     throw new Error(
       "useProfileStatsContext must be used within a ProfileStatsProvider",
     );
-  }
+
   return context;
 };

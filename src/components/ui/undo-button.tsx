@@ -1,5 +1,6 @@
 import { colors } from "@/src/lib/colors";
 import { Undo2 } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { Text, TouchableOpacity } from "react-native";
 
 interface UndoButtonProps {
@@ -7,10 +8,9 @@ interface UndoButtonProps {
   label?: string;
 }
 
-export default function UndoButton({
-  onPress,
-  label = "Annuler",
-}: UndoButtonProps) {
+export default function UndoButton({ onPress, label }: UndoButtonProps) {
+  const { t } = useTranslation();
+  const labelText = label ?? t("actions.cancel");
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -19,7 +19,7 @@ export default function UndoButton({
     >
       <Undo2 size={16} color={colors.neutral} />
       <Text className="font-oswald text-sm text-neutral uppercase tracking-wider">
-        {label}
+        {labelText}
       </Text>
     </TouchableOpacity>
   );

@@ -1,25 +1,49 @@
 {
-  "setup": {
-    "title": "Nouveau match",
-    "mode": {
-      "singles": "Simple",
-      "doubles": "Double"
+  "header": {
+    "title": "Story Studio"
+  },
+  "selector": {
+    "scorecard": "Result",
+    "highlight": "Key stats"
+  },
+  "quickStats": {
+    "biggestMargin": "Biggest margin",
+    "inASet": "In a set",
+    "pointsScored": "Points scored",
+    "pointsConceded": "Points conceded"
+  },
+  "umpireStats": {
+    "pointEfficiency": "Point efficiency",
+    "onServe": "On serve",
+    "onReturn": "On return",
+    "winners": "Winners",
+    "unforcedErrors": "Unforced errors"
+  },
+  "sets": {
+    "setLabel": "Set {{number}}"
+  },
+  "footer": {
+    "setsToWin_one": "First to {{count}} set",
+    "setsToWin_other": "First to {{count}} sets"
+  },
+  "share": {
+    "dialogTitle": "Share my ISKU story"
+  },
+  "errors": {
+    "shareStory": "An error occurred while sharing the story"
+  },
+  "templates": {
+    "playerFallback": "Player {{number}}",
+    "highlight": {
+      "victory": "★ Huge win!",
+      "defeat": "Epic battle"
     },
-    "setsCount": "Sets gagnants",
-    "playerPlaceholder": "Joueur {{number}}"
-  },
-  "tracker": {
-    "score": "Score",
-    "service": "Au service",
-    "matchPoint": "Balle de match",
-    "setPoint": "Balle de set",
-    "undoPoint": "Annuler le point"
-  },
-  "summary": {
-    "victory": "Victoire",
-    "defeat": "Défaite",
-    "duration": "Durée : {{minutes}} min",
-    "setsWon_one": "{{count}} set remporté",
-    "setsWon_other": "{{count}} sets remportés"
+    "matchDay": {
+      "header": "Upcoming match"
+    },
+    "scorecard": {
+      "victory": "Victory",
+      "defeat": "Defeat"
+    }
   }
 }

@@ -67,6 +67,7 @@
   },
   "stats": {
     "title": "Statistics",
+    "playerFallback": "Player {{number}}",
     "chart": {
       "title": "Score progression",
       "empty": "No points recorded in this set."
@@ -155,5 +156,8 @@
     "saveSets": "Error while saving sets",
     "createMatch": "Error while creating match",
     "updateMatch": "Error while updating match"
+  },
+  "validation": {
+    "nameRequired": "Name is required"
   }
 }

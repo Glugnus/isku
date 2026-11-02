@@ -17,6 +17,7 @@ import {
   countWinnersPoints,
   filterPointsBySet,
 } from "@/src/features/match/utils/stats-calculator";
+import { useTranslation } from "react-i18next";
 
 export const useStats = (
   setNumber?: number,
@@ -26,6 +27,7 @@ export const useStats = (
     sets?: MatchSet[];
   },
 ) => {
+  const { t } = useTranslation("match");
   const store = useMatchStore();
 
   const points = override?.points ?? store.points;
@@ -151,7 +153,7 @@ export const useStats = (
       p2: unforcedErrorsP2,
     },
     scoreEvolution,
-    p1Name: teams?.team1Name ?? "Joueur 1",
-    p2Name: teams?.team2Name ?? "Joueur 2",
+    p1Name: teams?.team1Name ?? t("stats.playerFallback", { number: 1 }),
+    p2Name: teams?.team2Name ?? t("stats.playerFallback", { number: 2 }),
   };
 };

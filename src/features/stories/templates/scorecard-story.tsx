@@ -10,6 +10,7 @@ import StoryPlayerScoreRow from "@/src/features/stories/components/story-player-
 import StoryScoresSets from "@/src/features/stories/components/story-scores-sets";
 import StoryTemplateFooter from "@/src/features/stories/components/story-template-footer";
 import StoryTemplateHeader from "@/src/features/stories/components/story-template-header";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 interface ScoreCardStoryProps {
@@ -21,6 +22,8 @@ export default function ScoreCardStoryTemplate({
   match,
   teams,
 }: ScoreCardStoryProps) {
+  const { t } = useTranslation("stories");
+  const { t: tc } = useTranslation();
   const { p1SetsWon, p2SetsWon } = calculateMatchScore(match.match_sets);
   const winner = getMatchWinner(p1SetsWon, p2SetsWon, match.format);
   const profilePosition = teams?.currentProfilePosition;
@@ -29,19 +32,27 @@ export default function ScoreCardStoryTemplate({
   return (
     <View className="flex-1 justify-between py-4 mt-8">
       <StoryTemplateHeader
-        headerText={hasWon ? "Victoire" : "Défaite"}
+        headerText={
+          hasWon
+            ? t("templates.scorecard.victory")
+            : t("templates.scorecard.defeat")
+        }
         variant={hasWon ? "primary" : "secondary"}
-        sport={match.sport === "table_tennis" ? "Tennis de Table" : ""}
+        sport={match.sport === "table_tennis" ? tc("sports.table_tennis") : ""}
       />
       <View className="my-auto gap-5">
         <StoryPlayerScoreRow
-          playerName={teams?.team1Name || "Joueur 1"}
+          playerName={
+            teams?.team1Name || t("templates.playerFallback", { number: 1 })
+          }
           setsWon={p1SetsWon}
           isMe={profilePosition === "p1"}
           hasWon={hasWon}
         />
         <StoryPlayerScoreRow
-          playerName={teams?.team2Name || "Joueur 2"}
+          playerName={
+            teams?.team2Name || t("templates.playerFallback", { number: 2 })
+          }
           setsWon={p2SetsWon}
           isMe={profilePosition === "p2"}
           hasWon={hasWon}

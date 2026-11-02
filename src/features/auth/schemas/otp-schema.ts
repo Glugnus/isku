@@ -1,7 +1,7 @@
 import { TFunction } from "i18next";
 import { z } from "zod";
 
-export const getOtpSchema = (t: TFunction) =>
+export const getOtpSchema = (t: TFunction<"auth">) =>
   z.object({
     code: z
       .string()

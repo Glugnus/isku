@@ -7,8 +7,8 @@ import {
   updateParticipantsMatch,
 } from "@/src/features/match/api/matches-api";
 import {
+  getSetupMatchSchema,
   SetupMatchFormData,
-  setupMatchSchema,
 } from "@/src/features/match/schema/setup-match-schema";
 import { getMatchParticipantsTeams } from "@/src/features/match/utils/match-participants-teams";
 import {
@@ -33,7 +33,7 @@ export const useSetupForm = () => {
   } | null>(null);
 
   const form = useForm<SetupMatchFormData>({
-    resolver: zodResolver(setupMatchSchema),
+    resolver: zodResolver(getSetupMatchSchema(t)),
     defaultValues: {
       p1Name: profile?.username,
       p2Name: "",

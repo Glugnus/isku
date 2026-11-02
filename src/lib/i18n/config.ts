@@ -39,7 +39,7 @@ i18next
   .use(languageDetector)
   .use(initReactI18next)
   .init({
-    debug: true,
+    debug: __DEV__,
     fallbackLng: DEFAULT_LANGUAGE,
     interpolation: {
       escapeValue: false,

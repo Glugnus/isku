@@ -2,9 +2,11 @@ import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import { incrementStoriesShared } from "@/src/features/stories/api/stories-api";
 import * as Sharing from "expo-sharing";
 import { RefObject, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ViewShotRef } from "react-native-view-shot";
 
 export function useShareStory(viewShotRef: RefObject<ViewShotRef | null>) {
+  const { t } = useTranslation("stories");
   const [error, setError] = useState<string | null>(null);
   const { profile, refreshProfile } = useAuthContext();
 
@@ -15,7 +17,7 @@ export function useShareStory(viewShotRef: RefObject<ViewShotRef | null>) {
         if (await Sharing.isAvailableAsync()) {
           await Sharing.shareAsync(uri, {
             mimeType: "image/jpeg",
-            dialogTitle: "Partager ma story ISKU",
+            dialogTitle: t("share.dialogTitle"),
           });
           if (profile?.id) {
             await incrementStoriesShared(profile.id);
@@ -24,7 +26,7 @@ export function useShareStory(viewShotRef: RefObject<ViewShotRef | null>) {
         }
       }
     } catch (err) {
-      setError("Une erreur est survenue lors du partage de la story");
+      setError(t("errors.shareStory"));
       console.log(err);
     }
   };

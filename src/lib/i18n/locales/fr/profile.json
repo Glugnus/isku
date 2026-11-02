@@ -2,5 +2,50 @@
   "tabs": {
     "overview": "Aperçu",
     "statistics": "Stats"
+  },
+  "header": {
+    "usernameFallback": "Mon profil"
+  },
+  "editUsernameModal": {
+    "title": "Modifier le pseudo",
+    "placeholder": "Nouveau pseudo"
+  },
+  "quickStats": {
+    "cards": {
+      "wins": "Victoires",
+      "winRate": "Taux",
+      "stories": "Stories"
+    },
+    "global": {
+      "title": "Bilan global",
+      "completedMatches": "Matchs terminés",
+      "lostMatches": "Matchs perdus",
+      "setsPlayed": "Sets disputés",
+      "pendingMatches": "Matchs en attente"
+    }
+  },
+  "stats": {
+    "service": {
+      "title": "Service & retour",
+      "ownServe": "Sur son service",
+      "return": "En retour"
+    },
+    "performance": {
+      "title": "Performances",
+      "winners": "Coups gagnants",
+      "unforcedErrors": "Fautes directes",
+      "maxLead": "Plus grande avance",
+      "longestStreak": "Plus longue série (points)",
+      "maxDeficit": "Retard max remonté"
+    }
+  },
+  "avatar": {
+    "permissionTitle": "Permission requise",
+    "permissionMessage": "Nous avons besoin de votre autorisation pour accéder à vos photos."
+  },
+  "errors": {
+    "fetchMatchData": "Erreur lors de la récupération des données des matchs",
+    "updateUsername": "Erreur lors de la mise à jour du pseudo",
+    "uploadAvatar": "Erreur lors de l'upload de l'avatar"
   }
 }

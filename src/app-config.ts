@@ -1,4 +1,4 @@
 export const APP_CONFIG = {
   name: "ISKU",
-  version: "1.0.1",
+  version: "1.0.3",
 };

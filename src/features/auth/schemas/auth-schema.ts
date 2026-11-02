@@ -18,7 +18,7 @@ const getPasswordValidation = (t: TFunction<"auth">) =>
 const getConfirmPasswordValidation = (t: TFunction<"auth">) =>
   z.string().min(1, t("validation.confirmPasswordRequired"));
 
-const getUsernameValidation = (t: TFunction<"auth">) =>
+export const getUsernameValidation = (t: TFunction<"auth">) =>
   z
     .string()
     .min(3, t("validation.usernameMin", { count: 3 }))

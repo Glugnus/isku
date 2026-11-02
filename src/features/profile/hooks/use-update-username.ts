@@ -1,8 +1,10 @@
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import { updateProfile } from "@/src/features/profile/api/profile-api";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useUpdateUsername = () => {
+  const { t } = useTranslation("profile");
   const { profile, refreshProfile } = useAuthContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +18,7 @@ export const useUpdateUsername = () => {
       await refreshProfile();
       return true;
     } catch (err) {
-      setError("Erreur lors de la mise à jour du nom d'utilisateur.");
+      setError(t("errors.updateUsername"));
       console.log(err);
       return false;
     } finally {

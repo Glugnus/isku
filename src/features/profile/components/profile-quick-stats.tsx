@@ -5,9 +5,11 @@ import ProfileStatRow from "@/src/features/profile/components/profile-stat-row";
 import { useProfileStatsContext } from "@/src/features/profile/hooks/use-profile-stats-context";
 import { colors } from "@/src/lib/colors";
 import { Activity, Share2, Target, Trophy } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function ProfileQuickStats() {
+  const { t } = useTranslation("profile");
   const { profile } = useAuthContext();
   const { quickStats, isFetching, error } = useProfileStatsContext();
   const QUICK_STATS = [
@@ -15,41 +17,41 @@ export default function ProfileQuickStats() {
       id: "wins",
       Icon: Trophy,
       value: quickStats?.wins.toString(),
-      label: "Victoires",
+      label: t("quickStats.cards.wins"),
     },
     {
       id: "winRate",
       Icon: Activity,
       value: `${quickStats?.winRate}%`,
-      label: "Taux",
+      label: t("quickStats.cards.winRate"),
     },
     {
       id: "sharedStories",
       Icon: Share2,
       value: (profile?.stories_shared ?? 0).toString(),
-      label: "Stories",
+      label: t("quickStats.cards.stories"),
     },
   ];
 
   const GLOBAL_STATS = [
     {
       id: "total",
-      label: "Matchs terminés",
+      label: t("quickStats.global.completedMatches"),
       value: quickStats?.matchesPlayed.toString(),
     },
     {
       id: "losses",
-      label: "Matchs perdus",
+      label: t("quickStats.global.lostMatches"),
       value: quickStats?.losses.toString(),
     },
     {
       id: "sets",
-      label: "Sets disputés",
+      label: t("quickStats.global.setsPlayed"),
       value: quickStats?.setsPlayed.toString(),
     },
     {
       id: "pending",
-      label: "Matchs en attente",
+      label: t("quickStats.global.pendingMatches"),
       value: quickStats?.pending.toString(),
     },
   ];
@@ -79,7 +81,7 @@ export default function ProfileQuickStats() {
             ))}
           </View>
           <ProfileStatCard
-            title="Bilan Global"
+            title={t("quickStats.global.title")}
             icon={<Target size={24} color={colors.primary} />}
           >
             {GLOBAL_STATS.map(({ id, label, value }, index) => (

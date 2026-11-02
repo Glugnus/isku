@@ -1,6 +1,7 @@
 import { colors } from "@/src/lib/colors";
 import { router } from "expo-router";
 import { Camera, ChevronLeft, Share2 } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 export default function StoriesHeader({
@@ -8,6 +9,7 @@ export default function StoriesHeader({
 }: {
   shareStory: () => void;
 }) {
+  const { t } = useTranslation("stories");
   return (
     <View className="flex-row items-center justify-between mb-4">
       <View className="flex-1 flex-row items-center justify-start pr-4">
@@ -24,7 +26,7 @@ export default function StoriesHeader({
           numberOfLines={1}
           className="text-white text-xl font-oswald uppercase tracking-widest text-left flex-1"
         >
-          Story Studio
+          {t("header.title")}
         </Text>
       </View>
       <View className="flex-row items-center justify-end">

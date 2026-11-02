@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 interface StoryUmpireStatsProps {
@@ -15,6 +16,7 @@ export default function StoryUmpireStats({
   errors,
   hasWon,
 }: StoryUmpireStatsProps) {
+  const { t } = useTranslation("stories");
   const borderColor = hasWon ? "border-primary/40" : "border-secondary/40";
   const accentColor = hasWon ? "text-primary" : "text-secondary";
 
@@ -22,7 +24,7 @@ export default function StoryUmpireStats({
     <View className="gap-3">
       <View className={`bg-surface border ${borderColor} p-4 rounded-3xl`}>
         <Text className="text-muted text-[10px] font-bold uppercase tracking-widest text-center mb-3">
-          Efficacité des points
+          {t("umpireStats.pointEfficiency")}
         </Text>
         <View className="flex-row items-center justify-around">
           <View className="items-center">
@@ -32,7 +34,7 @@ export default function StoryUmpireStats({
               {servePointsWinrate}%
             </Text>
             <Text className="text-neutral text-[10px] font-bold uppercase mt-1">
-              Au Service
+              {t("umpireStats.onServe")}
             </Text>
           </View>
           <View className="w-[1px] h-10 bg-white/10" />
@@ -41,7 +43,7 @@ export default function StoryUmpireStats({
               {returnPointsWinrate}%
             </Text>
             <Text className="text-neutral text-[10px] font-bold uppercase mt-1">
-              En Retour
+              {t("umpireStats.onReturn")}
             </Text>
           </View>
         </View>
@@ -52,7 +54,7 @@ export default function StoryUmpireStats({
             {winners}
           </Text>
           <Text className="text-neutral text-[10px] font-bold uppercase mt-1">
-            Coups Gagnants
+            {t("umpireStats.winners")}
           </Text>
         </View>
 
@@ -61,7 +63,7 @@ export default function StoryUmpireStats({
             {errors}
           </Text>
           <Text className="text-neutral text-[10px] font-bold uppercase mt-1">
-            Fautes Directes
+            {t("umpireStats.unforcedErrors")}
           </Text>
         </View>
       </View>

@@ -10,6 +10,7 @@ import StoryScoresSets from "@/src/features/stories/components/story-scores-sets
 import StoryTemplateFooter from "@/src/features/stories/components/story-template-footer";
 import StoryTemplateHeader from "@/src/features/stories/components/story-template-header";
 import StoryUmpireStats from "@/src/features/stories/components/story-umpire-stats";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 interface HighlightStoryTemplateProps {
@@ -21,6 +22,8 @@ export default function HighlightStoryTemplate({
   match,
   teams,
 }: HighlightStoryTemplateProps) {
+  const { t } = useTranslation("stories");
+  const { t: tc } = useTranslation();
   const { sets, points } = adaptMatchDetails(match.match_sets);
   const profilePosition = teams?.currentProfilePosition;
 
@@ -33,9 +36,13 @@ export default function HighlightStoryTemplate({
   return (
     <View className="flex-1 justify-between py-4 mt-8">
       <StoryTemplateHeader
-        headerText={hasWon ? "★ Grosse Perf !" : "Combat Épique"}
+        headerText={
+          hasWon
+            ? t("templates.highlight.victory")
+            : t("templates.highlight.defeat")
+        }
         variant={hasWon ? "primary" : "secondary"}
-        sport={match.sport === "table_tennis" ? "Tennis de Table" : ""}
+        sport={match.sport === "table_tennis" ? tc("sports.table_tennis") : ""}
       />
       <View className="my-auto gap-3">
         <StoryScoreBanner

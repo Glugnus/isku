@@ -14,23 +14,25 @@ import {
   TrendingUp,
   Zap,
 } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function ProfileStats() {
+  const { t } = useTranslation("profile");
   const { serveStats, performanceStats, isFetching, error } =
     useProfileStatsContext();
   const SERVICE_STATS = [
     {
       id: "serve",
       icon: <Target color={colors.secondary} size={18} />,
-      label: "Sur son service",
+      label: t("stats.service.ownServe"),
       subValue: `${serveStats?.pointsWonOnServe} / ${serveStats.pointsPlayedOnServe}`,
       value: `${serveStats?.servePointsWonRate}%`,
     },
     {
       id: "return",
       icon: <Shield color={colors.primary} size={18} />,
-      label: "En retour",
+      label: t("stats.service.return"),
       subValue: `${serveStats?.pointsWonOnReturn} / ${serveStats?.pointsPlayedOnReturn}`,
       value: `${serveStats?.returnPointsWonRate}%`,
     },
@@ -40,33 +42,33 @@ export default function ProfileStats() {
     {
       id: "winners",
       icon: <CheckCircle color={colors.secondary} size={18} />,
-      label: "Coups Gagnants",
+      label: t("stats.performance.winners"),
       subValue: `${performanceStats?.winners} / ${performanceStats.pointsPlayed}`,
       value: `${performanceStats?.winnersRate}%`,
     },
     {
       id: "ufe",
       icon: <AlertTriangle color={colors.red} size={18} />,
-      label: "Fautes Directes",
+      label: t("stats.performance.unforcedErrors"),
       subValue: `${performanceStats?.ufe} / ${performanceStats.pointsPlayed}`,
       value: `${performanceStats?.ufeRate}%`,
     },
     {
       id: "lead",
       icon: <ChevronsUp color={colors.primary} size={18} />,
-      label: "Plus Grande Avance",
+      label: t("stats.performance.maxLead"),
       value: performanceStats?.maxLead,
     },
     {
       id: "streak",
       icon: <Flame color={colors.primary} size={18} />,
-      label: "Plus Longue Série (Points)",
+      label: t("stats.performance.longestStreak"),
       value: performanceStats?.longestStreak,
     },
     {
       id: "deficit",
       icon: <RotateCcw color={colors.secondary} size={18} />,
-      label: "Retard Max Remonté",
+      label: t("stats.performance.maxDeficit"),
       value: performanceStats?.maxDeficit,
     },
   ];
@@ -77,7 +79,7 @@ export default function ProfileStats() {
       ) : (
         <>
           <ProfileStatCard
-            title="Service & Retour"
+            title={t("stats.service.title")}
             icon={<Zap size={24} color={colors.primary} />}
           >
             {SERVICE_STATS.map(
@@ -94,7 +96,7 @@ export default function ProfileStats() {
             )}
           </ProfileStatCard>
           <ProfileStatCard
-            title="Performances"
+            title={t("stats.performance.title")}
             icon={<TrendingUp size={24} color={colors.primary} />}
           >
             {STATS.map(({ id, label, value, subValue, icon }, index) => (

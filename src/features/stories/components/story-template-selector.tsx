@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 export type StoryTemplateType = "scorecard" | "highlight";
@@ -11,6 +12,7 @@ export default function StoryTemplateSelector({
   selectedTemplate,
   onSelect,
 }: StoryTemplateSelectorProps) {
+  const { t } = useTranslation("stories");
   return (
     <View className="flex-row items-center justify-center gap-2 mb-3">
       <Pressable
@@ -28,7 +30,7 @@ export default function StoryTemplateSelector({
               : "text-neutral"
           }`}
         >
-          Résultat
+          {t("selector.scorecard")}
         </Text>
       </Pressable>
       <Pressable
@@ -46,7 +48,7 @@ export default function StoryTemplateSelector({
               : "text-neutral"
           }`}
         >
-          Stats Clés
+          {t("selector.highlight")}
         </Text>
       </Pressable>
     </View>
