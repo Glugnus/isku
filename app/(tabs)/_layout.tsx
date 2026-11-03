@@ -1,8 +1,9 @@
 import { TextLogo } from "@/src/components/ui/text-logo";
 import { colors } from "@/src/lib/colors";
-import { Tabs } from "expo-router";
-import { History, Home, User } from "lucide-react-native";
+import { router, Tabs } from "expo-router";
+import { History, Home, Menu, User } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
+import { Pressable } from "react-native";
 
 const APP_TABS = [
   { name: "index", labelKey: "navigation.new", Icon: Home },
@@ -15,6 +16,16 @@ const APP_TABS = [
 ] as const;
 
 const headerTitle = () => <TextLogo width={200} height={38} />;
+const settingsIcon = () => (
+  <Pressable
+    onPress={() => {
+      router.push("/settings");
+    }}
+    className="mr-4"
+  >
+    <Menu size={24} color={colors.white} />
+  </Pressable>
+);
 
 export default function TabsLayout() {
   const { t } = useTranslation();
@@ -46,6 +57,7 @@ export default function TabsLayout() {
           options={{
             tabBarLabel: t(labelKey),
             tabBarIcon: ({ color, size }) => <Icon color={color} size={size} />,
+            headerRight: name === "profile" ? settingsIcon : undefined,
           }}
         />
       ))}
