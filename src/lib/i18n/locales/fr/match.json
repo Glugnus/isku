@@ -1,0 +1,163 @@
+{
+  "matches": {
+    "status": {
+      "planned": "Préparé",
+      "completed": "Terminé"
+    },
+    "sections": {
+      "planned": "Matchs préparés",
+      "completed": "Matchs terminés"
+    },
+    "mode": {
+      "quick": "Mode rapide",
+      "umpire": "Mode arbitre"
+    },
+    "deleteModal": {
+      "title": "Supprimer la rencontre ?",
+      "message": "Êtes-vous sûr de vouloir supprimer ce match ?",
+      "error": "Une erreur est survenue pendant la suppression du match"
+    },
+    "emptyState": {
+      "errorTitle": "Erreur",
+      "title": "Aucun match",
+      "description": "Vous n'avez planifié ou terminé aucun match pour le moment"
+    }
+  },
+  "setup": {
+    "info": {
+      "title": "Informations du match (optionnel)",
+      "location": {
+        "label": "Lieu",
+        "placeholder": "Ex: Paris"
+      },
+      "date": "Jour",
+      "time": "Heure"
+    },
+    "mode": {
+      "title": "Mode de suivi",
+      "umpire": {
+        "title": "Arbitre",
+        "subtitle": "Suivi point par point"
+      },
+      "quick": {
+        "title": "Rapide",
+        "subtitle": "Saisie du score final"
+      }
+    },
+    "players": {
+      "label": "Joueur {{number}}",
+      "placeholder": "NOM J{{number}}",
+      "swapPosition": "Changer ma position (Je suis Joueur {{number}})"
+    },
+    "setsToWin": "Sets gagnants",
+    "header": {
+      "prefix": "Préparer mon",
+      "highlight": "Match"
+    }
+  },
+  "quickResult": {
+    "undoLastSet": "Annuler le dernier set",
+    "submit": "Valider le match",
+    "eyebrow": "Résultat rapide",
+    "title": "Score final",
+    "table": {
+      "player": "Joueur",
+      "points": "Points"
+    }
+  },
+  "stats": {
+    "title": "Statistiques",
+    "playerFallback": "Joueur {{number}}",
+    "chart": {
+      "title": "Évolution du score",
+      "empty": "Aucun point enregistré dans ce set."
+    },
+    "tabs": {
+      "match": "Match",
+      "set": "Set {{number}}"
+    },
+    "metrics": {
+      "pointsWon": "Points gagnés",
+      "ownServe": "Sur son service",
+      "opponentServe": "Sur service adverse",
+      "maxLead": "Plus grande avance",
+      "longestStreak": "Plus longue série",
+      "deficitOvercome": "Retard remonté",
+      "winners": "Coups gagnants",
+      "unforcedErrors": "Fautes directes"
+    }
+  },
+  "summary": {
+    "wellPlayed": "Bien joué !",
+    "title": "Résultat final",
+    "error": "Impossible de récupérer le match.",
+    "actions": {
+      "stats": "Statistiques du match",
+      "share": "Partager le résultat",
+      "backHome": "Retour à l'accueil"
+    },
+    "card": {
+      "result": "Résultat",
+      "victory": "Victoire",
+      "defeat": "Défaite",
+      "setsBreakdown": "Détail des sets",
+      "setLabel": "Set {{number}}"
+    }
+  },
+  "toss": {
+    "title": "Avant-match",
+    "subtitle": "Définissez le premier serveur",
+    "firstServer": "Premier serveur",
+    "playerFallback": "Joueur {{number}}",
+    "startMatch": "Démarrer le match",
+    "button": {
+      "idle": "Toss officiel",
+      "loading": "Toss...",
+      "done": "Toss effectué"
+    },
+    "unlockModal": {
+      "title": "Toss déjà effectué",
+      "message": "Le premier serveur a déjà été défini par le toss officiel.",
+      "cancel": "Conserver",
+      "confirm": "Relancer"
+    }
+  },
+  "tracker": {
+    "header": {
+      "serve": "Service ({{count}})",
+      "receive": "Réception",
+      "setLabel": "Set {{number}}",
+      "previousSets": "Sets précédents :",
+      "setShort": "S{{number}}"
+    },
+    "playerPlaceholder": "Joueur {{number}}",
+    "court": {
+      "serve": "Service",
+      "receive": "Réception",
+      "addPoint": "Point +1",
+      "winner": "Coup gagnant",
+      "unforcedError": "Faute directe"
+    },
+    "footer": {
+      "undo": "Annuler",
+      "stats": "Stats",
+      "abandon": "Abandonner",
+      "abandonModal": {
+        "title": "Arrêter le match",
+        "message": "Le match n'est pas terminé. Êtes-vous sûr de vouloir l'abandonner ?",
+        "cancel": "Non, reprendre",
+        "confirm": "Oui, abandonner"
+      }
+    }
+  },
+  "errors": {
+    "fetchMatchDetails": "Erreur lors de la récupération des détails du match",
+    "fetchMatch": "Erreur lors de la récupération du match",
+    "saveSets": "Erreur lors de l'enregistrement des sets",
+    "createMatch": "Erreur lors de la création du match",
+    "updateMatch": "Erreur lors de la mise à jour du match"
+  },
+  "validation": {
+    "nameRequired": "Le nom est requis"
+  }
+}

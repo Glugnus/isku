@@ -21,3 +21,8 @@ export interface MatchSet {
   p1SetScore: number;
   p2SetScore: number;
 }
+export interface StatsTab {
+  key: string; // invariant, ex: "match" ou "set-1"
+  label: string; // traduit avec t(...)
+  setNumber?: number; // undefined pour le match global, 1, 2... pour un set
+}

@@ -3,9 +3,11 @@ import { getOpponent } from "@/src/features/match/utils/score-calculator";
 import { colors } from "@/src/lib/colors";
 import { ArrowLeftRight } from "lucide-react-native";
 import { useFormContext, useWatch } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 export default function SwapPlayersButton() {
+  const { t } = useTranslation("match");
   const { setValue, getValues, control } = useFormContext<SetupMatchFormData>();
 
   const currentPosition = useWatch({ control, name: "currentProfilePosition" });
@@ -27,8 +29,9 @@ export default function SwapPlayersButton() {
       >
         <ArrowLeftRight size={16} color={colors.primary} />
         <Text className="text-white text-sm font-medium ml-2">
-          Changer ma position (Je suis Joueur{" "}
-          {currentPosition === "p1" ? "1" : "2"})
+          {t("setup.players.swapPosition", {
+            number: currentPosition === "p1" ? 1 : 2,
+          })}
         </Text>
       </Pressable>
     </View>

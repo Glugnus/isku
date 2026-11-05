@@ -7,9 +7,11 @@ import { SetupMatchFormData } from "@/src/features/match/schema/setup-match-sche
 import { colors } from "@/src/lib/colors";
 import { Calendar, Clock } from "lucide-react-native";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function MatchInfoInputs() {
+  const { t } = useTranslation("match");
   const { control } = useFormContext<SetupMatchFormData>();
 
   const {
@@ -25,15 +27,15 @@ export default function MatchInfoInputs() {
 
   return (
     <View className="mb-6">
-      <SectionTitle title="Informations du match (Optionnel)" />
+      <SectionTitle title={t("setup.info.title")} />
       <View className="flex-row gap-x-2">
         <ControlledInput
           control={control}
           name="location"
           size="sm"
           variant="neutral"
-          label="Lieu"
-          placeholder="Ex: Paris"
+          label={t("setup.info.location.label")}
+          placeholder={t("setup.info.location.placeholder")}
           containerClassName="flex-[1.2]"
         />
         <Input
@@ -41,8 +43,8 @@ export default function MatchInfoInputs() {
           value={formatedDate}
           editable={false}
           variant="neutral"
-          label="Jour"
-          placeholder="Jour"
+          label={t("setup.info.date")}
+          placeholder={t("setup.info.date")}
           containerClassName="flex-1"
           uppercase
           rightIcon={<Calendar size={14} color={colors.placeholder} />}
@@ -53,8 +55,8 @@ export default function MatchInfoInputs() {
           value={formatedTime}
           editable={false}
           variant="neutral"
-          label="Heure"
-          placeholder="Heure"
+          label={t("setup.info.time")}
+          placeholder={t("setup.info.time")}
           uppercase
           containerClassName="flex-1"
           rightIcon={<Clock size={14} color={colors.placeholder} />}

@@ -4,6 +4,7 @@ import {
 } from "@/src/features/match/types/match.types";
 import { colors } from "@/src/lib/colors";
 import { AlertCircle, Plus, Zap } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 interface TrackerCourtSideProps {
@@ -21,6 +22,7 @@ export default function TrackerCourtSide({
   servesLeft,
   onScorePoint,
 }: TrackerCourtSideProps) {
+  const { t } = useTranslation("match");
   const THEME = {
     p1: {
       sideContainer: "bg-primary/5 rounded-l-2xl border-r pr-2",
@@ -51,7 +53,9 @@ export default function TrackerCourtSide({
           <Text
             className={`text-[10px] font-bold uppercase tracking-wider mr-1 ${THEME[playerKey].scoreText}`}
           >
-            {currentServer === playerKey ? "Service" : "Réception"}
+            {currentServer === playerKey
+              ? t("tracker.court.serve")
+              : t("tracker.court.receive")}
           </Text>
           {currentServer === playerKey &&
             Array.from({ length: servesLeft }).map((_, index) => (
@@ -76,7 +80,7 @@ export default function TrackerCourtSide({
         >
           <Plus size={20} color={colors.white} strokeWidth={3} />
           <Text className="text-white text-sm font-oswald tracking-widest uppercase ml-2">
-            Point +1
+            {t("tracker.court.addPoint")}
           </Text>
         </View>
       </Pressable>
@@ -90,7 +94,7 @@ export default function TrackerCourtSide({
             className={`${THEME[playerKey].scoreText} text-sm font-oswald uppercase tracking-wider ml-2 text-center`}
             numberOfLines={1}
           >
-            Coup Gagnant
+            {t("tracker.court.winner")}
           </Text>
         </Pressable>
         <View className="h-4" />
@@ -103,7 +107,7 @@ export default function TrackerCourtSide({
             className="text-danger text-sm font-oswald uppercase tracking-wider ml-2 text-center"
             numberOfLines={1}
           >
-            Faute Directe
+            {t("tracker.court.unforcedError")}
           </Text>
         </Pressable>
       </View>

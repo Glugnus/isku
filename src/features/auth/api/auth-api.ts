@@ -68,7 +68,7 @@ export const signInWithOAuth = async (provider: Provider) => {
     },
   });
   if (error || !data.url)
-    throw new Error(error?.message || "Impossible de récupérer l'URL OAuth");
+    throw new Error(error?.message || "OAuth URL not found");
   return data.url;
 };
 

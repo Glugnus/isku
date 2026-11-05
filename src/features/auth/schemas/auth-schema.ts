@@ -1,61 +1,72 @@
+import { TFunction } from "i18next";
 import { z } from "zod";
 
-const emailValidation = z
-  .string()
-  .trim()
-  .min(1, "L'email est requis")
-  .email("Format d'email invalide");
+const getEmailValidation = (t: TFunction<"auth">) =>
+  z
+    .string()
+    .trim()
+    .min(1, t("validation.emailRequired"))
+    .email(t("validation.emailInvalid"));
 
-const passwordValidation = z
-  .string()
-  .min(8, "Le mot de passe doit contenir au moins 8 caractères")
-  .regex(/[a-zA-Z]/, "Le mot de passe doit contenir au moins une lettre")
-  .regex(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre");
+const getPasswordValidation = (t: TFunction<"auth">) =>
+  z
+    .string()
+    .min(8, t("validation.passwordMin", { count: 8 }))
+    .regex(/[a-zA-Z]/, t("validation.passwordLetter"))
+    .regex(/[0-9]/, t("validation.passwordNumber"));
 
-const confirmPasswordValidation = z
-  .string()
-  .min(1, "La confirmation du mot de passe est requise");
+const getConfirmPasswordValidation = (t: TFunction<"auth">) =>
+  z.string().min(1, t("validation.confirmPasswordRequired"));
 
-export const usernameValidation = z
-  .string()
-  .min(3, "Le pseudo doit contenir au moins 3 caractères")
-  .max(20, "Le pseudo doit contenir au plus 20 caractères");
+export const getUsernameValidation = (t: TFunction<"auth">) =>
+  z
+    .string()
+    .min(3, t("validation.usernameMin", { count: 3 }))
+    .max(20, t("validation.usernameMax", { count: 20 }));
 
-export const loginSchema = z.object({
-  email: emailValidation,
-  password: z.string().min(1, "Le mot de passe est requis"),
-});
-
-export const registerSchema = z
-  .object({
-    username: usernameValidation,
-    email: emailValidation,
-    password: passwordValidation,
-    confirmPassword: confirmPasswordValidation,
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Les mots de passe ne correspondent pas",
-    path: ["confirmPassword"],
+export const getLoginSchema = (t: TFunction<"auth">) =>
+  z.object({
+    email: getEmailValidation(t),
+    password: z.string().min(1, t("validation.passwordRequired")),
   });
 
-export const resetPasswordFormSchema = z
-  .object({
-    password: passwordValidation,
-    confirmPassword: confirmPasswordValidation,
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Les mots de passe ne correspondent pas",
-    path: ["confirmPassword"],
+export const getRegisterSchema = (t: TFunction<"auth">) =>
+  z
+    .object({
+      username: getUsernameValidation(t),
+      email: getEmailValidation(t),
+      password: getPasswordValidation(t),
+      confirmPassword: getConfirmPasswordValidation(t),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("validation.passwordMismatch"),
+      path: ["confirmPassword"],
+    });
+
+export const getResetPasswordFormSchema = (t: TFunction<"auth">) =>
+  z
+    .object({
+      password: getPasswordValidation(t),
+      confirmPassword: getConfirmPasswordValidation(t),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("validation.passwordMismatch"),
+      path: ["confirmPassword"],
+    });
+
+export const getForgotPasswordSchema = (t: TFunction<"auth">) =>
+  z.object({
+    email: getEmailValidation(t),
   });
 
-export const forgotPasswordSchema = z.object({
-  email: emailValidation,
-});
+export type RegisterFormValues = z.infer<ReturnType<typeof getRegisterSchema>>;
 
-export type RegisterFormValues = z.infer<typeof registerSchema>;
+export type LoginFormValues = z.infer<ReturnType<typeof getLoginSchema>>;
 
-export type LoginFormValues = z.infer<typeof loginSchema>;
+export type ResetPasswordFormValues = z.infer<
+  ReturnType<typeof getResetPasswordFormSchema>
+>;
 
-export type ResetPasswordFormValues = z.infer<typeof resetPasswordFormSchema>;
-
-export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
+export type ForgotPasswordFormValues = z.infer<
+  ReturnType<typeof getForgotPasswordSchema>
+>;

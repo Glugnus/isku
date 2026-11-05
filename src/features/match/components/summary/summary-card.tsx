@@ -2,6 +2,7 @@ import SummarySetBadge from "@/src/features/match/components/summary/summary-set
 import { MatchSet, PlayerKey } from "@/src/features/match/types/match.types";
 import { colors } from "@/src/lib/colors";
 import { Trophy } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function SummaryCard({
@@ -17,6 +18,7 @@ export default function SummaryCard({
   p2SetsWon: number;
   profilePosition: PlayerKey;
 }) {
+  const { t } = useTranslation("match");
   return (
     <View
       className={`w-full bg-surface p-8 rounded-3xl border-[3px] items-center mb-8 ${
@@ -29,14 +31,14 @@ export default function SummaryCard({
         color={profilePosition === "p1" ? colors.primary : colors.secondary}
       />
       <Text className="text-muted text-xs font-bold uppercase tracking-widest mb-2">
-        Résultat
+        {t("summary.card.result")}
       </Text>
       <Text
         className={`text-3xl font-oswald uppercase tracking-widest text-center mb-6 ${
           profilePosition === "p1" ? "text-primary" : "text-secondary"
         }`}
       >
-        {profileIsWinner ? "Victoire" : "Défaite"}
+        {profileIsWinner ? t("summary.card.victory") : t("summary.card.defeat")}
       </Text>
       <View className="bg-background px-8 py-4 rounded-2xl border border-muted/20 flex-row items-center gap-x-3">
         <Text className={`text-5xl font-oswald tracking-widest text-primary`}>
@@ -50,7 +52,7 @@ export default function SummaryCard({
       {sets?.length > 0 && (
         <View className="mt-6 items-center w-full">
           <Text className="text-muted text-xs font-bold uppercase tracking-widest mb-3">
-            Détail des Sets
+            {t("summary.card.setsBreakdown")}
           </Text>
           <View className="flex-row flex-wrap justify-center items-center gap-2">
             {sets.map((s) => (

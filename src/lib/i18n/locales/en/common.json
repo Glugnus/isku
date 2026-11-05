@@ -1,0 +1,36 @@
+{
+  "navigation": {
+    "new": "New",
+    "matches": "My Matches",
+    "profile": "Profile"
+  },
+  "actions": {
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "signOut": "Sign out",
+    "save": "Save"
+  },
+  "fields": {
+    "email": {
+      "label": "Email",
+      "placeholder": "your@email.com"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "********"
+    },
+    "username": {
+      "label": "Username",
+      "placeholder": "Your username"
+    },
+    "confirmPassword": {
+      "label": "Confirm password",
+      "placeholder": "********"
+    }
+  },
+  "sports": {
+    "table_tennis": "Table tennis"
+  }
+}

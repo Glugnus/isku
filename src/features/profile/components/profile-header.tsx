@@ -5,9 +5,11 @@ import { colors } from "@/src/lib/colors";
 import { Image } from "expo-image";
 import { Camera, Pencil } from "lucide-react-native";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
 
 export default function ProfileHeader() {
+  const { t } = useTranslation("profile");
   const { profile, claims } = useAuthContext();
   const [isEditUsernameModalVisible, setIsEditUsernameModalVisible] =
     useState<boolean>(false);
@@ -46,7 +48,7 @@ export default function ProfileHeader() {
       )}
       <View className="flex-row items-center">
         <Text className="text-2xl font-oswald text-white uppercase tracking-widest mr-2">
-          {profile?.username ?? "Mon profil"}
+          {profile?.username ?? t("header.usernameFallback")}
         </Text>
         <Pressable
           className="p-1"

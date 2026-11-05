@@ -1,6 +1,8 @@
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
 import { getAllMatches } from "@/src/features/match/api/matches-api";
+import { TFunction } from "i18next";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Section {
   title: string;
@@ -13,6 +15,7 @@ export type MatchListItem = NonNullable<
 >[number];
 
 export const useMatchesList = () => {
+  const { t } = useTranslation("match");
   const { profile } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +29,7 @@ export const useMatchesList = () => {
       try {
         setIsLoading(true);
         const matches = await getAllMatches(profileId);
-        const groupedMatches = groupMatchesByStatus(matches);
+        const groupedMatches = groupMatchesByStatus(matches, t);
         setSections(groupedMatches);
       } catch (err) {
         if (typeof err === "string") setError(err);
@@ -35,23 +38,23 @@ export const useMatchesList = () => {
         setIsLoading(false);
       }
     }
-  }, [profileId]);
+  }, [profileId, t]);
   return { sections, getMatches, isLoading, error };
 };
 
-function groupMatchesByStatus(matches: MatchListItem[]) {
+function groupMatchesByStatus(matches: MatchListItem[], t: TFunction<"match">) {
   const preparedMatches = matches.filter((m) => m.status === "planned");
   const completedMatches = matches.filter((m) => m.status !== "planned");
   const groupedMatches = [];
   preparedMatches.length > 0 &&
     groupedMatches.push({
-      title: "Matchs préparés",
+      title: t("matches.sections.planned"),
       data: preparedMatches,
       isPrepared: true,
     });
   completedMatches.length > 0 &&
     groupedMatches.push({
-      title: "Matchs terminés",
+      title: t("matches.sections.completed"),
       data: completedMatches,
       isPrepared: false,
     });

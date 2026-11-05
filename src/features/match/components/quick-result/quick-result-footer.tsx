@@ -1,6 +1,7 @@
 import Button from "@/src/components/ui/button";
 import { colors } from "@/src/lib/colors";
 import { CheckCircle } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function QuickResultFooter({
@@ -12,10 +13,11 @@ export default function QuickResultFooter({
   onPress: () => void;
   isLoading: boolean;
 }) {
+  const { t } = useTranslation("match");
   return (
     <View className="my-6">
       <Button
-        title="Valider le match"
+        title={t("quickResult.submit")}
         onPress={onPress}
         disabled={!winner}
         isLoading={isLoading}

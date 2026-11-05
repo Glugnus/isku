@@ -4,9 +4,11 @@ import TossComponent from "@/src/features/match/components/toss/toss-component";
 import { useInitMatch } from "@/src/features/match/hooks/use-init-match";
 import { useMatchStore } from "@/src/features/match/store/use-match-store";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function TossScreen() {
+  const { t } = useTranslation("match");
   const router = useRouter();
   const { id: matchId } = useLocalSearchParams<{
     id: string;
@@ -35,10 +37,10 @@ export default function TossScreen() {
         <>
           <View className="mt-12 mb-12 items-center">
             <Text className="font-oswald text-3xl uppercase tracking-widest mb-2 text-center text-primary">
-              Avant-match
+              {t("toss.title")}
             </Text>
             <Text className="text-muted text-sm uppercase tracking-wider text-center">
-              Définissez le premier serveur
+              {t("toss.subtitle")}
             </Text>
           </View>
           <TossComponent teams={teams} onStartMatch={onStartMatch} />

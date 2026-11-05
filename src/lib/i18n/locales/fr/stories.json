@@ -1,0 +1,49 @@
+{
+  "header": {
+    "title": "Story Studio"
+  },
+  "selector": {
+    "scorecard": "Résultat",
+    "highlight": "Stats clés"
+  },
+  "quickStats": {
+    "biggestMargin": "Plus gros écart",
+    "inASet": "Sur un set",
+    "pointsScored": "Points marqués",
+    "pointsConceded": "Points concédés"
+  },
+  "umpireStats": {
+    "pointEfficiency": "Efficacité des points",
+    "onServe": "Au service",
+    "onReturn": "En retour",
+    "winners": "Coups gagnants",
+    "unforcedErrors": "Fautes directes"
+  },
+  "sets": {
+    "setLabel": "Set {{number}}"
+  },
+  "footer": {
+    "setsToWin_one": "{{count}} set gagnant",
+    "setsToWin_other": "{{count}} sets gagnants"
+  },
+  "share": {
+    "dialogTitle": "Partager ma story ISKU"
+  },
+  "errors": {
+    "shareStory": "Une erreur est survenue lors du partage de la story"
+  },
+  "templates": {
+    "playerFallback": "Joueur {{number}}",
+    "highlight": {
+      "victory": "★ Grosse perf !",
+      "defeat": "Combat épique"
+    },
+    "matchDay": {
+      "header": "Prochain match"
+    },
+    "scorecard": {
+      "victory": "Victoire",
+      "defeat": "Défaite"
+    }
+  }
+}

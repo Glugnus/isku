@@ -5,9 +5,12 @@ import TrackerFooter from "@/src/features/match/components/tracker/tracker-foote
 import TrackerHeader from "@/src/features/match/components/tracker/tracker-header";
 import { useTracker } from "@/src/features/match/hooks/use-tracker";
 import { useKeepAwake } from "expo-keep-awake";
+import { useTranslation } from "react-i18next";
 import { Text } from "react-native";
 
 export default function TrackerScreen() {
+  const { t } = useTranslation("match");
+  const { t: tc } = useTranslation();
   useKeepAwake();
   const {
     teams,
@@ -29,8 +32,12 @@ export default function TrackerScreen() {
   return (
     <ScreenLayout>
       <TrackerHeader
-        p1Name={teams?.team1Name || "Joueur 1"}
-        p2Name={teams?.team2Name || "Joueur 2"}
+        p1Name={
+          teams?.team1Name || t("tracker.playerPlaceholder", { number: 1 })
+        }
+        p2Name={
+          teams?.team2Name || t("tracker.playerPlaceholder", { number: 2 })
+        }
         currentServer={currentServer}
         servesLeft={servesLeft}
         sets={sets}
@@ -57,7 +64,7 @@ export default function TrackerScreen() {
             {saveError}
           </Text>
           <Button
-            title="Réessayer"
+            title={tc("actions.retry")}
             onPress={retrySave}
             isLoading={isSaving}
             variant="surface"

@@ -1,5 +1,4 @@
 export interface SportsRules {
-  name: string;
   pointsToWinSet: number;
   pointsDifferenceToWinSet: number;
   servesPerPlayer: number;

@@ -1,5 +1,6 @@
 import TrackerHeaderPlayer from "@/src/features/match/components/tracker/tracker-header-players";
 import { MatchSet, PlayerKey } from "@/src/features/match/types/match.types";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 interface TrackerHeaderProps {
@@ -23,6 +24,7 @@ export default function TrackerHeader({
   p2Score,
   currentSet,
 }: TrackerHeaderProps) {
+  const { t } = useTranslation("match");
   return (
     <View>
       <View className="py-3 flex-row items-center justify-between">
@@ -35,7 +37,7 @@ export default function TrackerHeader({
         />
         <View className="items-center px-4 py-1.5 bg-background rounded-xl border border-muted/30 mx-1">
           <Text className="text-muted text-[8px] font-bold uppercase tracking-widest">
-            SET {currentSet}
+            {t("tracker.header.setLabel", { number: currentSet }).toUpperCase()}
           </Text>
           <Text className="text-white text-lg font-oswald tracking-widest">
             <Text className="text-primary">{p1Score}</Text> -{" "}
@@ -53,7 +55,7 @@ export default function TrackerHeader({
       {sets.length > 0 && (
         <View className="flex-row items-center justify-center gap-x-3 pt-2 px-4 bg-background/60 border-t border-muted/20">
           <Text className="text-muted text-[10px] font-bold uppercase tracking-wider">
-            Sets précédents :
+            {t("tracker.header.previousSets")}
           </Text>
           <View className="flex-row items-center gap-x-2">
             {sets.map((set) => (
@@ -62,7 +64,7 @@ export default function TrackerHeader({
                 className="bg-surface px-2.5 py-0.5 rounded-md border border-muted/30 flex-row items-center gap-x-1"
               >
                 <Text className="text-muted text-[9px] font-bold">
-                  S{set.setNumber}
+                  {t("tracker.header.setShort", { number: set.setNumber })}
                 </Text>
                 <Text className="text-primary text-xs font-oswald">
                   {set.p1SetScore}

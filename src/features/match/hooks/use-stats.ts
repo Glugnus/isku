@@ -15,24 +15,26 @@ import {
   countPointsWonOnOwnServe,
   countUnforcedErrorsPoints,
   countWinnersPoints,
-  filterPointsByTab,
+  filterPointsBySet,
 } from "@/src/features/match/utils/stats-calculator";
+import { useTranslation } from "react-i18next";
 
 export const useStats = (
-  tab: string,
+  setNumber?: number,
   override?: {
     points?: MatchPoint[];
     teams?: MatchTeams | null;
     sets?: MatchSet[];
   },
 ) => {
+  const { t } = useTranslation("match");
   const store = useMatchStore();
 
   const points = override?.points ?? store.points;
   const teams = override?.teams ?? store.teams;
   const sets = override?.sets ?? store.sets;
 
-  const filteredPoints = filterPointsByTab(tab, points);
+  const filteredPoints = filterPointsBySet(setNumber, points);
 
   const { p1SetsWon, p2SetsWon } = calculateMatchScore(sets);
 
@@ -151,7 +153,7 @@ export const useStats = (
       p2: unforcedErrorsP2,
     },
     scoreEvolution,
-    p1Name: teams?.team1Name ?? "Joueur 1",
-    p2Name: teams?.team2Name ?? "Joueur 2",
+    p1Name: teams?.team1Name ?? t("stats.playerFallback", { number: 1 }),
+    p2Name: teams?.team2Name ?? t("stats.playerFallback", { number: 2 }),
   };
 };

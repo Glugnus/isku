@@ -2,9 +2,11 @@ import ControlledInput from "@/src/components/utils/controlled-input";
 import SwapPlayersButton from "@/src/features/match/components/setup/swap-players-button";
 import { SetupMatchFormData } from "@/src/features/match/schema/setup-match-schema";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function PlayersInputs() {
+  const { t } = useTranslation("match");
   const { control, watch } = useFormContext<SetupMatchFormData>();
 
   const currentPosition = watch("currentProfilePosition");
@@ -15,8 +17,8 @@ export default function PlayersInputs() {
         <ControlledInput
           control={control}
           name="p1Name"
-          label="Joueur 1"
-          placeholder="NOM J1"
+          label={t("setup.players.label", { number: 1 })}
+          placeholder={t("setup.players.placeholder", { number: 1 })}
           containerClassName="flex-1"
           autoCapitalize="characters"
           uppercase
@@ -26,8 +28,8 @@ export default function PlayersInputs() {
         <ControlledInput
           control={control}
           name="p2Name"
-          label="Joueur 2"
-          placeholder="NOM J2"
+          label={t("setup.players.label", { number: 2 })}
+          placeholder={t("setup.players.placeholder", { number: 2 })}
           variant="secondary"
           isRight
           containerClassName="flex-1"

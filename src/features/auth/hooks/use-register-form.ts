@@ -1,15 +1,17 @@
 import { signUp } from "@/src/features/auth/api/auth-api";
 import {
+  getRegisterSchema,
   RegisterFormValues,
-  registerSchema,
 } from "@/src/features/auth/schemas/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export const useRegisterForm = () => {
+  const { t } = useTranslation("auth");
   const form = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(getRegisterSchema(t)),
     defaultValues: {
       username: "",
       email: "",
@@ -30,9 +32,8 @@ export const useRegisterForm = () => {
       });
     } catch (err) {
       form.setError("root", {
-        // TODO: Gérer le cas inscription déjà existante
         type: "manual",
-        message: "Erreur lors de l'inscription",
+        message: t("register.errorSignUp"),
       });
       console.log(err);
     }

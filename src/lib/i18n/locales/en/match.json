@@ -1,0 +1,163 @@
+{
+  "matches": {
+    "status": {
+      "planned": "Planned",
+      "completed": "Completed"
+    },
+    "sections": {
+      "planned": "Planned matches",
+      "completed": "Completed matches"
+    },
+    "mode": {
+      "quick": "Quick mode",
+      "umpire": "Umpire mode"
+    },
+    "deleteModal": {
+      "title": "Delete match?",
+      "message": "Are you sure you want to delete this match?",
+      "error": "An error occurred while deleting the match"
+    },
+    "emptyState": {
+      "errorTitle": "Error",
+      "title": "No matches",
+      "description": "You haven't planned or completed any matches yet"
+    }
+  },
+  "setup": {
+    "info": {
+      "title": "Match info (optional)",
+      "location": {
+        "label": "Location",
+        "placeholder": "e.g. Paris"
+      },
+      "date": "Date",
+      "time": "Time"
+    },
+    "mode": {
+      "title": "Tracking mode",
+      "umpire": {
+        "title": "Umpire",
+        "subtitle": "Point-by-point tracking"
+      },
+      "quick": {
+        "title": "Quick",
+        "subtitle": "Final score entry"
+      }
+    },
+    "players": {
+      "label": "Player {{number}}",
+      "placeholder": "P{{number}} NAME",
+      "swapPosition": "Switch my position (I'm Player {{number}})"
+    },
+    "setsToWin": "Sets to win",
+    "header": {
+      "prefix": "Set up my",
+      "highlight": "Match"
+    }
+  },
+  "quickResult": {
+    "undoLastSet": "Undo last set",
+    "submit": "Confirm match",
+    "eyebrow": "Quick result",
+    "title": "Final score",
+    "table": {
+      "player": "Player",
+      "points": "Points"
+    }
+  },
+  "stats": {
+    "title": "Statistics",
+    "playerFallback": "Player {{number}}",
+    "chart": {
+      "title": "Score progression",
+      "empty": "No points recorded in this set."
+    },
+    "tabs": {
+      "match": "Match",
+      "set": "Set {{number}}"
+    },
+    "metrics": {
+      "pointsWon": "Points won",
+      "ownServe": "On own serve",
+      "opponentServe": "On opponent serve",
+      "maxLead": "Biggest lead",
+      "longestStreak": "Longest streak",
+      "deficitOvercome": "Deficit overcome",
+      "winners": "Winners",
+      "unforcedErrors": "Unforced errors"
+    }
+  },
+  "summary": {
+    "wellPlayed": "Well played!",
+    "title": "Final result",
+    "error": "Unable to load match.",
+    "actions": {
+      "stats": "Match statistics",
+      "share": "Share result",
+      "backHome": "Back to home"
+    },
+    "card": {
+      "result": "Result",
+      "victory": "Victory",
+      "defeat": "Defeat",
+      "setsBreakdown": "Set breakdown",
+      "setLabel": "Set {{number}}"
+    }
+  },
+  "toss": {
+    "title": "Pre-match",
+    "subtitle": "Select the first server",
+    "firstServer": "First server",
+    "playerFallback": "Player {{number}}",
+    "startMatch": "Start match",
+    "button": {
+      "idle": "Official toss",
+      "loading": "Tossing...",
+      "done": "Toss done"
+    },
+    "unlockModal": {
+      "title": "Toss already done",
+      "message": "The first server has already been selected by the official toss.",
+      "cancel": "Keep",
+      "confirm": "Redo"
+    }
+  },
+  "tracker": {
+    "header": {
+      "serve": "Serve ({{count}})",
+      "receive": "Receive",
+      "setLabel": "Set {{number}}",
+      "previousSets": "Previous sets:",
+      "setShort": "S{{number}}"
+    },
+    "playerPlaceholder": "Player {{number}}",
+    "court": {
+      "serve": "Serve",
+      "receive": "Receive",
+      "addPoint": "Point +1",
+      "winner": "Winner",
+      "unforcedError": "Unforced error"
+    },
+    "footer": {
+      "undo": "Undo",
+      "stats": "Stats",
+      "abandon": "Abandon",
+      "abandonModal": {
+        "title": "Stop match",
+        "message": "The match is not finished. Are you sure you want to abandon it?",
+        "cancel": "No, resume",
+        "confirm": "Yes, abandon"
+      }
+    }
+  },
+  "errors": {
+    "fetchMatchDetails": "Error while retrieving match details",
+    "fetchMatch": "Error while retrieving match",
+    "saveSets": "Error while saving sets",
+    "createMatch": "Error while creating match",
+    "updateMatch": "Error while updating match"
+  },
+  "validation": {
+    "nameRequired": "Name is required"
+  }
+}

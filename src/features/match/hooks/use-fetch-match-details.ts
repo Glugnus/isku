@@ -7,11 +7,13 @@ import {
 import { adaptMatchDetails } from "@/src/features/match/utils/adapt-match-details";
 import { getMatchParticipantsTeams } from "@/src/features/match/utils/match-participants-teams";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useFetchMatchDetails = (
   matchId: string,
   { enabled = true }: { enabled?: boolean } = {},
 ) => {
+  const { t } = useTranslation("match");
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [match, setMatch] = useState<MatchDetails | null>(null);
@@ -21,6 +23,7 @@ export const useFetchMatchDetails = (
   useEffect(() => {
     if (matchId && enabled) {
       const fetchDetailsMatch = async () => {
+        setError(null);
         setIsFetching(true);
         try {
           const match = await getMatchDetails(matchId);
@@ -31,7 +34,7 @@ export const useFetchMatchDetails = (
           setMatch(match);
           setTeams(teams);
         } catch (err) {
-          setError("Erreur lors de la récupération des détails du match");
+          setError(t("errors.fetchMatchDetails"));
           console.log(err);
         } finally {
           setIsFetching(false);
@@ -39,7 +42,7 @@ export const useFetchMatchDetails = (
       };
       fetchDetailsMatch();
     }
-  }, [matchId, profile?.id, enabled]);
+  }, [matchId, profile?.id, enabled, t]);
 
   const { sets, points } = adaptMatchDetails(match?.match_sets || []);
 

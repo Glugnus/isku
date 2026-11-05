@@ -1,6 +1,7 @@
 import { colors } from "@/src/lib/colors";
 import { TrendingUp } from "lucide-react-native";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 
@@ -15,6 +16,7 @@ export default function MatchEvolutionChart({
   dataP1: { value: number }[];
   dataP2: { value: number }[];
 }) {
+  const { t } = useTranslation("match");
   const [containerWidth, setContainerWidth] = useState(0);
 
   return (
@@ -26,7 +28,7 @@ export default function MatchEvolutionChart({
         <View className="flex-row items-center gap-x-2">
           <TrendingUp size={16} color={colors.muted} />
           <Text className="text-muted text-xs font-bold uppercase tracking-wider">
-            Evolution du score
+            {t("stats.chart.title")}
           </Text>
         </View>
         <View className="flex-row items-center justify-end">
@@ -79,7 +81,7 @@ export default function MatchEvolutionChart({
       ) : (
         <View className="h-60 justify-center items-center">
           <Text className="text-muted text-xs text-center">
-            Aucun point enregistré dans ce set.
+            {t("stats.chart.empty")}
           </Text>
         </View>
       )}

@@ -6,6 +6,7 @@ import { MatchTeams, PlayerKey } from "@/src/features/match/types/match.types";
 import { colors } from "@/src/lib/colors";
 import { Dices, Lock, Play } from "lucide-react-native";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 export default function TossComponent({
@@ -15,6 +16,7 @@ export default function TossComponent({
   teams: MatchTeams | null;
   onStartMatch: () => void;
 }) {
+  const { t } = useTranslation("match");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
@@ -43,7 +45,7 @@ export default function TossComponent({
         <View className="flex-row items-center justify-between mb-12">
           <View className="flex-row items-center gap-x-2">
             <Text className="text-white text-xs font-bold uppercase tracking-widest">
-              Premier Serveur
+              {t("toss.firstServer")}
             </Text>
             {isTossDone && (
               <View className="bg-primary/20 border border-primary px-2 py-0.5 rounded-full flex-row items-center ml-2">
@@ -64,16 +66,16 @@ export default function TossComponent({
             )}
             <Text className="text-primary ml-2 text-xs font-bold uppercase tracking-wider">
               {isTossDone
-                ? "Toss Effectué"
+                ? t("toss.button.done")
                 : isTossing
-                  ? "Toss..."
-                  : "Toss Officiel"}
+                  ? t("toss.button.loading")
+                  : t("toss.button.idle")}
             </Text>
           </Pressable>
         </View>
         <View className="flex-row gap-x-4 mb-12">
           <SelectableCard
-            title={teams?.team1Name || "Joueur 1"}
+            title={teams?.team1Name || t("toss.playerFallback", { number: 1 })}
             isSelected={displayedServer === "p1"}
             onPress={() => {
               handleSelectServer("p1");
@@ -81,7 +83,7 @@ export default function TossComponent({
             variant="primary"
           />
           <SelectableCard
-            title={teams?.team2Name || "Joueur 2"}
+            title={teams?.team2Name || t("toss.playerFallback", { number: 2 })}
             isSelected={displayedServer === "p2"}
             onPress={() => {
               handleSelectServer("p2");
@@ -91,7 +93,7 @@ export default function TossComponent({
         </View>
       </View>
       <Button
-        title="Démarrer le match"
+        title={t("toss.startMatch")}
         onPress={onStartMatch}
         disabled={isTossing}
         variant={displayedServer === "p1" ? "primary" : "secondary"}
@@ -105,15 +107,15 @@ export default function TossComponent({
       />
       <ConfirmModal
         visible={isModalOpen}
-        title="Toss déjà Effectué"
-        message="Le premier serveur a déjà été défini par le Toss officiel"
+        title={t("toss.unlockModal.title")}
+        message={t("toss.unlockModal.message")}
         onClose={() => setIsModalOpen(false)}
         onConfirm={() => {
           unlockToss();
           setIsModalOpen(false);
         }}
-        cancelText="Conserver"
-        confirmText="Relancer"
+        cancelText={t("toss.unlockModal.cancel")}
+        confirmText={t("toss.unlockModal.confirm")}
       />
     </View>
   );

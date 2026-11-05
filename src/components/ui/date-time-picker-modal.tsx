@@ -2,6 +2,7 @@ import RNDateTimePicker, {
   DateTimePickerAndroid,
 } from "@react-native-community/datetimepicker";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Modal, Platform, Pressable, Text, View } from "react-native";
 
 interface DateTimePickerModalProps {
@@ -59,16 +60,19 @@ function IOSPickerContent({
   onConfirm,
   onCancel,
 }: Omit<DateTimePickerModalProps, "isVisible">) {
+  const { t } = useTranslation();
   const [tempDate, setTempDate] = useState(value);
 
   return (
     <View className="bg-surface p-4 rounded-t-3xl border-t border-border">
       <View className="flex-row justify-between items-center pb-4 border-b border-border/40">
         <Pressable onPress={onCancel}>
-          <Text className="text-muted font-medium">Annuler</Text>
+          <Text className="text-muted font-medium">{t("actions.cancel")}</Text>
         </Pressable>
         <Pressable onPress={() => onConfirm(tempDate)}>
-          <Text className="text-primary font-semibold">Confirmer</Text>
+          <Text className="text-primary font-semibold">
+            {t("actions.confirm")}
+          </Text>
         </Pressable>
       </View>
       <RNDateTimePicker

@@ -2,9 +2,10 @@ import Button from "@/src/components/ui/button";
 import Input from "@/src/components/ui/input";
 import BaseModal from "@/src/components/ui/modal";
 import { useAuthContext } from "@/src/features/auth/hooks/use-auth-context";
-import { usernameValidation } from "@/src/features/auth/schemas/auth-schema";
+import { getUsernameValidation } from "@/src/features/auth/schemas/auth-schema";
 import { useUpdateUsername } from "@/src/features/profile/hooks/use-update-username";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 export default function EditUsernameModal({
@@ -14,6 +15,9 @@ export default function EditUsernameModal({
   onClose: () => void;
   visible: boolean;
 }) {
+  const { t: tc } = useTranslation();
+  const { t } = useTranslation("profile");
+  const { t: tAuth } = useTranslation("auth");
   const { profile } = useAuthContext();
   const [newUsername, setNewUsername] = useState<string>(
     profile?.username ?? "",
@@ -22,7 +26,7 @@ export default function EditUsernameModal({
   const { updateUsername, error, isLoading } = useUpdateUsername();
 
   const handleSubmit = async () => {
-    const result = usernameValidation.safeParse(newUsername);
+    const result = getUsernameValidation(tAuth).safeParse(newUsername);
     if (!result.success) {
       setClientError(result.error.issues[0]?.message ?? null);
       return;
@@ -43,26 +47,26 @@ export default function EditUsernameModal({
     <BaseModal visible={visible} onClose={handleCloseModal}>
       <View className="gap-4">
         <Text className="text-white text-2xl font-oswald uppercase mb-6 text-center tracking-widest">
-          Modifier le pseudo
+          {t("editUsernameModal.title")}
         </Text>
         <Input
           value={newUsername}
           onChangeText={setNewUsername}
-          placeholder="Nouveau nom d'utilisateur"
+          placeholder={t("editUsernameModal.placeholder")}
           errorMessage={clientError}
         />
         <View className="gap-3">
           <Button
             onPress={handleCloseModal}
             variant="surface"
-            title="Annuler"
+            title={tc("actions.cancel")}
             disabled={isLoading}
           />
           <Button
             onPress={handleSubmit}
             isLoading={isLoading}
             variant="primary"
-            title="Confirmer"
+            title={tc("actions.confirm")}
           />
         </View>
         {error && (

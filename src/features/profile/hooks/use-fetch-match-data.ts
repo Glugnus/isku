@@ -2,8 +2,10 @@ import { getProfileMatchData } from "@/src/features/profile/api/profile-api";
 import { ProfileMatchData } from "@/src/features/profile/types/profiles-types";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useFetchMatchData = (profileId?: string) => {
+  const { t } = useTranslation("profile");
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [matchesData, setMatchesData] = useState<ProfileMatchData | null>(null);
@@ -15,13 +17,13 @@ export const useFetchMatchData = (profileId?: string) => {
         const matchData = await getProfileMatchData(profileId);
         setMatchesData(matchData);
       } catch (err) {
-        setError("Erreur lors de la récupération des données des match");
+        setError(t("errors.fetchMatchData"));
         console.log(err);
       } finally {
         setIsFetching(false);
       }
     }
-  }, [profileId]);
+  }, [profileId, t]);
 
   useFocusEffect(
     useCallback(() => {

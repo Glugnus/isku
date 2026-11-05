@@ -1,12 +1,13 @@
 import { signOut, verifyOtp } from "@/src/features/auth/api/auth-api";
 import {
+  getOtpSchema,
   OtpFormValues,
-  otpSchema,
 } from "@/src/features/auth/schemas/otp-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EmailOtpType } from "@supabase/supabase-js";
 import { router } from "expo-router";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 export const useVerifyOtpForm = ({
   email,
@@ -15,8 +16,9 @@ export const useVerifyOtpForm = ({
   email: string;
   type: EmailOtpType;
 }) => {
+  const { t } = useTranslation("auth");
   const form = useForm<OtpFormValues>({
-    resolver: zodResolver(otpSchema),
+    resolver: zodResolver(getOtpSchema(t)),
     defaultValues: { code: "" },
   });
 
@@ -32,7 +34,7 @@ export const useVerifyOtpForm = ({
     } catch (err) {
       form.setError("root", {
         type: "manual",
-        message: "Code incorrect",
+        message: t("verifyOtp.errorCode"),
       });
       console.log(err);
     }

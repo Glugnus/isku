@@ -4,6 +4,7 @@ import { colors } from "@/src/lib/colors";
 import { router, useLocalSearchParams } from "expo-router";
 import { BarChart2, Flag, Undo2 } from "lucide-react-native";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 export default function TrackerFooter({
@@ -17,6 +18,7 @@ export default function TrackerFooter({
   canUndo: boolean;
   onConfirmAbandon: () => void;
 }) {
+  const { t } = useTranslation("match");
   const { id: matchId } = useLocalSearchParams<{
     id: string;
   }>();
@@ -25,7 +27,7 @@ export default function TrackerFooter({
   return (
     <View className="px-6 py-3 bg-surface flex-row items-center justify-between border-t border-muted/20 -mx-6">
       <Button
-        title="Annuler"
+        title={t("tracker.footer.undo")}
         leftIcon={<Undo2 size={18} color={colors.muted} />}
         variant="ghost"
         size="sm"
@@ -33,7 +35,7 @@ export default function TrackerFooter({
         disabled={!canUndo}
       />
       <Button
-        title="Stats"
+        title={t("tracker.footer.stats")}
         leftIcon={<BarChart2 size={18} color={colors.muted} />}
         variant="ghost"
         size="sm"
@@ -45,7 +47,7 @@ export default function TrackerFooter({
         }
       />
       <Button
-        title="Abandonner"
+        title={t("tracker.footer.abandon")}
         leftIcon={<Flag size={18} color={colors.muted} />}
         variant="ghost"
         size="sm"
@@ -53,15 +55,15 @@ export default function TrackerFooter({
       />
       <ConfirmModal
         visible={isModalOpen}
-        title="Arrêter le match"
-        message="Le match n'est pas terminé. Êtes-vous sûr de vouloir l'abandonner ?"
+        title={t("tracker.footer.abandonModal.title")}
+        message={t("tracker.footer.abandonModal.message")}
         onClose={() => setIsModalOpen(false)}
         onConfirm={() => {
           onConfirmAbandon();
           setIsModalOpen(false);
         }}
-        cancelText="Non, reprendre"
-        confirmText="Oui, abandonner"
+        cancelText={t("tracker.footer.abandonModal.cancel")}
+        confirmText={t("tracker.footer.abandonModal.confirm")}
       />
     </View>
   );

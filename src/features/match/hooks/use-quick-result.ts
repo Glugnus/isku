@@ -8,8 +8,10 @@ import { PlayerKey } from "@/src/features/match/types/match.types";
 import { calculateQuickResult } from "@/src/features/match/utils/quick-result-calculator";
 import { router } from "expo-router";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useQuickResult = (matchId: string) => {
+  const { t } = useTranslation("match");
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [scoreSets, setScoreSets] = useState<{ p1: string; p2: string }[]>([
@@ -75,6 +77,7 @@ export const useQuickResult = (matchId: string) => {
   const handleSaveMatchResult = async () => {
     if (matchResult.isMatchOver) {
       setIsSaving(true);
+      setSaveError(null);
       try {
         await createSetsMatch(
           scoreSets.map((set, index) => ({
@@ -89,7 +92,7 @@ export const useQuickResult = (matchId: string) => {
         });
         router.back();
       } catch (err) {
-        setSaveError("Erreur lors de l'enregistrement des sets");
+        setSaveError(t("errors.saveSets"));
         console.log(err);
       } finally {
         setIsSaving(false);

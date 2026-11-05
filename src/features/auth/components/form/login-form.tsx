@@ -3,23 +3,26 @@ import ControlledInput from "@/src/components/utils/controlled-input";
 import AuthHeader from "@/src/features/auth/components/auth-header";
 import { useLoginForm } from "@/src/features/auth/hooks/use-login-form";
 import { Link } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 
 export default function LoginForm() {
+  const { t } = useTranslation("auth");
+  const { t: tc } = useTranslation();
   const { control, onSubmit, errors, isSubmitting } = useLoginForm();
 
   return (
     <>
-      <AuthHeader subtitle="Connectez-vous pour retrouver vos matchs et statistiques" />
+      <AuthHeader subtitle={t("login.subtitle")} />
       <View className="my-4 gap-y-4">
         <ControlledInput
           control={control}
-          label="Email"
+          label={tc("fields.email.label")}
           name="email"
           variant="secondary"
           keyboardType="email-address"
           autoCapitalize="none"
-          placeholder="votre@email.com"
+          placeholder={tc("fields.email.placeholder")}
           textContentType="emailAddress"
           autoComplete="email"
           returnKeyType="next"
@@ -27,11 +30,11 @@ export default function LoginForm() {
 
         <ControlledInput
           control={control}
-          label="Mot de passe"
+          label={tc("fields.password.label")}
           name="password"
           variant="secondary"
           autoCapitalize="none"
-          placeholder="********"
+          placeholder={tc("fields.password.placeholder")}
           textContentType="password"
           autoComplete="password"
           returnKeyType="done"
@@ -40,7 +43,9 @@ export default function LoginForm() {
         />
         <Link asChild href="/(auth)/forgot-password">
           <Pressable className="mt-2 self-end active:opacity-70">
-            <Text className="text-muted text-sm">Mot de passe oublié ?</Text>
+            <Text className="text-muted text-sm">
+              {t("login.forgotPassword")}
+            </Text>
           </Pressable>
         </Link>
       </View>
@@ -52,13 +57,13 @@ export default function LoginForm() {
       <View className="gap-y-6 pb-4">
         <View className="gap-y-2">
           <Button
-            title="Se connecter"
+            title={t("login.submit")}
             variant="primary"
             onPress={onSubmit}
             isLoading={isSubmitting}
           />
           <Link href="/(auth)/register" asChild>
-            <Button title="Créer un compte" variant="surface" />
+            <Button title={t("login.createAccount")} variant="surface" />
           </Link>
         </View>
         {/* <GoogleSignInButton title="Continuer avec Google" /> */}
