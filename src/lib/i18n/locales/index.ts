@@ -9,3 +9,8 @@ export const resources = {
 } as const;
 
 export type LanguageCode = keyof typeof resources;
+
+export const supportedLanguages: Record<LanguageCode, string> = {
+  fr: "Français",
+  en: "English",
+};

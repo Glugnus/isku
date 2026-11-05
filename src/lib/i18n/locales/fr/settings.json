@@ -1,1 +1,10 @@
-{ "sections": { "preference": "Préférences", "account": "Compte" } }
+{
+  "sections": {
+    "preference": "Préférences",
+    "account": "Compte"
+  },
+  "language": {
+    "label": "Langue",
+    "modalTitle": "Choisir la langue"
+  }
+}

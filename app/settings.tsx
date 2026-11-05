@@ -15,11 +15,9 @@ export default function SettingsPage() {
           {t("sections.preference")}
         </Text>
         <View className="bg-surface rounded-2xl border border-muted/20 px-4 py-1 divide-y divide-muted/10">
-          {/* Composant Ligne Langue */}
           <LanguageSettingItem />
         </View>
       </View>
-      {/* SECTION 2 : COMPTE & SÉCURITÉ */}
       <View className="mb-6">
         <Text className="text-xs font-oswald text-muted uppercase tracking-widest mb-3 ml-1">
           {t("sections.account")}
