@@ -35,7 +35,7 @@ Ce document retrace la vision produit, les jalons de développement et les persp
   - Remplacement du flux OAuth web actuel par les flux natifs (Google One Tap / Credential Manager & Apple Authentication avec biométrie).
   - Réduction drastique de la friction à l'inscription/connexion.
   - Transition de l'environnement vers les Development Builds d'Expo (`expo-dev-client`) requise pour le SDK Google natif.
-- [ ] **Internationalisation (i18n)** :
+- [x] **Internationalisation (i18n)** :
   - Support natif de l'Anglais et du Français.
   - Architecture modulaire facilitant l'ajout ultérieur d'autres langues (Espagnol, Allemand, Italien).
 - [ ] **Brique Matériel "Mon Sac / Mon Setup" (Préparation des données d'usure)** :
