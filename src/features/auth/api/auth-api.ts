@@ -1,4 +1,3 @@
-import { expo } from "@/app.json";
 import {
   LoginFormValues,
   RegisterFormValues,
@@ -58,18 +57,15 @@ export const onAuthStateChange = (
   };
 };
 
-export const signInWithOAuth = async (provider: Provider) => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
+export const signInWithIdToken = async (
+  provider: Provider,
+  idToken: string,
+) => {
+  const { error } = await supabase.auth.signInWithIdToken({
     provider: provider,
-    options: {
-      redirectTo: `${expo.scheme}://${provider}-auth`,
-      queryParams: { prompt: "consent" },
-      skipBrowserRedirect: true,
-    },
+    token: idToken,
   });
-  if (error || !data.url)
-    throw new Error(error?.message || "OAuth URL not found");
-  return data.url;
+  if (error) throw new Error(error?.message);
 };
 
 export const setSession = async (
