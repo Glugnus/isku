@@ -1,7 +1,8 @@
 import Button from "@/src/components/ui/button";
 import ControlledInput from "@/src/components/utils/controlled-input";
 import AuthHeader from "@/src/features/auth/components/auth-header";
-import GoogleSignInButton from "@/src/features/auth/components/social-auth-buttons/google/google-sign-in-button";
+import AppleSignInButton from "@/src/features/auth/components/social-auth-buttons/apple-sign-in-button";
+import GoogleSignInButton from "@/src/features/auth/components/social-auth-buttons/google-sign-in-button";
 import { useLoginForm } from "@/src/features/auth/hooks/use-login-form";
 import { Link } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -70,6 +71,7 @@ export default function LoginForm() {
         {Platform.OS === "android" && (
           <GoogleSignInButton title={t("login.googleButton")} />
         )}
+        {Platform.OS === "ios" && <AppleSignInButton />}
       </View>
     </>
   );

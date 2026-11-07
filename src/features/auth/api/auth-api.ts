@@ -60,10 +60,12 @@ export const onAuthStateChange = (
 export const signInWithIdToken = async (
   provider: Provider,
   idToken: string,
+  nonce?: string,
 ) => {
   const { error } = await supabase.auth.signInWithIdToken({
     provider: provider,
     token: idToken,
+    nonce,
   });
   if (error) throw new Error(error?.message);
 };
