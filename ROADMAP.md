@@ -31,7 +31,7 @@ Ce document retrace la vision produit, les jalons de développement et les persp
 
 > **Objectif** : Élargir l'audience, amorcer la collecte de données matérielles sans complexité algorithmique et enrichir la viralité des Stories.
 
-- [ ] **Authentification Sociale Native (Google & Apple)** :
+- [X] **Authentification Sociale Native (Google & Apple)** :
   - Remplacement du flux OAuth web actuel par les flux natifs (Google One Tap / Credential Manager & Apple Authentication avec biométrie).
   - Réduction drastique de la friction à l'inscription/connexion.
   - Transition de l'environnement vers les Development Builds d'Expo (`expo-dev-client`) requise pour le SDK Google natif.

@@ -55,7 +55,7 @@ export default function LoginForm() {
           {errors.root?.message}
         </Text>
       )}
-      <View className="gap-y-6 pb-4">
+      <View className="gap-y-2 pb-4">
         <View className="gap-y-2">
           <Button
             title={t("login.submit")}

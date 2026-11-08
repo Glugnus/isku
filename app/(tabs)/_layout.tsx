@@ -57,7 +57,7 @@ export default function TabsLayout() {
           options={{
             tabBarLabel: t(labelKey),
             tabBarIcon: ({ color, size }) => <Icon color={color} size={size} />,
-            headerRight: name === "profile" ? settingsIcon : undefined,
+            headerRight: settingsIcon,
           }}
         />
       ))}

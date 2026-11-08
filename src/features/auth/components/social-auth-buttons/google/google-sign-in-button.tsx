@@ -8,14 +8,14 @@ export default function GoogleSignInButton({ title }: { title: string }) {
     <View>
       <Pressable
         onPress={() => signInWithGoogle()}
-        className="flex-row items-center justify-center bg-white rounded-xl py-3.5 px-4 active:opacity-80 shadow-sm"
+        className="flex-row items-center justify-center bg-white rounded-xl p-4 active:opacity-80 shadow-sm"
         disabled={isLoading}
       >
         <Image
           source={{
             uri: "https://developers.google.com/identity/images/g-logo.png",
           }}
-          className="w-5 h-5 mr-3"
+          style={{ width: 24, height: 24, marginRight: 10 }}
         />
         <Text className="text-textBase text-base font-semibold">{title}</Text>
       </Pressable>

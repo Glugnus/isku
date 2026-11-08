@@ -1,0 +1,81 @@
+# 🐛 Suivi des Anomalies et Retours (Issues & Bugs Tracker)
+
+Ce document centralise les bugs, anomalies de parcours et retours de tests constatés sur l'application **Isku** afin d'assurer leur suivi et résolution méthodique.
+
+---
+
+## 📌 En attente / À traiter
+
+### 1. [Routage & Auth] Écran 404 / "Unmatched Route" au lancement et à la déconnexion
+* **Date de signalement** : 08/11/2026
+* **Environnement** : Android / iOS
+* **Symptômes** : 
+  1. Au premier lancement en mode déconnecté (`!isLoggedIn`), Expo Router affiche l'écran 404 / sitemap.
+  2. Lors d'une déconnexion (`signOut`), l'utilisateur se retrouve également sur l'écran 404 ("Unmatched Route") au lieu d'être renvoyé vers l'écran de connexion (`/login`).
+* **Cause identifiée** : 
+  * L'URL racine `/` cible `app/(tabs)/index.tsx`, protégée par `<Stack.Protected guard={isLoggedIn}>`.
+  * Le dossier `app/(auth)/` ne contient aucune route racine `/`, seulement `/login`, `/register`, etc.
+  * Lors de la déconnexion, l'écran actuel devient protégé sans redirection automatique immédiate vers `/login`.
+* **Piste de résolution** :
+  * Créer une route racine pivot `app/index.tsx` (avec `<Redirect href={isLoggedIn ? "/(tabs)" : "/(auth)/login"} />`) ou orchestrer la redirection impérative lors des transitions d'authentification dans le layout racine.
+* **Priorité** : 🔴 Haute (Parcours utilisateur critique)
+
+---
+
+### 2. [UI / UX] Flash blanc au démarrage sur Android
+* **Date de signalement** : 08/11/2026
+* **Environnement** : Android (Google Pixel 10) - Dev Client
+* **Symptômes** : Un bref écran blanc apparaît pendant une fraction de seconde au lancement de l'application avant l'affichage du splash screen ou du thème sombre (`#0A0B14`).
+* **Cause identifiée** : 
+  * Sous Android, la fenêtre native de l'OS (`android:windowBackground`) est blanche par défaut dans le binaire compilé tant que la configuration explicite `backgroundColor` n'est pas intégrée dans `app.json` (et prise en compte lors du prebuild natif).
+  * Les stacks React Navigation peuvent également flasher en blanc si `contentStyle: { backgroundColor: colors.background }` n'est pas défini sur les layouts.
+* **Piste de résolution** :
+  * `"backgroundColor": "#0A0B14"` configuré dans `app.json` (actif au prochain build EAS).
+  * Ajouter `contentStyle: { backgroundColor: colors.background }` dans les `screenOptions` des `Stack` de navigation.
+* **Priorité** : 🟡 Moyenne (Confort visuel / Thème sombre)
+
+---
+
+### 3. [UX / Ergonomie] Zone tactile trop petite pour le bouton Menu / Réglages
+* **Date de signalement** : 08/11/2026
+* **Fichier concerné** : `app/(tabs)/_layout.tsx` (lignes 19-28)
+* **Symptômes** : Le bouton Menu (icône d'accès aux paramètres dans le header des tabs) est difficile à presser au doigt.
+* **Piste de résolution** :
+  * Agrandir l'icône ou ajouter une zone tactile élargie via la prop `hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}` ou du padding (`p-2`) sur le `Pressable`.
+* **Priorité** : 🟡 Moyenne (Ergonomie)
+
+---
+
+### 4. [iOS / Typographie] Chiffre de score tronqué en haut sur iOS
+* **Date de signalement** : 08/11/2026
+* **Fichier concerné** : `src/features/match/components/tracker/tracker-court-side.tsx` (lignes 73-77)
+* **Environnement** : Spécifique iOS
+* **Symptômes** : Le haut du chiffre du score (`font-oswald text-7xl md:text-8xl`) est légèrement rogné / coupé en haut sur les appareils Apple.
+* **Cause identifiée** : 
+  * Métriques verticales de la police custom Oswald sur iOS : l'ascendante des glyphes dépasse la boîte de ligne native calculée par CoreText sans `lineHeight` adapté.
+* **Piste de résolution** :
+  * Ajouter une hauteur de ligne explicite (`leading-none` ou `leading-tight`), ou un léger padding supérieur (`pt-1` / `pt-2`) pour éviter le découpage vertical.
+* **Priorité** : 🟡 Moyenne (Finition visuelle iOS)
+
+---
+
+### 5. [Expo Router] Warning sur l'export par défaut de `login.tsx`
+* **Date de signalement** : 08/11/2026
+* **Message de log** : `WARN Route "./(auth)/login.tsx" is missing the required default export.`
+* **Symptômes** : Warning affiché dans la console Metro lors du bundling de la route `(auth)/login`.
+* **Piste de résolution** : Vérifier que le composant de page dans `app/(auth)/login.tsx` possède bien une déclaration `export default`.
+* **Priorité** : 🟡 Moyenne (Avertissement console / Robustesse)
+
+---
+
+### 6. [Dette Technique] Dépréciation du composant `ImageBackground`
+* **Date de signalement** : 08/11/2026
+* **Message de log** : `WARN ImageBackground is deprecated and will be removed in a future release.`
+* **Piste de résolution** : Remplacer l'usage de `ImageBackground` par une `<View>` contenant une `<Image>` positionnée en absolu (`absolute inset-0`).
+* **Priorité** : 🟢 Basse (Dette technique future)
+
+---
+
+## ✅ Résolus
+
+*(Les tickets résolus seront déplacés ici avec leur commit de correction associé).*
