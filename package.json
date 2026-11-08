@@ -15,11 +15,13 @@
     "@hookform/resolvers": "^5.9.1",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-community/datetimepicker": "9.2.1",
+    "@react-native-google-signin/google-signin": "^17.0.0",
     "@supabase/supabase-js": "^2.112.3",
     "aes-js": "^3.1.2",
     "base64-arraybuffer": "^1.0.2",
     "expo": "^58.0.20",
     "expo-constants": "~58.0.13",
+    "expo-dev-client": "~58.0.18",
     "expo-font": "~58.0.10",
     "expo-haptics": "~58.0.7",
     "expo-image": "~58.0.17",
@@ -58,6 +60,8 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@emnapi/core": "^1.11.3",
+    "@emnapi/runtime": "^1.11.3",
     "@types/aes-js": "^3.1.4",
     "@types/react": "~19.3.0",
     "babel-preset-expo": "~58.0.0",
