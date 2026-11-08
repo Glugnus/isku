@@ -71,7 +71,7 @@ export default function TrackerCourtSide({
         onPress={() => onScorePoint()}
       >
         <Text
-          className={`${THEME[playerKey].scoreText} font-oswald text-7xl md:text-8xl tracking-tighter`}
+          className={`${THEME[playerKey].scoreText} font-oswald text-7xl md:text-8xl tracking-tighter pt-1`}
         >
           {score}
         </Text>

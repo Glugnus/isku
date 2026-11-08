@@ -6,19 +6,6 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 
 ## 📌 En attente / À traiter
 
-### 4. [iOS / Typographie] Chiffre de score tronqué en haut sur iOS
-* **Date de signalement** : 08/11/2026
-* **Fichier concerné** : `src/features/match/components/tracker/tracker-court-side.tsx` (lignes 73-77)
-* **Environnement** : Spécifique iOS
-* **Symptômes** : Le haut du chiffre du score (`font-oswald text-7xl md:text-8xl`) est légèrement rogné / coupé en haut sur les appareils Apple.
-* **Cause identifiée** : 
-  * Métriques verticales de la police custom Oswald sur iOS : l'ascendante des glyphes dépasse la boîte de ligne native calculée par CoreText sans `lineHeight` adapté.
-* **Piste de résolution** :
-  * Ajouter une hauteur de ligne explicite (`leading-none` ou `leading-tight`), ou un léger padding supérieur (`pt-1` / `pt-2`) pour éviter le découpage vertical.
-* **Priorité** : 🟡 Moyenne (Finition visuelle iOS)
-
----
-
 ### 5. [Expo Router] Warning sur l'export par défaut de `login.tsx`
 * **Date de signalement** : 08/11/2026
 * **Message de log** : `WARN Route "./(auth)/login.tsx" is missing the required default export.`
@@ -60,4 +47,12 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 * **Date de résolution** : 08/11/2026
 * **Solution apportée** : 
   * Ajout de la prop `hitSlop={12}` sur le composant `<Pressable>` de l'icône paramètres dans `app/(tabs)/_layout.tsx` pour étendre la zone tactile à plus de 44dp sans modifier l'alignement visuel du header.
-* **Commit** : `55ae42c`
+* **Commit** : `75aaf76`
+
+---
+
+### 4. [iOS / Typographie] Chiffre de score tronqué en haut sur iOS
+* **Date de résolution** : 08/11/2026
+* **Solution apportée** : 
+  * Ajout de la classe NativeWind `pt-1` sur le `<Text>` affichant le score (`tracker-court-side.tsx`) pour accorder le dégagement vertical nécessaire à CoreText sans perturber le line-height ni l'alignement cross-platform.
+* **Commit** : `a57eda8`
