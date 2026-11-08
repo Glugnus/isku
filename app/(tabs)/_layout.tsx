@@ -22,6 +22,7 @@ const settingsIcon = () => (
       router.push("/settings");
     }}
     className="mr-4"
+    hitSlop={12}
   >
     <Menu size={24} color={colors.white} />
   </Pressable>

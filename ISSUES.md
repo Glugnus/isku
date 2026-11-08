@@ -6,16 +6,6 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 
 ## 📌 En attente / À traiter
 
-### 3. [UX / Ergonomie] Zone tactile trop petite pour le bouton Menu / Réglages
-* **Date de signalement** : 08/11/2026
-* **Fichier concerné** : `app/(tabs)/_layout.tsx` (lignes 19-28)
-* **Symptômes** : Le bouton Menu (icône d'accès aux paramètres dans le header des tabs) est difficile à presser au doigt.
-* **Piste de résolution** :
-  * Agrandir l'icône ou ajouter une zone tactile élargie via la prop `hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}` ou du padding (`p-2`) sur le `Pressable`.
-* **Priorité** : 🟡 Moyenne (Ergonomie)
-
----
-
 ### 4. [iOS / Typographie] Chiffre de score tronqué en haut sur iOS
 * **Date de signalement** : 08/11/2026
 * **Fichier concerné** : `src/features/match/components/tracker/tracker-court-side.tsx` (lignes 73-77)
@@ -62,4 +52,12 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 * **Solution apportée** : 
   * Configuration de `"backgroundColor": "#0A0B14"` dans `app.json` (global, android et splash-screen).
   * Ajout de `contentStyle: { backgroundColor: colors.background }` dans les `screenOptions` des stacks (`app/_layout.tsx` et `app/(auth)/_layout.tsx`) pour supprimer tout scintillement natif blanc lors des transitions.
-* **Commit** : `8872105`
+* **Commit** : `f957850`
+
+---
+
+### 3. [UX / Ergonomie] Zone tactile trop petite pour le bouton Menu / Réglages
+* **Date de résolution** : 08/11/2026
+* **Solution apportée** : 
+  * Ajout de la prop `hitSlop={12}` sur le composant `<Pressable>` de l'icône paramètres dans `app/(tabs)/_layout.tsx` pour étendre la zone tactile à plus de 44dp sans modifier l'alignement visuel du header.
+* **Commit** : `55ae42c`
