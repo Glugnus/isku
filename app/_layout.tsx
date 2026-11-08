@@ -40,6 +40,7 @@ function RootNavigator() {
     <Stack
       screenOptions={{
         headerShown: false,
+        contentStyle: { backgroundColor: colors.background },
       }}
     >
       <Stack.Screen name="index" />

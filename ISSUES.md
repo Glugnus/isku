@@ -6,20 +6,6 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 
 ## 📌 En attente / À traiter
 
-### 2. [UI / UX] Flash blanc au démarrage sur Android
-* **Date de signalement** : 08/11/2026
-* **Environnement** : Android (Google Pixel 10) - Dev Client
-* **Symptômes** : Un bref écran blanc apparaît pendant une fraction de seconde au lancement de l'application avant l'affichage du splash screen ou du thème sombre (`#0A0B14`).
-* **Cause identifiée** : 
-  * Sous Android, la fenêtre native de l'OS (`android:windowBackground`) est blanche par défaut dans le binaire compilé tant que la configuration explicite `backgroundColor` n'est pas intégrée dans `app.json` (et prise en compte lors du prebuild natif).
-  * Les stacks React Navigation peuvent également flasher en blanc si `contentStyle: { backgroundColor: colors.background }` n'est pas défini sur les layouts.
-* **Piste de résolution** :
-  * `"backgroundColor": "#0A0B14"` configuré dans `app.json` (actif au prochain build EAS).
-  * Ajouter `contentStyle: { backgroundColor: colors.background }` dans les `screenOptions` des `Stack` de navigation.
-* **Priorité** : 🟡 Moyenne (Confort visuel / Thème sombre)
-
----
-
 ### 3. [UX / Ergonomie] Zone tactile trop petite pour le bouton Menu / Réglages
 * **Date de signalement** : 08/11/2026
 * **Fichier concerné** : `app/(tabs)/_layout.tsx` (lignes 19-28)
@@ -67,4 +53,13 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 * **Solution apportée** : 
   * Création de la route racine pivot `app/index.tsx` avec redirection déclarative via `<Redirect href={isLoggedIn ? "/(tabs)" : "/(auth)/login"} />`.
   * Déclaration de `<Stack.Screen name="index" />` à la racine de `<Stack>` dans `app/_layout.tsx` pour servir d'ancre universelle de navigation et de fallback lors de la déconnexion.
-* **Commit** : `0e6df28`
+* **Commit** : `141c81f`
+
+---
+
+### 2. [UI / UX] Flash blanc au démarrage sur Android
+* **Date de résolution** : 08/11/2026
+* **Solution apportée** : 
+  * Configuration de `"backgroundColor": "#0A0B14"` dans `app.json` (global, android et splash-screen).
+  * Ajout de `contentStyle: { backgroundColor: colors.background }` dans les `screenOptions` des stacks (`app/_layout.tsx` et `app/(auth)/_layout.tsx`) pour supprimer tout scintillement natif blanc lors des transitions.
+* **Commit** : `8872105`
