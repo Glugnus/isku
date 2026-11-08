@@ -1,8 +1,8 @@
 {
   "navigation": {
-    "new": "Nouveau",
-    "matches": "Mes Matchs",
-    "gear": "Mon Sac",
+    "new": "New",
+    "matches": "Mes matchs",
+    "gear": "Équipement",
     "profile": "Profil"
   },
   "actions": {

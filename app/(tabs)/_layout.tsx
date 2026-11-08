@@ -1,7 +1,7 @@
 import { TextLogo } from "@/src/components/ui/text-logo";
 import { colors } from "@/src/lib/colors";
 import { router, Tabs } from "expo-router";
-import { Briefcase, History, Home, Menu, User } from "lucide-react-native";
+import { History, Home, Menu, User } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { Pressable } from "react-native";
 
@@ -15,7 +15,7 @@ const APP_TABS = [
   {
     name: "gear",
     labelKey: "navigation.gear",
-    Icon: Briefcase,
+    Icon: User,
   },
   { name: "profile", labelKey: "navigation.profile", Icon: User },
 ] as const;
