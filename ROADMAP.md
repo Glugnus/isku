@@ -43,6 +43,9 @@ Ce document retrace la vision produit, les jalons de développement et les persp
     - _Ping_ : Bois, Revêtements coup droit / revers, Épaisseurs de mousse.
   - Association automatique du setup à chaque match joué.
   - **Compteur automatique d'heures de jeu** par équipement pour accumuler la donnée d'usure dès les premiers mois.
+- [ ] **Chronométrage & Précision du Temps de Jeu (Modes Arbitre & Rapide)** :
+  - **Chronomètre en direct (Mode Arbitre)** : Affichage et suivi du temps de match effectif en direct pendant l'arbitrage (avec gestion des pauses / temps morts et reprise).
+  - **Saisie de la durée (Mode Rapide)** : Ajout d'un champ de saisie (input) du temps de jeu lors de l'enregistrement rapide d'un match (essentiel pour fiabiliser le cumul d'heures et le calcul d'usure du matériel).
 - [ ] **Viralité & Affiliation passive** :
   - **Setup sur la Story** : Incrustation automatique du matériel utilisé au bas de la Story partagée (style Strava).
   - Premiers liens affiliés passifs ("Racheter mes revêtements / mon équipement").
