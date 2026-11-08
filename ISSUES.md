@@ -6,20 +6,12 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 
 ## 📌 En attente / À traiter
 
-### 5. [Expo Router] Warning sur l'export par défaut de `login.tsx`
-* **Date de signalement** : 08/11/2026
-* **Message de log** : `WARN Route "./(auth)/login.tsx" is missing the required default export.`
-* **Symptômes** : Warning affiché dans la console Metro lors du bundling de la route `(auth)/login`.
-* **Piste de résolution** : Vérifier que le composant de page dans `app/(auth)/login.tsx` possède bien une déclaration `export default`.
-* **Priorité** : 🟡 Moyenne (Avertissement console / Robustesse)
-
----
-
 ### 6. [Dette Technique] Dépréciation du composant `ImageBackground`
 * **Date de signalement** : 08/11/2026
 * **Message de log** : `WARN ImageBackground is deprecated and will be removed in a future release.`
-* **Piste de résolution** : Remplacer l'usage de `ImageBackground` par une `<View>` contenant une `<Image>` positionnée en absolu (`absolute inset-0`).
-* **Priorité** : 🟢 Basse (Dette technique future)
+* **Observation** : Aucun usage direct dans `app/` ou `src/`. L'avertissement provient d'une dépendance externe dans `node_modules`.
+* **Piste de résolution** : Suivre les mises à jour des dépendances tierces au fil des montées de version Expo.
+* **Priorité** : 🟢 Basse (Dette technique externe)
 
 ---
 
@@ -55,4 +47,4 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 * **Date de résolution** : 08/11/2026
 * **Solution apportée** : 
   * Ajout de la classe NativeWind `pt-1` sur le `<Text>` affichant le score (`tracker-court-side.tsx`) pour accorder le dégagement vertical nécessaire à CoreText sans perturber le line-height ni l'alignement cross-platform.
-* **Commit** : `a57eda8`
+* **Commit** : `2acc720`
