@@ -6,22 +6,6 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 
 ## 📌 En attente / À traiter
 
-### 1. [Routage & Auth] Écran 404 / "Unmatched Route" au lancement et à la déconnexion
-* **Date de signalement** : 08/11/2026
-* **Environnement** : Android / iOS
-* **Symptômes** : 
-  1. Au premier lancement en mode déconnecté (`!isLoggedIn`), Expo Router affiche l'écran 404 / sitemap.
-  2. Lors d'une déconnexion (`signOut`), l'utilisateur se retrouve également sur l'écran 404 ("Unmatched Route") au lieu d'être renvoyé vers l'écran de connexion (`/login`).
-* **Cause identifiée** : 
-  * L'URL racine `/` cible `app/(tabs)/index.tsx`, protégée par `<Stack.Protected guard={isLoggedIn}>`.
-  * Le dossier `app/(auth)/` ne contient aucune route racine `/`, seulement `/login`, `/register`, etc.
-  * Lors de la déconnexion, l'écran actuel devient protégé sans redirection automatique immédiate vers `/login`.
-* **Piste de résolution** :
-  * Créer une route racine pivot `app/index.tsx` (avec `<Redirect href={isLoggedIn ? "/(tabs)" : "/(auth)/login"} />`) ou orchestrer la redirection impérative lors des transitions d'authentification dans le layout racine.
-* **Priorité** : 🔴 Haute (Parcours utilisateur critique)
-
----
-
 ### 2. [UI / UX] Flash blanc au démarrage sur Android
 * **Date de signalement** : 08/11/2026
 * **Environnement** : Android (Google Pixel 10) - Dev Client
@@ -78,4 +62,9 @@ Ce document centralise les bugs, anomalies de parcours et retours de tests const
 
 ## ✅ Résolus
 
-*(Les tickets résolus seront déplacés ici avec leur commit de correction associé).*
+### 1. [Routage & Auth] Écran 404 / "Unmatched Route" au lancement et à la déconnexion
+* **Date de résolution** : 08/11/2026
+* **Solution apportée** : 
+  * Création de la route racine pivot `app/index.tsx` avec redirection déclarative via `<Redirect href={isLoggedIn ? "/(tabs)" : "/(auth)/login"} />`.
+  * Déclaration de `<Stack.Screen name="index" />` à la racine de `<Stack>` dans `app/_layout.tsx` pour servir d'ancre universelle de navigation et de fallback lors de la déconnexion.
+* **Commit** : `0e6df28`

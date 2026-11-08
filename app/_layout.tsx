@@ -42,6 +42,7 @@ function RootNavigator() {
         headerShown: false,
       }}
     >
+      <Stack.Screen name="index" />
       <Stack.Protected guard={isLoggedIn}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="match" />
