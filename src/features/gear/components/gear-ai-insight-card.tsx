@@ -1,7 +1,8 @@
 import { colors } from "@/src/lib/colors";
 import { GearSetup } from "@/src/features/gear/types/gear.types";
+import { LinearGradient } from "expo-linear-gradient";
 import { ChevronRight, Sparkles } from "lucide-react-native";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface GearAiInsightCardProps {
   gear: GearSetup;
@@ -12,38 +13,39 @@ export function GearAiInsightCard({ gear, onPress }: GearAiInsightCardProps) {
   return (
     <Pressable
       onPress={onPress}
-      className="rounded-3xl border border-primary/40 bg-gradient-to-r from-[#121526] via-[#10142B] to-[#141C35] p-4 mb-3 relative overflow-hidden active:opacity-90"
-      style={{
-        shadowColor: colors.primary,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 14,
-      }}
+      className="mb-4 overflow-hidden rounded-2xl border border-primary/70 active:opacity-90"
+      style={{ elevation: 6, shadowColor: colors.primary }}
     >
-      {/* Halo subtil or / bleu en fond */}
-      <View className="absolute -top-10 -right-10 w-28 h-28 bg-primary/10 rounded-full blur-2xl pointer-events-none" />
+      {/* Fond : dégradé nuit ➜ bleu électrique (NativeWind ne gère pas bg-gradient-* en natif) */}
+      <LinearGradient
+        colors={[colors.background, colors.surface, `${colors.secondary}66`]}
+        locations={[0, 0.55, 1]}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
+        style={StyleSheet.absoluteFill}
+      />
 
-      {/* Titre avec symbole ✦ */}
-      <View className="flex-row items-center justify-between mb-2">
-        <View className="flex-row items-center gap-1.5">
-          <Sparkles size={14} color={colors.primary} />
-          <Text className="text-[11px] font-bold text-primary tracking-widest uppercase">
-            ✦ CONSEIL ISKU
+      {/* Reflet diagonal or / bleu (remplace le halo blur, non supporté sur Android) */}
+      <LinearGradient
+        colors={["transparent", `${colors.primary}33`, "transparent"]}
+        start={{ x: 0.55, y: 1 }}
+        end={{ x: 0.95, y: 0 }}
+        style={StyleSheet.absoluteFill}
+      />
+
+      {/* Contenu : icône ✦ | titre + action recommandée | chevron */}
+      <View className="flex-row items-center gap-4 px-5 py-4">
+        <Sparkles size={26} color={colors.primary} strokeWidth={1.6} />
+
+        <View className="flex-1">
+          <Text className="text-base font-bold text-primary">Conseil IA</Text>
+          <Text className="text-sm text-neutral mt-0.5" numberOfLines={1}>
+            {gear.aiAdvice.recommendedAction}
           </Text>
         </View>
 
-        <ChevronRight size={16} color={colors.neutral} />
+        <ChevronRight size={20} color={colors.neutral} />
       </View>
-
-      {/* Accroche */}
-      <Text className="text-sm font-bold text-white mb-1">
-        {gear.aiAdvice.headline}
-      </Text>
-
-      {/* Texte de l'analyse */}
-      <Text className="text-xs text-neutral leading-relaxed">
-        {gear.aiAdvice.adviceText}
-      </Text>
     </Pressable>
   );
 }

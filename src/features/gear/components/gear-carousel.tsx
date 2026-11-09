@@ -1,179 +1,122 @@
 import { colors } from "@/src/lib/colors";
+import { GearSetupThumbnail } from "@/src/features/gear/components/gear-setup-thumbnail";
 import { GearSetup } from "@/src/features/gear/types/gear.types";
-import { Check, Shield } from "lucide-react-native";
-import { useEffect, useRef } from "react";
-import {
-  Dimensions,
-  FlatList,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import { Check } from "lucide-react-native";
+import { ReactNode } from "react";
+import { Pressable, Text, View } from "react-native";
+import Animated from "react-native-reanimated";
 
 interface GearCarouselProps {
   setups: GearSetup[];
   selectedIndex: number;
   onSelectIndex: (index: number) => void;
+  /** Contenu central du setup sélectionné (ex : <GearBlueprintCard />), injecté par l'écran */
+  children: ReactNode;
 }
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const CARD_WIDTH = Math.round(SCREEN_WIDTH * 0.64);
-const SPACING = 12;
-
+/**
+ * Scène du carrousel :
+ *   [voisin précédent]   [cadre titre + contenu central animé]   [voisin suivant]
+ * Le carrousel POSSÈDE l'animation ; le contenu central (children) reste présentationnel.
+ */
 export function GearCarousel({
   setups,
   selectedIndex,
   onSelectIndex,
+  children,
 }: GearCarouselProps) {
-  const flatListRef = useRef<FlatList>(null);
+  const selected = setups[selectedIndex];
 
-  // Synchronisation lors du changement d'index externe
-  useEffect(() => {
-    flatListRef.current?.scrollToOffset({
-      offset: selectedIndex * (CARD_WIDTH + SPACING),
-      animated: true,
-    });
-  }, [selectedIndex]);
+  // TODO: [Boucle infinie] Calculer les index des voisins.
+  //       Indice : opérateur modulo (%) — attention au cas selectedIndex = 0 pour le précédent.
+  const prevIndex = selectedIndex;
+  const nextIndex = selectedIndex;
 
-  const handleMomentumScrollEnd = (
-    event: NativeSyntheticEvent<NativeScrollEvent>
-  ) => {
-    const offsetX = event.nativeEvent.contentOffset.x;
-    const newIndex = Math.round(offsetX / (CARD_WIDTH + SPACING));
-    if (newIndex >= 0 && newIndex < setups.length && newIndex !== selectedIndex) {
-      onSelectIndex(newIndex);
-    }
+  const handleSelectPrevious = () => {
+    // TODO: [Navigation] Mémoriser la direction (utile pour l'animation) puis notifier le parent.
   };
 
-  const scrollToSetup = (index: number) => {
-    onSelectIndex(index);
-    flatListRef.current?.scrollToOffset({
-      offset: index * (CARD_WIDTH + SPACING),
-      animated: true,
-    });
+  const handleSelectNext = () => {
+    // TODO: [Navigation] Idem, direction inverse.
   };
+
+  // TODO: [Swipe] Détecter un swipe horizontal sur la scène et appeler
+  //       handleSelectPrevious / handleSelectNext selon le sens.
+  //       Piste : GestureDetector (react-native-gesture-handler). Point d'attention :
+  //       les callbacks de geste tournent sur le thread UI (worklets) — comment appeler
+  //       une fonction JS (setState) depuis là ?
+
+  if (!selected) return null;
+
+  const isActive = selected.status === "active";
 
   return (
-    <View className="mb-4 -mx-6">
-      <FlatList
-        ref={flatListRef}
-        data={setups}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={CARD_WIDTH + SPACING}
-        snapToAlignment="center"
-        decelerationRate="fast"
-        onMomentumScrollEnd={handleMomentumScrollEnd}
-        contentContainerStyle={{
-          paddingHorizontal: (SCREEN_WIDTH - CARD_WIDTH) / 2,
-        }}
-        renderItem={({ item, index }) => {
-          const isSelected = index === selectedIndex;
-          const isActive = item.status === "active";
+    <View className="relative mb-4 -mx-6">
+      {/* 1. Voisins estompés (rendus AVANT le centre pour passer derrière) */}
+      <Pressable
+        onPress={handleSelectPrevious}
+        hitSlop={8}
+        className="absolute -left-3 top-2 z-0 opacity-40"
+        style={{ transform: [{ scale: 0.85 }, { rotate: "-8deg" }] }}
+      >
+        <GearSetupThumbnail setup={setups[prevIndex]} side="left" />
+      </Pressable>
 
-          return (
-            <Pressable
-              onPress={() => scrollToSetup(index)}
-              style={{
-                width: CARD_WIDTH,
-                marginRight: index < setups.length - 1 ? SPACING : 0,
-                transform: [{ scale: isSelected ? 1 : 0.86 }],
-                opacity: isSelected ? 1 : 0.45,
-              }}
-              className={`rounded-2xl p-3 border transition-all ${
-                isSelected
-                  ? "bg-[#121528] border-primary shadow-lg"
-                  : "bg-surface/50 border-surface"
+      <Pressable
+        onPress={handleSelectNext}
+        hitSlop={8}
+        className="absolute -right-3 top-2 z-0 opacity-40"
+        style={{ transform: [{ scale: 0.85 }, { rotate: "8deg" }] }}
+      >
+        <GearSetupThumbnail setup={setups[nextIndex]} side="right" />
+      </Pressable>
+
+      {/* 2. Cadre titre du setup sélectionné (unique source du titre : pas de doublon dans le blueprint) */}
+      <View
+        className="z-10 self-center w-[64%] rounded-3xl border border-primary bg-background/80 px-4 pt-3 pb-2.5"
+        style={{ elevation: 8, shadowColor: colors.primary }}
+      >
+        <View className="flex-row items-center justify-between">
+          <Text className="text-base font-bold text-white" numberOfLines={1}>
+            {selected.name}
+          </Text>
+
+          {isActive ? (
+            <View className="flex-row items-center gap-0.5 rounded-full bg-primary px-2 py-0.5">
+              <Text className="text-[11px] font-bold text-background">Actif</Text>
+              <Check size={11} color={colors.background} strokeWidth={3} />
+            </View>
+          ) : (
+            <View className="rounded-full border border-neutral/30 px-2 py-0.5">
+              <Text className="text-[11px] font-bold text-muted">Réserve</Text>
+            </View>
+          )}
+        </View>
+
+        {/* Pagination */}
+        <View className="flex-row justify-center gap-2 mt-2.5">
+          {setups.map((setup, index) => (
+            <View
+              key={setup.id}
+              className={`w-1.5 h-1.5 rounded-full ${
+                index === selectedIndex ? "bg-primary" : "bg-muted/50"
               }`}
-            >
-              {/* En-tête de la carte miniature */}
-              <View className="flex-row items-center justify-between mb-2">
-                <View className="flex-row items-center gap-1.5">
-                  <Shield
-                    size={14}
-                    color={isSelected ? colors.primary : colors.muted}
-                  />
-                  <Text
-                    className={`font-oswald text-sm uppercase tracking-wide ${
-                      isSelected ? "text-white" : "text-neutral"
-                    }`}
-                  >
-                    Setup #{String(item.setupNumber).padStart(2, "0")}
-                  </Text>
-                </View>
+            />
+          ))}
+        </View>
+      </View>
 
-                {/* Badge statut */}
-                {isActive ? (
-                  <View className="flex-row items-center gap-0.5 bg-primary/20 border border-primary/50 px-2 py-0.5 rounded-full">
-                    <Text className="text-[9px] font-bold text-primary">ACTIF</Text>
-                    <Check size={10} color={colors.primary} strokeWidth={3} />
-                  </View>
-                ) : (
-                  <View className="bg-surface/80 border border-neutral/20 px-2 py-0.5 rounded-full">
-                    <Text className="text-[9px] font-bold text-muted">
-                      RÉSERVE
-                    </Text>
-                  </View>
-                )}
-              </View>
-
-              {/* Miniature visuelle de la raquette */}
-              <View className="flex-row items-center justify-between bg-background/60 rounded-xl p-2 mb-2 border border-surface/50">
-                {/* Pastille CD */}
-                <View className="flex-row items-center gap-1">
-                  <View
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{
-                      backgroundColor:
-                        item.forehandRubber.color === "black"
-                          ? "#222"
-                          : colors.red,
-                    }}
-                  />
-                  <Text className="text-[10px] text-muted font-medium">CD</Text>
-                </View>
-
-                {/* Nom du Bois au centre */}
-                <Text
-                  className="text-[11px] font-bold text-white max-w-[100px] text-center"
-                  numberOfLines={1}
-                >
-                  {item.blade.name.replace("Butterfly ", "")}
-                </Text>
-
-                {/* Pastille RV */}
-                <View className="flex-row items-center gap-1">
-                  <Text className="text-[10px] text-muted font-medium">RV</Text>
-                  <View
-                    className="w-2.5 h-2.5 rounded-full"
-                    style={{
-                      backgroundColor:
-                        item.backhandRubber.color === "black"
-                          ? "#222"
-                          : colors.red,
-                    }}
-                  />
-                </View>
-              </View>
-
-              {/* Ligne inférieure : Catégorie de vitesse + Poids */}
-              <View className="flex-row justify-between items-center">
-                <View className="bg-primary/10 border border-primary/30 px-2 py-0.5 rounded-md">
-                  <Text className="text-[9px] font-bold text-primary">
-                    {item.category}
-                  </Text>
-                </View>
-                <Text className="text-[10px] text-muted">
-                  {item.weightGrams}g • {item.totalPlayTimeHours}h
-                </Text>
-              </View>
-            </Pressable>
-          );
-        }}
-      />
+      {/* 3. Contenu central animé */}
+      <Animated.View
+        key={selected.id}
+        // TODO: [Animation] Ajouter une animation d'entrée (layout animation Reanimated)
+        //       qui donne l'impression que la miniature grossit en venant du côté choisi.
+        //       Question : pourquoi la prop `key` ci-dessus est-elle indispensable pour que
+        //       l'animation se rejoue à chaque changement de setup ?
+        className="z-10 -mt-2 px-6"
+      >
+        {children}
+      </Animated.View>
     </View>
   );
 }

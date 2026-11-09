@@ -1,7 +1,7 @@
 import { TextLogo } from "@/src/components/ui/text-logo";
 import { colors } from "@/src/lib/colors";
 import { router, Tabs } from "expo-router";
-import { History, Home, Menu, User } from "lucide-react-native";
+import { History, Home, Menu, User, Wrench } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { Pressable } from "react-native";
 
@@ -67,6 +67,14 @@ export default function TabsLayout() {
           }}
         />
       ))}
+      <Tabs.Screen
+        name="gear-draft"
+        options={{
+          tabBarLabel: "Chantier",
+          tabBarIcon: ({ color, size }) => <Wrench color={color} size={size} />,
+          headerRight: settingsIcon,
+        }}
+      />
     </Tabs>
   );
 }

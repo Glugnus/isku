@@ -38,11 +38,11 @@ Ce document retrace la vision produit, les jalons de développement et les persp
 - [x] **Internationalisation (i18n)** :
   - Support natif de l'Anglais et du Français.
   - Architecture modulaire facilitant l'ajout ultérieur d'autres langues (Espagnol, Allemand, Italien).
-- [ ] **Brique Matériel "Mon Sac / Mon Setup" (Préparation des données d'usure)** :
-  - Configuration du profil matériel par joueur :
-    - _Ping_ : Bois, Revêtements coup droit / revers, Épaisseurs de mousse.
-  - Association automatique du setup à chaque match joué.
-  - **Compteur automatique d'heures de jeu** par équipement pour accumuler la donnée d'usure dès les premiers mois.
+- [ ] **Brique Matériel "Mon Sac / Mon Setup" (Socle V1.1)** *(spécifications détaillées dans [GEAR_ROADMAP.md](file:///c:/Users/perne/Documents/isku/GEAR_ROADMAP.md))* :
+  - Modèle de données évolutif : Architecture modulaire `Sport -> Setup -> Components` (bois, revêtements CD/RV, épaisseurs, poids, statut actif/réserve/archivé).
+  - **Écran "Mon Sac" & Signature Visuelle Isku** : Vue éclatée (exploded view) façon blueprint technique SVG, carrousel de navigation et diagnostic rapide (poids, âge, heures, usure déclarative).
+  - **Association automatique aux matchs** : Sélection du setup lors de la préparation de match et historique immuable.
+  - **Compteur automatique d'heures de jeu** : Cumul automatique alimenté par le chronomètre live (Mode Arbitre) ou la durée saisie (Mode Rapide).
 - [ ] **Chronométrage & Précision du Temps de Jeu (Modes Arbitre & Rapide)** :
   - **Chronomètre en direct (Mode Arbitre)** : Affichage et suivi du temps de match effectif en direct pendant l'arbitrage (avec gestion des pauses / temps morts et reprise).
   - **Saisie de la durée (Mode Rapide)** : Ajout d'un champ de saisie (input) du temps de jeu lors de l'enregistrement rapide d'un match (essentiel pour fiabiliser le cumul d'heures et le calcul d'usure du matériel).
@@ -69,6 +69,10 @@ Ce document retrace la vision produit, les jalons de développement et les persp
   - Recherche d'utilisateurs (par identifiant unique / pseudo ou partage de QR code).
   - Gestion des demandes d'amis (envoi, acceptation, liste d'amis).
   - Consultation des profils amis : statistiques globales, matériel utilisé ("Mon Sac") et historique des matchs.
+- [ ] **Statistiques & Historique Matériel (V1.2)** :
+  - Métriques par setup : taux de victoire, sets gagnés, heures de jeu accumulées.
+  - Timeline du matériel (journal de bord chronologique des changements de revêtements/bois).
+  - Comparateur de setups (#01 vs #02).
 - [ ] **Sélection d'Amis dans la Préparation de Match** :
   - Sélecteur d'adversaire hybride (saisie libre pour joueur occasionnel OU sélection rapide parmi la liste d'amis).
   - Association du compte adverse à la rencontre pour alimenter les historiques respectifs.

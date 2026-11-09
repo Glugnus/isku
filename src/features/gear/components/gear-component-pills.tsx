@@ -1,12 +1,16 @@
 import { colors } from "@/src/lib/colors";
 import { GearSetup } from "@/src/features/gear/types/gear.types";
-import { Flame, Layers, Shield, Waves } from "lucide-react-native";
+import { Layers, Shield, Waves } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 
 interface GearComponentPillsProps {
   gear: GearSetup;
   onPressComponent?: (componentKey: string) => void;
 }
+
+// Style partagé des 4 tuiles (fond surface translucide + liseré discret)
+const PILL_CLASSNAME =
+  "flex-1 min-h-[96px] items-center rounded-2xl border border-white/10 bg-surface/60 px-1.5 pt-3 pb-2.5 active:opacity-75";
 
 export function GearComponentPills({
   gear,
@@ -31,84 +35,52 @@ export function GearComponentPills({
       : "Porte-plume";
 
   return (
-    <View className="flex-row justify-between gap-2 mb-3">
+    <View className="flex-row gap-2 mb-4">
       {/* 1. Bois */}
-      <Pressable
-        onPress={() => onPressComponent?.("blade")}
-        className="flex-1 bg-surface/70 border border-surface rounded-2xl p-2.5 items-center justify-between active:opacity-75 min-h-[76px]"
-      >
-        <Layers size={16} color={colors.primary} />
-        <Text className="text-[9px] font-bold text-primary uppercase mt-1">
-          BOIS
-        </Text>
+      <Pressable onPress={() => onPressComponent?.("blade")} className={PILL_CLASSNAME}>
+        <Layers size={20} color={colors.primary} strokeWidth={1.6} />
+        <Text className="text-xs font-bold text-primary mt-2">Bois</Text>
         <Text
-          className="text-[11px] font-bold text-white text-center leading-tight"
-          numberOfLines={1}
+          className="text-[12px] text-neutral text-center leading-4 mt-0.5"
+          numberOfLines={2}
         >
-          {gear.blade.name.replace("Butterfly ", "")}
-        </Text>
-        <Text className="text-[9px] text-muted font-medium">
-          {gear.blade.category}
+          {gear.blade.name}
         </Text>
       </Pressable>
 
       {/* 2. CD */}
-      <Pressable
-        onPress={() => onPressComponent?.("forehand")}
-        className="flex-1 bg-surface/70 border border-surface rounded-2xl p-2.5 items-center justify-between active:opacity-75 min-h-[76px]"
-      >
-        <Waves size={16} color={colors.secondary} />
-        <Text className="text-[9px] font-bold text-secondary uppercase mt-1">
-          CD
-        </Text>
+      <Pressable onPress={() => onPressComponent?.("forehand")} className={PILL_CLASSNAME}>
+        <Waves size={20} color={colors.secondary} strokeWidth={1.6} />
+        <Text className="text-xs font-bold text-secondary mt-2">CD</Text>
         <Text
-          className="text-[11px] font-bold text-white text-center leading-tight"
-          numberOfLines={1}
+          className="text-[12px] text-neutral text-center leading-4 mt-0.5"
+          numberOfLines={2}
         >
           {gear.forehandRubber.name}
-        </Text>
-        <Text className="text-[9px] text-muted font-medium">
-          {gear.forehandRubber.thickness}
         </Text>
       </Pressable>
 
       {/* 3. RV */}
-      <Pressable
-        onPress={() => onPressComponent?.("backhand")}
-        className="flex-1 bg-surface/70 border border-surface rounded-2xl p-2.5 items-center justify-between active:opacity-75 min-h-[76px]"
-      >
-        <Flame size={16} color={colors.red} />
-        <Text className="text-[9px] font-bold text-red uppercase mt-1">
-          RV
-        </Text>
+      <Pressable onPress={() => onPressComponent?.("backhand")} className={PILL_CLASSNAME}>
+        <Waves size={20} color={colors.red} strokeWidth={1.6} />
+        <Text className="text-xs font-bold text-red mt-2">RV</Text>
         <Text
-          className="text-[11px] font-bold text-white text-center leading-tight"
-          numberOfLines={1}
+          className="text-[12px] text-neutral text-center leading-4 mt-0.5"
+          numberOfLines={2}
         >
           {gear.backhandRubber.name}
-        </Text>
-        <Text className="text-[9px] text-muted font-medium">
-          {gear.backhandRubber.thickness}
         </Text>
       </Pressable>
 
       {/* 4. Manche */}
-      <Pressable
-        onPress={() => onPressComponent?.("handle")}
-        className="flex-1 bg-surface/70 border border-surface rounded-2xl p-2.5 items-center justify-between active:opacity-75 min-h-[76px]"
-      >
-        <Shield size={16} color={colors.primary} />
-        <Text className="text-[9px] font-bold text-primary uppercase mt-1">
-          MANCHE
-        </Text>
+      <Pressable onPress={() => onPressComponent?.("handle")} className={PILL_CLASSNAME}>
+        <Shield size={20} color={colors.neutral} strokeWidth={1.6} />
+        <Text className="text-xs font-bold text-primary mt-2">Manche</Text>
         <Text
-          className="text-[11px] font-bold text-white text-center leading-tight"
-          numberOfLines={1}
+          className="text-[12px] text-neutral text-center leading-4 mt-0.5"
+          numberOfLines={2}
         >
-          {handleTypeLabel}
-        </Text>
-        <Text className="text-[9px] text-muted font-medium">
-          {handleDesc}
+          {handleTypeLabel} / {handleDesc}
         </Text>
       </Pressable>
     </View>
