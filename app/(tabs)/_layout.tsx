@@ -1,16 +1,16 @@
 import { TextLogo } from "@/src/components/ui/text-logo";
 import { colors } from "@/src/lib/colors";
 import { router, Tabs } from "expo-router";
-import { History, Home, Menu, User, Wrench } from "lucide-react-native";
+import { Menu, Trophy, User, Wrench, Zap } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { Pressable } from "react-native";
 
 const APP_TABS = [
-  { name: "index", labelKey: "navigation.new", Icon: Home },
+  { name: "index", labelKey: "navigation.new", Icon: Zap },
   {
     name: "matches",
     labelKey: "navigation.matches",
-    Icon: History,
+    Icon: Trophy,
   },
   {
     name: "gear",

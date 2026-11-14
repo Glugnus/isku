@@ -1,47 +1,62 @@
 import ScreenLayout from "@/src/components/ui/screen-layout";
 import { colors } from "@/src/lib/colors";
-import { Plus } from "lucide-react-native";
-import { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
+import { Check } from "lucide-react-native";
+import { Text, View } from "react-native";
 
 export default function GearDraftScreen() {
-  // Mock data local pour tester le rendu du compteur
-  const [setupCount, setSetupCount] = useState(3);
-
   return (
     <ScreenLayout scrollable edges={["left", "right"]}>
-      {/* ──────────────────────────────────────────────────────────── */}
-      {/* CONTENEUR PARENT #1 : Header de l'écran (Titre + Action)    */}
-      {/* ──────────────────────────────────────────────────────────── */}
-      <View className="flex-row items-center justify-between mb-4 px-1">
-        {/* Titre & Compteur */}
-        <View>
-          <Text className="font-oswald text-2xl text-white tracking-wider">
-            MON SAC
-          </Text>
-          <Text className="text-xs text-muted font-medium">
-            {setupCount} {setupCount > 1 ? "setups enregistrés" : "setup enregistré"}
-          </Text>
-        </View>
-
-        {/* Bouton d'action principal */}
-        <Pressable
-          onPress={() => {
-            // TODO: [Étape Modale] Déclencher l'ouverture du formulaire d'ajout
-            console.log("Action : Ajouter un setup");
+      <View className="mb-4">
+        <LinearGradient
+          colors={[colors.primary, `${colors.primary}00`]}
+          style={{
+            width: "70%",
+            height: 150,
+            alignSelf: "center",
+            borderTopLeftRadius: 24,
+            borderTopRightRadius: 24,
+            paddingTop: 2,
+            paddingHorizontal: 2,
           }}
-          hitSlop={8}
-          className="flex-row items-center gap-1.5 bg-primary px-3 py-1.5 rounded-xl active:opacity-80 shadow-md shadow-primary/20"
         >
-          <Plus size={15} color={colors.background} strokeWidth={2.5} />
-          <Text className="text-xs font-bold text-background uppercase">
-            Ajouter
-          </Text>
-        </Pressable>
-      </View>
+          <View className=" bg-background px-4 py-3 flex-1 rounded-t-3xl">
+            <View className="flex-row items-center justify-between gap-2">
+              <Text
+                className="flex-1 font-oswald text-base text-white tracking-wide"
+                numberOfLines={1}
+              >
+                SETUP 1 - OFF+
+              </Text>
 
-      {/* Emplacement du Conteneur Parent #2 à venir */}
+              <View className="flex-row items-center gap-1 rounded-full bg-primary px-2.5 py-0.5">
+                <Text className="text-[11px] font-bold text-background">
+                  Actif
+                </Text>
+                <Check size={11} color={colors.background} strokeWidth={3} />
+              </View>
+            </View>
+          </View>
+        </LinearGradient>
+
+        {/* Zone Showcase : Halo SVG (fond transparent) + Raquette PNG */}
+        <View
+          className="relative w-full items-center justify-center"
+          style={{ height: 390, marginTop: -90 }}
+        >
+          {/* <GearHaloBackdrop
+            height={390}
+            style={{ position: "absolute", top: 0, left: 0, right: 0 }}
+          /> */}
+
+          <Image
+            source={require("@/assets/images/isku_racket_transparent.png")}
+            style={{ width: "82%", height: 325, marginTop: -8 }}
+            contentFit="contain"
+          />
+        </View>
+      </View>
     </ScreenLayout>
   );
 }
-
